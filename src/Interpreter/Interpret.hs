@@ -485,7 +485,7 @@ getCommand st buildc
        let cscheme = colorSchemeFromFlags (flags st)
            matches = B.buildcGetMatchNames [] buildc
            incPath = includePath (flags st)
-           ansiPrompt = if isConsolePrinter (printer st) 
+           ansiPrompt = if isConsolePrinter (printer st)
                           then ""
                           else if isAnsiPrinter (printer st)
                             then let c = ansiColor (colorInterpreter cscheme)
@@ -628,7 +628,7 @@ messageHeader st
     headerVersion = text $ "version " ++ version ++
                            (if compilerBuildVariant /= "release" then (" (" ++ compilerBuildVariant ++ ")") else "") ++ ", "
                            ++ buildDate ++ targetMsg
-    welcome       = text ("welcome to the " ++ Config.programName ++ " interactive compiler")
+    welcome       = text ("welcome to the " ++ "Santos" ++ " interactive compiler")
     tgt = target (flags st)
     targetMsg
       = case tgt of
