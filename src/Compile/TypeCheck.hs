@@ -47,6 +47,8 @@ import qualified Core.Core as Core
 import Compile.Options
 import Compile.Module( Definitions(..), Module (modName) )
 
+import qualified Core.SPretty as SP
+
 
 {---------------------------------------------------------------
   Type check
@@ -106,7 +108,7 @@ typeCheck flags defs coreImports program0
 
         -- check generated core
         let checkCoreDefs title = when (coreCheck flags) $ Core.Check.checkCore False False penv gamma
-        when (showInitialCore flags) $
+        when (showInitialCore flags) $ do
           traceDefGroups "initial"
 
         -- remove return statements
@@ -115,7 +117,14 @@ typeCheck flags defs coreImports program0
         -- checkCoreDefs "unreturn"
         coreDefs1 <- Core.getCoreDefs
         let borrowed = borrowedExtendICore (coreProgram{ Core.coreProgDefs = coreDefs1 }) (defsBorrowed defs)
+        -- traceDefGroups "before FBIP"
+        -- trace ("\nFBIP check started for module: " ++ show progName ++ "\n") $ return ()
         checkFBIP penv (platform flags) newtypes borrowed gamma
+        traceDefGroupsSExpr "initial" -- New call for S-expressions
+
+
+        -- trace ("\nFBIP check finished for module: " ++ show progName ++ "\n") $ return ()
+        -- traceDefGroups "after FBIP"
 
         -- initial simplify
         let ndebug  = optimize flags > 0
@@ -159,6 +168,14 @@ typeCheck flags defs coreImports program0
       where
         showDef def = show (Core.Pretty.prettyDef (penv{coreShowDef=True}) def)
         penv = prettyEnvFromFlags flags
+
+    traceDefGroupsSExpr :: String -> Core.CorePhase () ()
+    traceDefGroupsSExpr title
+      = do dgs <- Core.getCoreDefs
+           trace (unlines (["","/* -----------------", title, " (S-expressions) --------------- */"] ++
+              map showDefAsSExpr (Core.flattenDefGroups dgs))) $ return ()
+      where
+        showDefAsSExpr def = show (SP.prettySExpr (Core.defExpr def))
 
 
 
