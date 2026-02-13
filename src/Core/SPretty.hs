@@ -10,7 +10,23 @@ import Common.ColorScheme
 
 data SExpr = SAtom String
            | SList [SExpr]
-           deriving (Show)
+
+isList :: SExpr -> Bool
+isList (SList _) = True
+isList _         = False
+
+prettySExpr' :: Int -> SExpr -> String
+prettySExpr' indent s = case s of
+  SAtom str -> str
+  SList [] -> "()"
+  SList (x:xs) ->
+    let multiline = any isList (x:xs) || length xs > 3
+    in if multiline
+       then "(" ++ prettySExpr' indent x ++ concatMap (\el -> "\n" ++ replicate ((indent+1)*2) ' ' ++ prettySExpr' (indent+1) el) xs ++ ")"
+       else "(" ++ unwords (map (prettySExpr' indent) (x:xs)) ++ ")"
+
+instance Show SExpr where
+  show sexpr = prettySExpr' 0 sexpr
 
 
 prettySExpr :: Expr -> SExpr
@@ -38,9 +54,26 @@ prettyTypeVarToSExpr :: TypeVar -> SExpr
 prettyTypeVarToSExpr tv = SAtom (show tv)
 
 
-
 prettyTypeToSExpr :: Type -> SExpr
-prettyTypeToSExpr tp = SAtom (show (TP.ppType TP.defaultEnv tp)) --TODO
+prettyTypeToSExpr tp = case tp of
+  TForall vars t    -> SList [SAtom "forall", SList (map prettyTypeVarToSExpr vars), prettyTypeToSExpr t]
+  TFun args eff res -> SList [SAtom "fun", SList (map prettyParamToSExpr args), prettyTypeToSExpr eff, prettyTypeToSExpr res]
+  TVar tv           -> SList [SAtom "tvar", prettyTypeVarToSExpr tv]
+  TCon tc           -> SList [SAtom "tcon", prettyTypeConToSExpr tc]
+  TApp f args       -> SList (SAtom "tapp" : prettyTypeToSExpr f : map prettyTypeToSExpr args)
+  TSyn syn args t   -> SList (SAtom "tsyn" : prettyTypeSynToSExpr syn : map prettyTypeToSExpr args ++ [prettyTypeToSExpr t])
+
+
+prettyParamToSExpr :: (Name, Type) -> SExpr
+prettyParamToSExpr (name, tp) = SList [SAtom (show (pretty name)), prettyTypeToSExpr tp]
+
+
+prettyTypeConToSExpr :: TypeCon -> SExpr
+prettyTypeConToSExpr (TypeCon name kind) = SList [SAtom (show (pretty name)), SAtom (show (pretty kind))]
+
+
+prettyTypeSynToSExpr :: TypeSyn -> SExpr
+prettyTypeSynToSExpr (TypeSyn name kind rank _) = SList [SAtom (show (pretty name)), SAtom (show (pretty kind)), SAtom (show rank)]
 
 
 prettyLitToSExpr :: Lit -> SExpr
