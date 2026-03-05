@@ -1,0 +1,165 @@
+[6n
+/* -----------------
+initial
+--------------- */
+// Automatically generated. Tests for the `Node` constructor of the `:tree` type.
+pub fip fun is-node : (^ tree : tmp_koka_test/main/tree) -> bool
+  = fn(tree: tmp_koka_test/main/tree){
+    match (tree) {
+      (tmp_koka_test/main/Node(_, _, _, _) : tmp_koka_test/main/tree )
+         -> std/core/types/True;
+      (@skip tmp_koka_test/main/Leaf() : tmp_koka_test/main/tree )
+         -> std/core/types/False;
+    };
+  };
+// Automatically generated. Tests for the `Leaf` constructor of the `:tree` type.
+pub fip fun is-leaf : (^ tree : tmp_koka_test/main/tree) -> bool
+  = fn(tree: tmp_koka_test/main/tree){
+    match (tree) {
+      (tmp_koka_test/main/Leaf() : tmp_koka_test/main/tree )
+         -> std/core/types/True;
+      (@skip tmp_koka_test/main/Node(_, _, _, _) : tmp_koka_test/main/tree )
+         -> std/core/types/False;
+    };
+  };
+// Automatically generated. Tests for the `MyNode` constructor of the `:mytree` type.
+pub fip fun is-myNode : (^ mytree : tmp_koka_test/main/mytree) -> bool
+  = fn(mytree: tmp_koka_test/main/mytree){
+    match (mytree) {
+      (tmp_koka_test/main/MyNode(_, _, _, _) : tmp_koka_test/main/mytree )
+         -> std/core/types/True;
+      (@skip tmp_koka_test/main/MyLeaf() : tmp_koka_test/main/mytree )
+         -> std/core/types/False;
+    };
+  };
+// Automatically generated. Tests for the `MyLeaf` constructor of the `:mytree` type.
+pub fip fun is-myLeaf : (^ mytree : tmp_koka_test/main/mytree) -> bool
+  = fn(mytree: tmp_koka_test/main/mytree){
+    match (mytree) {
+      (tmp_koka_test/main/MyLeaf() : tmp_koka_test/main/mytree )
+         -> std/core/types/True;
+      (@skip tmp_koka_test/main/MyNode(_, _, _, _) : tmp_koka_test/main/mytree )
+         -> std/core/types/False;
+    };
+  };
+pub fip fun replace : (t : tmp_koka_test/main/tree, key : int, value : bool) -> tmp_koka_test/main/mytree
+  = fn(t: tmp_koka_test/main/tree, key: int, value: bool){
+    match (t) {
+      (tmp_koka_test/main/Node((lchild: tmp_koka_test/main/tree), (k: int), _, (rchild: tmp_koka_test/main/tree)) : tmp_koka_test/main/tree )
+         -> (match ((std/core/types/@open(std/core/int/(==))(k, key))) {
+          (std/core/types/True() : bool )
+             -> tmp_koka_test/main/MyNode(lchild, k, value, rchild);
+          (@skip std/core/types/False() : bool )
+             -> (match ((std/core/types/@open(std/core/int/(<))(k, key))) {
+              (std/core/types/True() : bool )
+                 -> tmp_koka_test/main/MyNode(lchild, k, value, rchild);
+              (@skip std/core/types/False() : bool )
+                 -> tmp_koka_test/main/MyNode(lchild, key, value, rchild);
+            });
+        });
+      (@skip tmp_koka_test/main/Leaf() : tmp_koka_test/main/tree )
+         -> tmp_koka_test/main/MyLeaf;
+    };
+  };
+pub fun show : (t : tmp_koka_test/main/tree) -> string
+  = fn(t: tmp_koka_test/main/tree){
+    match (t) {
+      (tmp_koka_test/main/Node((lchild: tmp_koka_test/main/tree), (k: int), (v: bool), (rchild: tmp_koka_test/main/tree)) : tmp_koka_test/main/tree )
+         -> std/core/types/@open(std/core/types/(++))("Node(", (std/core/types/@open(std/core/types/(++))((std/core/types/@open(tmp_koka_test/main/show)(lchild)), (std/core/types/@open(std/core/types/(++))(", ", (std/core/types/@open(std/core/types/(++))((std/core/types/@open(std/core/int/show)(k)), (std/core/types/@open(std/core/types/(++))(", ", (std/core/types/@open(std/core/types/(++))((std/core/types/@open(std/core/bool/show)(v)), (std/core/types/@open(std/core/types/(++))(", ", (std/core/types/@open(std/core/types/(++))((std/core/types/@open(tmp_koka_test/main/show)(rchild)), ")")))))))))))))));
+      (@skip tmp_koka_test/main/Leaf() : tmp_koka_test/main/tree )
+         -> "Leaf";
+    };
+  };
+pub fip fun rev-acc : forall<a> (xs : list<a>, acc : list<a>) -> list<a>
+  = forall<a> fn(xs: list<a>, acc: list<a>){
+    (match (xs) {
+      (std/core/types/Cons((x: a), (xx: list<a>)) : list<a> )
+         -> std/core/types/@open(tmp_koka_test/main/rev-acc)(xx, (std/core/types/Cons(x, acc)));
+      (@skip std/core/types/Nil() : (list<a>) )
+         -> acc;
+    });
+  };
+pub fun main : () -> console/console ()
+  = fn<console/console>(){
+    val l : list<int>
+          = std/core/types/Cons(1, (std/core/types/Cons(2, (std/core/types/Cons(3, std/core/types/Nil)))));
+    val new_l : list<int>
+          = std/core/types/@open(tmp_koka_test/main/rev-acc)(l, std/core/types/Nil);
+    std/core/types/@open(std/core/console/string/print)((std/core/list/show(new_l, (std/core/types/@open(std/core/int/show)))));
+  };
+
+
+/* -----------------
+initial
+ (S-expressions) --------------- */
+SList [SAtom "lam",SList [SList [SAtom "tree",SAtom "tmp_koka_test/main/tree"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "tree",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Node",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/tree"],SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Leaf",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/False",SAtom "bool"]]]]]]]]
+SList [SAtom "lam",SList [SList [SAtom "tree",SAtom "tmp_koka_test/main/tree"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "tree",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Leaf",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Node",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/tree"],SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/False",SAtom "bool"]]]]]]]]
+SList [SAtom "lam",SList [SList [SAtom "mytree",SAtom "tmp_koka_test/main/mytree"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "mytree",SAtom "tmp_koka_test/main/mytree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/MyNode",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/mytree"],SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/MyLeaf",SAtom "tmp_koka_test/main/mytree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/False",SAtom "bool"]]]]]]]]
+SList [SAtom "lam",SList [SList [SAtom "mytree",SAtom "tmp_koka_test/main/mytree"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "mytree",SAtom "tmp_koka_test/main/mytree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/MyLeaf",SAtom "tmp_koka_test/main/mytree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/MyNode",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/mytree"],SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "pat-wild",SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "std/core/types/False",SAtom "bool"]]]]]]]]
+SList [SAtom "lam",SList [SList [SAtom "t",SAtom "tmp_koka_test/main/tree"],SList [SAtom "key",SAtom "int"],SList [SAtom "value",SAtom "bool"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "t",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Node",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/tree"],SList [SAtom "pat-var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"],SAtom "pat-wild"],SList [SAtom "pat-var",SList [SAtom "k",SAtom "int"],SAtom "pat-wild"],SAtom "pat-wild",SList [SAtom "pat-var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"],SAtom "pat-wild"],SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "case",SList [SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : int, y : int) -> bool) -> ((x : int, y : int) -> bool)"]],SAtom "total",SAtom "total",SAtom "(x : int, y : int) -> bool",SAtom "(x : int, y : int) -> bool"],SList [SAtom "var",SList [SAtom "std/core/int/(==)",SAtom "(x : int, y : int) -> bool"]]],SList [SAtom "var",SList [SAtom "k",SAtom "int"]],SList [SAtom "var",SList [SAtom "key",SAtom "int"]]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/True",SAtom "bool"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "app",SList [SAtom "con",SList [SAtom "tmp_koka_test/main/MyNode",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/mytree"]],SList [SAtom "var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"]],SList [SAtom "var",SList [SAtom "k",SAtom "int"]],SList [SAtom "var",SList [SAtom "value",SAtom "bool"]],SList [SAtom "var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"]]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/False",SAtom "bool"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "case",SList [SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : int, y : int) -> bool) -> ((x : int, y : int) -> bool)"]],SAtom "total",SAtom "total",SAtom "(x : int, y : int) -> bool",SAtom "(x : int, y : int) -> bool"],SList [SAtom "var",SList [SAtom "std/core/int/(<)",SAtom "(x : int, y : int) -> bool"]]],SList [SAtom "var",SList [SAtom "k",SAtom "int"]],SList [SAtom "var",SList [SAtom "key",SAtom "int"]]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/True",SAtom "bool"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "app",SList [SAtom "con",SList [SAtom "tmp_koka_test/main/MyNode",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/mytree"]],SList [SAtom "var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"]],SList [SAtom "var",SList [SAtom "k",SAtom "int"]],SList [SAtom "var",SList [SAtom "value",SAtom "bool"]],SList [SAtom "var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"]]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/False",SAtom "bool"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "app",SList [SAtom "con",SList [SAtom "tmp_koka_test/main/MyNode",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/mytree"]],SList [SAtom "var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"]],SList [SAtom "var",SList [SAtom "key",SAtom "int"]],SList [SAtom "var",SList [SAtom "value",SAtom "bool"]],SList [SAtom "var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"]]]]]]]]]]]]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Leaf",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "con",SList [SAtom "tmp_koka_test/main/MyLeaf",SAtom "tmp_koka_test/main/mytree"]]]]]]]]
+SList [SAtom "lam",SList [SList [SAtom "t",SAtom "tmp_koka_test/main/tree"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "t",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Node",SAtom "(lchild : tmp_koka_test/main/tree, key : int, value : bool, rchild : tmp_koka_test/main/tree) -> tmp_koka_test/main/tree"],SList [SAtom "pat-var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"],SAtom "pat-wild"],SList [SAtom "pat-var",SList [SAtom "k",SAtom "int"],SAtom "pat-wild"],SList [SAtom "pat-var",SList [SAtom "v",SAtom "bool"],SAtom "pat-wild"],SList [SAtom "pat-var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"],SAtom "pat-wild"],SAtom "tmp_koka_test/main/tree",SAtom "int",SAtom "bool",SAtom "tmp_koka_test/main/tree"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SAtom "\"Node(\"",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (t : tmp_koka_test/main/tree) -> string) -> ((t : tmp_koka_test/main/tree) -> string)"]],SAtom "total",SAtom "total",SAtom "(t : tmp_koka_test/main/tree) -> string",SAtom "(t : tmp_koka_test/main/tree) -> string"],SList [SAtom "var",SList [SAtom "tmp_koka_test/main/show",SAtom "(t : tmp_koka_test/main/tree) -> string"]]],SList [SAtom "var",SList [SAtom "lchild",SAtom "tmp_koka_test/main/tree"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SAtom "\", \"",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (i : int) -> string) -> ((i : int) -> string)"]],SAtom "total",SAtom "total",SAtom "(i : int) -> string",SAtom "(i : int) -> string"],SList [SAtom "var",SList [SAtom "std/core/int/show",SAtom "(i : int) -> string"]]],SList [SAtom "var",SList [SAtom "k",SAtom "int"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SAtom "\", \"",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (b : bool) -> string) -> ((b : bool) -> string)"]],SAtom "total",SAtom "total",SAtom "(b : bool) -> string",SAtom "(b : bool) -> string"],SList [SAtom "var",SList [SAtom "std/core/bool/show",SAtom "(b : bool) -> string"]]],SList [SAtom "var",SList [SAtom "v",SAtom "bool"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SAtom "\", \"",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (x : string, y : string) -> string) -> ((x : string, y : string) -> string)"]],SAtom "total",SAtom "total",SAtom "(x : string, y : string) -> string",SAtom "(x : string, y : string) -> string"],SList [SAtom "var",SList [SAtom "std/core/types/(++)",SAtom "(x : string, y : string) -> string"]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (t : tmp_koka_test/main/tree) -> string) -> ((t : tmp_koka_test/main/tree) -> string)"]],SAtom "total",SAtom "total",SAtom "(t : tmp_koka_test/main/tree) -> string",SAtom "(t : tmp_koka_test/main/tree) -> string"],SList [SAtom "var",SList [SAtom "tmp_koka_test/main/show",SAtom "(t : tmp_koka_test/main/tree) -> string"]]],SList [SAtom "var",SList [SAtom "rchild",SAtom "tmp_koka_test/main/tree"]]],SAtom "\")\""]]]]]]]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "tmp_koka_test/main/Leaf",SAtom "tmp_koka_test/main/tree"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SAtom "\"Leaf\""]]]]]]
+SList [SAtom "type-lam",SList [SAtom "TypeVar {typevarId = 666, typevarKind = KCon V, typevarFlavour = Bound}"],SList [SAtom "lam",SList [SList [SAtom "xs",SAtom "list<666>"],SList [SAtom "acc",SAtom "list<666>"]],SAtom "total",SList [SAtom "case",SList [SList [SAtom "var",SList [SAtom "xs",SAtom "list<666>"]]],SList [SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/Cons",SAtom "(head : 666, tail : list<666>) -> list<666>"],SList [SAtom "pat-var",SList [SAtom "x",SAtom "666"],SAtom "pat-wild"],SList [SAtom "pat-var",SList [SAtom "xx",SAtom "list<666>"],SAtom "pat-wild"],SAtom "666",SAtom "list<666>"]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (xs : list<666>, acc : list<666>) -> list<666>) -> ((xs : list<666>, acc : list<666>) -> list<666>)"]],SAtom "total",SAtom "total",SAtom "(xs : list<666>, acc : list<666>) -> list<666>",SAtom "(xs : list<666>, acc : list<666>) -> list<666>"],SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "tmp_koka_test/main/rev-acc",SAtom "forall<a> (xs : list<a>, acc : list<a>) -> list<a>"]],SAtom "666"]],SList [SAtom "var",SList [SAtom "xx",SAtom "list<666>"]],SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Cons",SAtom "forall<a> (head : a, tail : list<a>) -> list<a>"]],SAtom "666"],SList [SAtom "var",SList [SAtom "x",SAtom "666"]],SList [SAtom "var",SList [SAtom "acc",SAtom "list<666>"]]]]]]],SList [SAtom "branch",SList [SList [SAtom "pat-con",SList [SAtom "std/core/types/Nil",SAtom "list<666>"]]],SList [SList [SAtom "guard",SList [SAtom "con",SList [SAtom "std/core/types/True",SAtom "bool"]],SList [SAtom "var",SList [SAtom "acc",SAtom "list<666>"]]]]]]]]]
+SList [SAtom "lam",SList [],SAtom "console/console",SList [SAtom "let",SList [SList [SAtom "non-rec",SList [SAtom "def",SAtom "l",SAtom "list<int>",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Cons",SAtom "forall<a> (head : a, tail : list<a>) -> list<a>"]],SAtom "int"],SAtom "1",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Cons",SAtom "forall<a> (head : a, tail : list<a>) -> list<a>"]],SAtom "int"],SAtom "2",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Cons",SAtom "forall<a> (head : a, tail : list<a>) -> list<a>"]],SAtom "int"],SAtom "3",SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Nil",SAtom "forall<a> list<a>"]],SAtom "int"]]]]]],SList [SAtom "non-rec",SList [SAtom "def",SAtom "new_l",SAtom "list<int>",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (xs : list<int>, acc : list<int>) -> list<int>) -> ((xs : list<int>, acc : list<int>) -> console/console list<int>)"]],SAtom "total",SAtom "console/console",SAtom "(xs : list<int>, acc : list<int>) -> list<int>",SAtom "(xs : list<int>, acc : list<int>) -> console/console list<int>"],SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "tmp_koka_test/main/rev-acc",SAtom "forall<a> (xs : list<a>, acc : list<a>) -> list<a>"]],SAtom "int"]],SList [SAtom "var",SList [SAtom "l",SAtom "list<int>"]],SList [SAtom "type-app",SList [SAtom "con",SList [SAtom "std/core/types/Nil",SAtom "forall<a> list<a>"]],SAtom "int"]]]]],SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (s : string) -> console/console ()) -> ((s : string) -> console/console ())"]],SAtom "console/console",SAtom "console/console",SAtom "(s : string) -> console/console ()",SAtom "(s : string) -> console/console ()"],SList [SAtom "var",SList [SAtom "std/core/console/#string/print",SAtom "(s : string) -> console/console ()"]]],SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/list/show",SAtom "forall<a,e> (xs : list<a>, ?show : (a) -> e string) -> e string"]],SAtom "int",SAtom "console/console"],SList [SAtom "var",SList [SAtom "new_l",SAtom "list<int>"]],SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : (i : int) -> string) -> ((i : int) -> console/console string)"]],SAtom "total",SAtom "console/console",SAtom "(i : int) -> string",SAtom "(i : int) -> console/console string"],SList [SAtom "var",SList [SAtom "std/core/int/show",SAtom "(i : int) -> string"]]]]]]]
+
+load    : std/core
+load    : std/core/types
+load    : std/core/undiv
+load    : std/core/hnd
+load    : std/core/unsafe
+load    : std/core/order
+load    : std/core/bool
+load    : std/core/char
+load    : std/core/exn
+load    : std/core/int
+load    : std/core/vector
+load    : std/core/string
+load    : std/core/list
+load    : std/core/maybe
+load    : std/core/sslice
+load    : std/core/maybe2
+load    : std/core/tuple
+load    : std/core/lazy
+load    : std/core/show
+load    : std/core/debug
+load    : std/core/delayed
+load    : std/core/console
+load    : std/core/either
+parse   : .../tmp_koka_test/main.kk
+check   : tmp_koka_test/main
+
+/* -----------------
+initial
+--------------- */
+pub fun @expr : () -> console/console ()
+  = fn<console/console>(){
+    std/core/types/@open(tmp_koka_test/main/main)();
+  };
+
+
+/* -----------------
+initial
+ (S-expressions) --------------- */
+SList [SAtom "lam",SList [],SAtom "console/console",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : () -> console/console ()) -> (() -> console/console ())"]],SAtom "console/console",SAtom "console/console",SAtom "() -> console/console ()",SAtom "() -> console/console ()"],SList [SAtom "var",SList [SAtom "tmp_koka_test/main/main",SAtom "() -> console/console ()"]]]]]
+
+
+/* -----------------
+initial
+--------------- */
+pub fun @expr : () -> console/console ()
+  = fn<console/console>(){
+    std/core/types/@open(tmp_koka_test/main/main)();
+  };
+pub fun @main : () -> <st<global>,console/console,div,fsys,ndet,net,ui> ()
+  = fn<io-noexn>(){
+    std/core/types/@open(tmp_koka_test/main/@main/@expr)();
+  };
+
+
+/* -----------------
+initial
+ (S-expressions) --------------- */
+SList [SAtom "lam",SList [],SAtom "console/console",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : () -> console/console ()) -> (() -> console/console ())"]],SAtom "console/console",SAtom "console/console",SAtom "() -> console/console ()",SAtom "() -> console/console ()"],SList [SAtom "var",SList [SAtom "tmp_koka_test/main/main",SAtom "() -> console/console ()"]]]]]
+SList [SAtom "lam",SList [],SAtom "io-noexn",SList [SAtom "app",SList [SAtom "app",SList [SAtom "type-app",SList [SAtom "var",SList [SAtom "std/core/types/@open",SAtom "forall<e,e1,a,b> (x : () -> console/console ()) -> (() -> <console/console,alloc<global>,div,fsys,ndet,net,read<global>,ui,write<global>> ())"]],SAtom "console/console",SAtom "<console/console,alloc<global>,div,fsys,ndet,net,read<global>,ui,write<global>>",SAtom "() -> console/console ()",SAtom "() -> <console/console,alloc<global>,div,fsys,ndet,net,read<global>,ui,write<global>> ()"],SList [SAtom "var",SList [SAtom "tmp_koka_test/main/@main/@expr",SAtom "() -> console/console ()"]]]]]
+
+linking : tmp_koka_test/main/@main
+created : .koka/v3.2.2/gcc-debug-432534/tmp__koka__test_main__main
