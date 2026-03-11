@@ -105,22 +105,18 @@ typeCheck flags defs coreImports program0
 
         -- when (show progName == "std/text/parse") $
         --   trace ("type check " ++ show progName ++ ", gamma: " ++ showHidden gamma) $ return ()
-
-        -- check generated core
         let checkCoreDefs title = when (coreCheck flags) $ Core.Check.checkCore False False penv gamma
-        when (showInitialCore flags) $ do
-          traceDefGroups "initial"
-
         -- remove return statements
         unreturn penv
 
         -- checkCoreDefs "unreturn"
         coreDefs1 <- Core.getCoreDefs
         let borrowed = borrowedExtendICore (coreProgram{ Core.coreProgDefs = coreDefs1 }) (defsBorrowed defs)
-        -- traceDefGroups "before FBIP"
-        -- trace ("\nFBIP check started for module: " ++ show progName ++ "\n") $ return ()
+        when (showInitialCore flags) $ do
+          traceDefGroups "initial"
+        when (showScore flags) $ do
+          traceDefGroupsSExpr "initial"
         checkFBIP penv (platform flags) newtypes borrowed gamma
-        traceDefGroupsSExpr "initial" -- New call for S-expressions
 
 
         -- trace ("\nFBIP check finished for module: " ++ show progName ++ "\n") $ return ()
@@ -173,9 +169,10 @@ typeCheck flags defs coreImports program0
     traceDefGroupsSExpr title
       = do dgs <- Core.getCoreDefs
            trace (unlines (["","/* -----------------", title, " (S-expressions) --------------- */"] ++
-              map showDefAsSExpr (Core.flattenDefGroups dgs))) $ return ()
+              map showDefAsSExpr (Core.flattenDefGroups dgs) ++
+              ["/* end of " ++ title ++ " (S-expressions) --------------- */"])) $ return ()
       where
-        showDefAsSExpr def = show (SP.prettySExpr (Core.defExpr def))
+        showDefAsSExpr def = show (SP.prettyDefToSExpr def)
 
 
 

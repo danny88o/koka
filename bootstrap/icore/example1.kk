@@ -1,27 +1,32 @@
-[6nload    : std/core
-load    : std/core/types
-load    : std/core/unsafe
-load    : std/core/int
-load    : std/core/hnd
-load    : std/core/exn
-load    : std/core/order
-load    : std/core/bool
-load    : std/core/undiv
-load    : std/core/char
-load    : std/core/vector
-load    : std/core/list
-load    : std/core/string
-load    : std/core/sslice
-load    : std/core/either
-load    : std/core/maybe2
-load    : std/core/maybe
-load    : std/core/lazy
-load    : std/core/show
-load    : std/core/tuple
-load    : std/core/console
-load    : std/core/delayed
-load    : std/core/debug
-parse   : .../bootstrap/example/example1.kk
-check   : bootstrap/example/example1
-linking : bootstrap/example/example1/@main
-created : .koka/v3.2.2/gcc-debug-6ac8a7/bootstrap_example_example1__main
+
+/* -----------------
+initial
+--------------- */
+pub fun main : () -> ()
+  = fn(){
+    std/core/types/Unit;
+  };
+
+
+/* -----------------
+initial
+--------------- */
+pub fun @expr : () -> ()
+  = fn(){
+    std/core/types/@open(bootstrap/example/example1/main)();
+  };
+
+
+/* -----------------
+initial
+--------------- */
+pub fun @expr : () -> ()
+  = fn(){
+    std/core/types/@open(bootstrap/example/example1/main)();
+  };
+pub fun @main : () -> <st<global>,console/console,div,fsys,ndet,net,ui> ()
+  = fn<io-noexn>(){
+    std/core/types/@open(bootstrap/example/example1/@main/@expr)();
+  };
+
+[6n

@@ -1,4 +1,4 @@
-module Core.SPretty (prettySExpr) where
+module Core.SPretty (prettySExpr, prettyDefToSExpr) where
 
 import Core.Core
 import Common.Name
@@ -15,18 +15,13 @@ isList :: SExpr -> Bool
 isList (SList _) = True
 isList _         = False
 
-prettySExpr' :: Int -> SExpr -> String
-prettySExpr' indent s = case s of
-  SAtom str -> str
-  SList [] -> "()"
-  SList (x:xs) ->
-    let multiline = any isList (x:xs) || length xs > 3
-    in if multiline
-       then "(" ++ prettySExpr' indent x ++ concatMap (\el -> "\n" ++ replicate ((indent+1)*2) ' ' ++ prettySExpr' (indent+1) el) xs ++ ")"
-       else "(" ++ unwords (map (prettySExpr' indent) (x:xs)) ++ ")"
+prettySExprToDoc :: SExpr -> Doc
+prettySExprToDoc (SAtom s) = text s
+prettySExprToDoc (SList []) = text "()"
+prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExprToDoc (x:xs))
 
 instance Show SExpr where
-  show sexpr = prettySExpr' 0 sexpr
+  show sexpr = displayS (renderPretty 0.4 80 (prettySExprToDoc sexpr)) ""
 
 
 prettySExpr :: Expr -> SExpr

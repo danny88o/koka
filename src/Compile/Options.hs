@@ -146,6 +146,7 @@ data Flags
          , showCore         :: !Bool
          , showInitialCore  :: !Bool
          , showFinalCore    :: !Bool
+         , showScore        :: !Bool
          , showCoreTypes    :: !Bool
          , showTypeIds      :: !Bool
          , showAsmCS        :: !Bool
@@ -297,7 +298,7 @@ flagsNull
           True
           -- show
           False False  -- kinds kindsigs
-          False False False False -- synonyms core icore fcore
+          False False False False False -- synonyms core icore fcore score
           False False -- core-types type-ids
           False -- show asm
           False
@@ -488,6 +489,7 @@ options = (\(xss,yss) -> (concat xss, concat yss)) $ unzip
  , flag   []    ["showcore"]       (\b f -> f{showCore=b})          "show core"
  , flag   []    ["showicore"]      (\b f -> f{showInitialCore=b})   "show initial core (right after type checking)"
  , flag   []    ["showfcore"]      (\b f -> f{showFinalCore=b})     "show final core (with backend optimizations)"
+ , flag   []    ["showscore"]      (\b f -> f{showScore=b})         "show initial core as S-expressions"
  , flag   []    ["showcoretypes"]  (\b f -> f{showCoreTypes=b})     "show full types in core"
  , flag   []    ["showtypeids"]    (\b f -> f{showTypeIds=b})       "show numeric type variable ids"
  , flag   []    ["showcs"]         (\b f -> f{showAsmCS=b})         "show generated c#"
