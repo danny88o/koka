@@ -2,20 +2,17 @@ type tree
   Node(lchild : tree, key : int, value : bool, rchild : tree)
   Leaf
 
-type mytree
-  MyNode(lchild : tree, key : int, value : bool, rchild : tree)
-  MyLeaf
 
-fip fun replace(t: tree, key: int, value: bool) : mytree {
+fip fun replace(t: tree, key: int, value: bool) : tree {
   match t {
     Node(lchild, k, _, rchild) ->
       if k == key then
-        MyNode(lchild, k, value, rchild)
+        Node(lchild, k, value, rchild)
       else if k < key then
-        MyNode(lchild, k, value, rchild)
+        Node(lchild, k, value, rchild)
       else
-        MyNode(lchild, key, value, rchild)
-    Leaf -> MyLeaf
+        Node(lchild, key, value, rchild)
+    Leaf -> Leaf
   }
 }
 

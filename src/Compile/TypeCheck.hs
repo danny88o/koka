@@ -115,7 +115,8 @@ typeCheck flags defs coreImports program0
         when (showInitialCore flags) $ do
           traceDefGroups "initial"
         when (showScore flags) $ do
-          traceDefGroupsSExpr "initial"
+          traceDefGroupsSExpr "initial" (Core.coreProgTypeDefs coreProgram)
+
         checkFBIP penv (platform flags) newtypes borrowed gamma
 
 
@@ -165,14 +166,12 @@ typeCheck flags defs coreImports program0
         showDef def = show (Core.Pretty.prettyDef (penv{coreShowDef=True}) def)
         penv = prettyEnvFromFlags flags
 
-    traceDefGroupsSExpr :: String -> Core.CorePhase () ()
-    traceDefGroupsSExpr title
+    traceDefGroupsSExpr :: String -> Core.TypeDefGroups -> Core.CorePhase () ()
+    traceDefGroupsSExpr title tdgs
       = do dgs <- Core.getCoreDefs
            trace (unlines (["","/* -----------------", title, " (S-expressions) --------------- */"] ++
-              map showDefAsSExpr (Core.flattenDefGroups dgs) ++
+              [show (SP.prettyCoreToSExpr tdgs dgs)] ++
               ["/* end of " ++ title ++ " (S-expressions) --------------- */"])) $ return ()
-      where
-        showDefAsSExpr def = show (SP.prettyDefToSExpr def)
 
 
 

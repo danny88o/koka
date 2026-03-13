@@ -2,559 +2,346 @@
 /* -----------------
 initial
  (S-expressions) --------------- */
-(def
-  bootstrap/example/example1/main
-  (fun
-    ()
-    (tcon (std/core/types/total E))
-    (tcon (std/core/types/unit V)))
-  (lam
-    ()
-    (tcon (std/core/types/total E))
-    (con
-      (std/core/types/Unit
-        (tcon
-          (std/core/types/unit V))))))
+(core
+  ()
+  ((non-rec
+      (def
+        bootstrap/example/example1/main
+        (fun
+          ()
+          (tcon std/core/types/total)
+          (tcon std/core/types/unit))
+        (lam
+          ()
+          (tcon std/core/types/total)
+          (con
+            std/core/types/Unit
+            (enum
+              enum
+              (value-repr 0 0 0)
+              1)))
+        (def-fun () (no-fip False))))))
 /* end of initial (S-expressions) --------------- */
 
 
 /* -----------------
 initial
  (S-expressions) --------------- */
-(def
-  bootstrap/example/example1/@main/@expr
-  (fun
-    ()
-    (tcon (std/core/types/total E))
-    (tcon (std/core/types/unit V)))
-  (lam
-    ()
-    (tcon (std/core/types/total E))
-    (app
-      (app
-        (type-app
-          (var
-            (std/core/types/@open
-              (forall
-                (TypeVar {typevarId = -3, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -4, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -1, typevarKind = KCon V, typevarFlavour = Bound}
-                  TypeVar {typevarId = -2, typevarKind = KCon V, typevarFlavour = Bound})
+(core
+  ()
+  ((non-rec
+      (def
+        bootstrap/example/example1/@main/@expr
+        (fun
+          ()
+          (tcon std/core/types/total)
+          (tcon std/core/types/unit))
+        (lam
+          ()
+          (tcon std/core/types/total)
+          (app
+            (app
+              (type-app
+                (var std/core/types/@open)
+                (tcon std/core/types/total)
+                (tcon std/core/types/total)
                 (fun
-                  ((x
-                      (fun
-                        ()
-                        (tcon (std/core/types/total E))
-                        (tcon
-                          (std/core/types/unit V)))))
-                  (tcon (std/core/types/total E))
-                  (fun
-                    ()
-                    (tcon (std/core/types/total E))
-                    (tcon
-                      (std/core/types/unit V)))))))
-          (tcon (std/core/types/total E))
-          (tcon (std/core/types/total E))
-          (fun
-            ()
-            (tcon (std/core/types/total E))
-            (tcon (std/core/types/unit V)))
-          (fun
-            ()
-            (tcon (std/core/types/total E))
-            (tcon (std/core/types/unit V))))
-        (var
-          (bootstrap/example/example1/main
-            (fun
-              ()
-              (tcon (std/core/types/total E))
-              (tcon
-                (std/core/types/unit V)))))))))
+                  ()
+                  (tcon std/core/types/total)
+                  (tcon std/core/types/unit))
+                (fun
+                  ()
+                  (tcon std/core/types/total)
+                  (tcon std/core/types/unit)))
+              (var
+                bootstrap/example/example1/main))))
+        (def-fun () (no-fip False))))))
 /* end of initial (S-expressions) --------------- */
 
 
 /* -----------------
 initial
  (S-expressions) --------------- */
-(def
-  bootstrap/example/example1/@main/@expr
-  (fun
-    ()
-    (tcon (std/core/types/total E))
-    (tcon (std/core/types/unit V)))
-  (lam
-    ()
-    (tcon (std/core/types/total E))
-    (app
-      (app
-        (type-app
-          (var
-            (std/core/types/@open
-              (forall
-                (TypeVar {typevarId = -3, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -4, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -1, typevarKind = KCon V, typevarFlavour = Bound}
-                  TypeVar {typevarId = -2, typevarKind = KCon V, typevarFlavour = Bound})
+(core
+  ()
+  ((non-rec
+      (def
+        bootstrap/example/example1/@main/@expr
+        (fun
+          ()
+          (tcon std/core/types/total)
+          (tcon std/core/types/unit))
+        (lam
+          ()
+          (tcon std/core/types/total)
+          (app
+            (app
+              (type-app
+                (var std/core/types/@open)
+                (tcon std/core/types/total)
+                (tcon std/core/types/total)
                 (fun
-                  ((x
-                      (fun
-                        ()
-                        (tcon (std/core/types/total E))
-                        (tcon
-                          (std/core/types/unit V)))))
-                  (tcon (std/core/types/total E))
-                  (fun
-                    ()
-                    (tcon (std/core/types/total E))
-                    (tcon
-                      (std/core/types/unit V)))))))
-          (tcon (std/core/types/total E))
-          (tcon (std/core/types/total E))
-          (fun
-            ()
-            (tcon (std/core/types/total E))
-            (tcon (std/core/types/unit V)))
-          (fun
-            ()
-            (tcon (std/core/types/total E))
-            (tcon (std/core/types/unit V))))
-        (var
-          (bootstrap/example/example1/main
-            (fun
-              ()
-              (tcon (std/core/types/total E))
-              (tcon
-                (std/core/types/unit V)))))))))
-(def
-  bootstrap/example/example1/@main/@main
-  (fun
-    ()
-    (tapp
-      (tcon
-        (std/core/types/effect-extend
-          (X, E) -> E))
-      (tsyn
-        (std/core/types/st H -> E 1)
-        (tcon (std/core/types/global H))
-        (tapp
-          (tcon
-            (std/core/types/effect-extend
-              (X, E) -> E))
-          (tapp
-            (tcon
-              (std/core/types/alloc H -> X))
-            (tcon
-              (std/core/types/global H)))
-          (tapp
-            (tcon
-              (std/core/types/effect-extend
-                (X, E) -> E))
-            (tapp
-              (tcon
-                (std/core/types/read H -> X))
-              (tcon
-                (std/core/types/global H)))
-            (tapp
-              (tcon
-                (std/core/types/effect-extend
-                  (X, E) -> E))
-              (tapp
-                (tcon
-                  (std/core/types/write H -> X))
-                (tcon
-                  (std/core/types/global H)))
-              (tcon
-                (std/core/types/total E))))))
-      (tapp
-        (tcon
-          (std/core/types/effect-extend
-            (X, E) -> E))
-        (tcon
-          (std/core/console/console X))
-        (tapp
-          (tcon
-            (std/core/types/effect-extend
-              (X, E) -> E))
-          (tcon (std/core/types/div X))
-          (tapp
-            (tcon
-              (std/core/types/effect-extend
-                (X, E) -> E))
-            (tcon (std/core/fsys X))
-            (tapp
-              (tcon
-                (std/core/types/effect-extend
-                  (X, E) -> E))
-              (tcon (std/core/types/ndet X))
-              (tapp
-                (tcon
-                  (std/core/types/effect-extend
-                    (X, E) -> E))
-                (tcon (std/core/net X))
-                (tapp
-                  (tcon
-                    (std/core/types/effect-extend
-                      (X, E) -> E))
-                  (tcon (std/core/ui X))
-                  (tcon
-                    (std/core/types/total E)))))))))
-    (tcon (std/core/types/unit V)))
-  (lam
-    ()
-    (tsyn
-      (std/core/io-noexn E 3)
-      (tapp
-        (tcon
-          (std/core/types/effect-extend
-            (X, E) -> E))
-        (tcon (std/core/types/div X))
-        (tapp
-          (tcon
-            (std/core/types/effect-extend
-              (X, E) -> E))
-          (tsyn
-            (std/core/io-total E 2)
-            (tapp
-              (tcon
-                (std/core/types/effect-extend
-                  (X, E) -> E))
-              (tcon (std/core/types/ndet X))
-              (tapp
-                (tcon
-                  (std/core/types/effect-extend
-                    (X, E) -> E))
-                (tcon
-                  (std/core/console/console X))
-                (tapp
-                  (tcon
-                    (std/core/types/effect-extend
-                      (X, E) -> E))
-                  (tcon (std/core/net X))
-                  (tapp
-                    (tcon
-                      (std/core/types/effect-extend
-                        (X, E) -> E))
-                    (tcon (std/core/fsys X))
-                    (tapp
-                      (tcon
-                        (std/core/types/effect-extend
-                          (X, E) -> E))
-                      (tcon (std/core/ui X))
-                      (tapp
-                        (tcon
-                          (std/core/types/effect-extend
-                            (X, E) -> E))
-                        (tsyn
-                          (std/core/types/st H -> E 1)
-                          (tcon (std/core/types/global H))
-                          (tapp
-                            (tcon
-                              (std/core/types/effect-extend
-                                (X, E) -> E))
-                            (tapp
-                              (tcon
-                                (std/core/types/read H -> X))
-                              (tcon
-                                (std/core/types/global H)))
-                            (tapp
-                              (tcon
-                                (std/core/types/effect-extend
-                                  (X, E) -> E))
-                              (tapp
-                                (tcon
-                                  (std/core/types/write H -> X))
-                                (tcon
-                                  (std/core/types/global H)))
-                              (tapp
-                                (tcon
-                                  (std/core/types/effect-extend
-                                    (X, E) -> E))
-                                (tapp
-                                  (tcon
-                                    (std/core/types/alloc H -> X))
-                                  (tcon
-                                    (std/core/types/global H)))
-                                (tcon
-                                  (std/core/types/total E))))))
-                        (tcon
-                          (std/core/types/total E)))))))))
-          (tcon
-            (std/core/types/total E)))))
-    (app
-      (app
-        (type-app
-          (var
-            (std/core/types/@open
-              (forall
-                (TypeVar {typevarId = -3, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -4, typevarKind = KCon E, typevarFlavour = Bound}
-                  TypeVar {typevarId = -1, typevarKind = KCon V, typevarFlavour = Bound}
-                  TypeVar {typevarId = -2, typevarKind = KCon V, typevarFlavour = Bound})
+                  ()
+                  (tcon std/core/types/total)
+                  (tcon std/core/types/unit))
                 (fun
-                  ((x
-                      (fun
-                        ()
-                        (tcon (std/core/types/total E))
-                        (tcon
-                          (std/core/types/unit V)))))
-                  (tcon (std/core/types/total E))
-                  (fun
-                    ()
-                    (tsyn
-                      (std/core/io-noexn E 3)
-                      (tapp
-                        (tcon
-                          (std/core/types/effect-extend
-                            (X, E) -> E))
-                        (tcon (std/core/types/div X))
-                        (tapp
-                          (tcon
-                            (std/core/types/effect-extend
-                              (X, E) -> E))
-                          (tsyn
-                            (std/core/io-total E 2)
-                            (tapp
-                              (tcon
-                                (std/core/types/effect-extend
-                                  (X, E) -> E))
-                              (tcon (std/core/types/ndet X))
-                              (tapp
-                                (tcon
-                                  (std/core/types/effect-extend
-                                    (X, E) -> E))
-                                (tcon
-                                  (std/core/console/console X))
-                                (tapp
-                                  (tcon
-                                    (std/core/types/effect-extend
-                                      (X, E) -> E))
-                                  (tcon (std/core/net X))
-                                  (tapp
-                                    (tcon
-                                      (std/core/types/effect-extend
-                                        (X, E) -> E))
-                                    (tcon (std/core/fsys X))
-                                    (tapp
-                                      (tcon
-                                        (std/core/types/effect-extend
-                                          (X, E) -> E))
-                                      (tcon (std/core/ui X))
-                                      (tapp
-                                        (tcon
-                                          (std/core/types/effect-extend
-                                            (X, E) -> E))
-                                        (tsyn
-                                          (std/core/types/st H -> E 1)
-                                          (tcon (std/core/types/global H))
-                                          (tapp
-                                            (tcon
-                                              (std/core/types/effect-extend
-                                                (X, E) -> E))
-                                            (tapp
-                                              (tcon
-                                                (std/core/types/read H -> X))
-                                              (tcon
-                                                (std/core/types/global H)))
-                                            (tapp
-                                              (tcon
-                                                (std/core/types/effect-extend
-                                                  (X, E) -> E))
-                                              (tapp
-                                                (tcon
-                                                  (std/core/types/write H -> X))
-                                                (tcon
-                                                  (std/core/types/global H)))
-                                              (tapp
-                                                (tcon
-                                                  (std/core/types/effect-extend
-                                                    (X, E) -> E))
-                                                (tapp
-                                                  (tcon
-                                                    (std/core/types/alloc
-                                                      H -> X))
-                                                  (tcon
-                                                    (std/core/types/global H)))
-                                                (tcon
-                                                  (std/core/types/total E))))))
-                                        (tcon
-                                          (std/core/types/total E)))))))))
-                          (tcon
-                            (std/core/types/total E)))))
-                    (tcon
-                      (std/core/types/unit V)))))))
-          (tcon (std/core/types/total E))
-          (tsyn
-            (std/core/io-noexn E 3)
-            (tapp
-              (tcon
-                (std/core/types/effect-extend
-                  (X, E) -> E))
-              (tcon (std/core/types/div X))
-              (tapp
-                (tcon
-                  (std/core/types/effect-extend
-                    (X, E) -> E))
-                (tsyn
-                  (std/core/io-total E 2)
-                  (tapp
-                    (tcon
-                      (std/core/types/effect-extend
-                        (X, E) -> E))
-                    (tcon (std/core/types/ndet X))
-                    (tapp
-                      (tcon
-                        (std/core/types/effect-extend
-                          (X, E) -> E))
-                      (tcon
-                        (std/core/console/console X))
-                      (tapp
-                        (tcon
-                          (std/core/types/effect-extend
-                            (X, E) -> E))
-                        (tcon (std/core/net X))
-                        (tapp
-                          (tcon
-                            (std/core/types/effect-extend
-                              (X, E) -> E))
-                          (tcon (std/core/fsys X))
-                          (tapp
-                            (tcon
-                              (std/core/types/effect-extend
-                                (X, E) -> E))
-                            (tcon (std/core/ui X))
-                            (tapp
-                              (tcon
-                                (std/core/types/effect-extend
-                                  (X, E) -> E))
-                              (tsyn
-                                (std/core/types/st H -> E 1)
-                                (tcon (std/core/types/global H))
-                                (tapp
-                                  (tcon
-                                    (std/core/types/effect-extend
-                                      (X, E) -> E))
-                                  (tapp
-                                    (tcon
-                                      (std/core/types/read H -> X))
-                                    (tcon
-                                      (std/core/types/global H)))
-                                  (tapp
-                                    (tcon
-                                      (std/core/types/effect-extend
-                                        (X, E) -> E))
-                                    (tapp
-                                      (tcon
-                                        (std/core/types/write H -> X))
-                                      (tcon
-                                        (std/core/types/global H)))
-                                    (tapp
-                                      (tcon
-                                        (std/core/types/effect-extend
-                                          (X, E) -> E))
-                                      (tapp
-                                        (tcon
-                                          (std/core/types/alloc H -> X))
-                                        (tcon
-                                          (std/core/types/global H)))
-                                      (tcon
-                                        (std/core/types/total E))))))
-                              (tcon
-                                (std/core/types/total E)))))))))
-                (tcon
-                  (std/core/types/total E)))))
-          (fun
-            ()
-            (tcon (std/core/types/total E))
-            (tcon (std/core/types/unit V)))
-          (fun
-            ()
+                  ()
+                  (tcon std/core/types/total)
+                  (tcon std/core/types/unit)))
+              (var
+                bootstrap/example/example1/main))))
+        (def-fun () (no-fip False))))
+    (non-rec
+      (def
+        bootstrap/example/example1/@main/@main
+        (fun
+          ()
+          (tapp
+            (tcon
+              std/core/types/effect-extend)
             (tsyn
-              (std/core/io-noexn E 3)
+              std/core/types/st
+              (tcon std/core/types/global)
               (tapp
                 (tcon
-                  (std/core/types/effect-extend
-                    (X, E) -> E))
-                (tcon (std/core/types/div X))
+                  std/core/types/effect-extend)
+                (tapp
+                  (tcon std/core/types/alloc)
+                  (tcon std/core/types/global))
                 (tapp
                   (tcon
-                    (std/core/types/effect-extend
-                      (X, E) -> E))
-                  (tsyn
-                    (std/core/io-total E 2)
+                    std/core/types/effect-extend)
+                  (tapp
+                    (tcon std/core/types/read)
+                    (tcon std/core/types/global))
+                  (tapp
+                    (tcon
+                      std/core/types/effect-extend)
+                    (tapp
+                      (tcon std/core/types/write)
+                      (tcon std/core/types/global))
+                    (tcon std/core/types/total)))))
+            (tapp
+              (tcon
+                std/core/types/effect-extend)
+              (tcon std/core/console/console)
+              (tapp
+                (tcon
+                  std/core/types/effect-extend)
+                (tcon std/core/types/div)
+                (tapp
+                  (tcon
+                    std/core/types/effect-extend)
+                  (tcon std/core/fsys)
+                  (tapp
+                    (tcon
+                      std/core/types/effect-extend)
+                    (tcon std/core/types/ndet)
                     (tapp
                       (tcon
-                        (std/core/types/effect-extend
-                          (X, E) -> E))
-                      (tcon (std/core/types/ndet X))
+                        std/core/types/effect-extend)
+                      (tcon std/core/net)
                       (tapp
                         (tcon
-                          (std/core/types/effect-extend
-                            (X, E) -> E))
+                          std/core/types/effect-extend)
+                        (tcon std/core/ui)
                         (tcon
-                          (std/core/console/console X))
+                          std/core/types/total))))))))
+          (tcon std/core/types/unit))
+        (lam
+          ()
+          (tsyn
+            std/core/io-noexn
+            (tapp
+              (tcon
+                std/core/types/effect-extend)
+              (tcon std/core/types/div)
+              (tapp
+                (tcon
+                  std/core/types/effect-extend)
+                (tsyn
+                  std/core/io-total
+                  (tapp
+                    (tcon
+                      std/core/types/effect-extend)
+                    (tcon std/core/types/ndet)
+                    (tapp
+                      (tcon
+                        std/core/types/effect-extend)
+                      (tcon std/core/console/console)
+                      (tapp
+                        (tcon
+                          std/core/types/effect-extend)
+                        (tcon std/core/net)
                         (tapp
                           (tcon
-                            (std/core/types/effect-extend
-                              (X, E) -> E))
-                          (tcon (std/core/net X))
+                            std/core/types/effect-extend)
+                          (tcon std/core/fsys)
                           (tapp
                             (tcon
-                              (std/core/types/effect-extend
-                                (X, E) -> E))
-                            (tcon (std/core/fsys X))
+                              std/core/types/effect-extend)
+                            (tcon std/core/ui)
                             (tapp
                               (tcon
-                                (std/core/types/effect-extend
-                                  (X, E) -> E))
-                              (tcon (std/core/ui X))
-                              (tapp
-                                (tcon
-                                  (std/core/types/effect-extend
-                                    (X, E) -> E))
-                                (tsyn
-                                  (std/core/types/st H -> E 1)
-                                  (tcon (std/core/types/global H))
+                                std/core/types/effect-extend)
+                              (tsyn
+                                std/core/types/st
+                                (tcon std/core/types/global)
+                                (tapp
+                                  (tcon
+                                    std/core/types/effect-extend)
+                                  (tapp
+                                    (tcon std/core/types/read)
+                                    (tcon std/core/types/global))
                                   (tapp
                                     (tcon
-                                      (std/core/types/effect-extend
-                                        (X, E) -> E))
+                                      std/core/types/effect-extend)
+                                    (tapp
+                                      (tcon std/core/types/write)
+                                      (tcon std/core/types/global))
                                     (tapp
                                       (tcon
-                                        (std/core/types/read H -> X))
-                                      (tcon
-                                        (std/core/types/global H)))
-                                    (tapp
-                                      (tcon
-                                        (std/core/types/effect-extend
-                                          (X, E) -> E))
+                                        std/core/types/effect-extend)
+                                      (tapp
+                                        (tcon std/core/types/alloc)
+                                        (tcon std/core/types/global))
+                                      (tcon std/core/types/total)))))
+                              (tcon
+                                std/core/types/total))))))))
+                (tcon std/core/types/total))))
+          (app
+            (app
+              (type-app
+                (var std/core/types/@open)
+                (tcon std/core/types/total)
+                (tsyn
+                  std/core/io-noexn
+                  (tapp
+                    (tcon
+                      std/core/types/effect-extend)
+                    (tcon std/core/types/div)
+                    (tapp
+                      (tcon
+                        std/core/types/effect-extend)
+                      (tsyn
+                        std/core/io-total
+                        (tapp
+                          (tcon
+                            std/core/types/effect-extend)
+                          (tcon std/core/types/ndet)
+                          (tapp
+                            (tcon
+                              std/core/types/effect-extend)
+                            (tcon std/core/console/console)
+                            (tapp
+                              (tcon
+                                std/core/types/effect-extend)
+                              (tcon std/core/net)
+                              (tapp
+                                (tcon
+                                  std/core/types/effect-extend)
+                                (tcon std/core/fsys)
+                                (tapp
+                                  (tcon
+                                    std/core/types/effect-extend)
+                                  (tcon std/core/ui)
+                                  (tapp
+                                    (tcon
+                                      std/core/types/effect-extend)
+                                    (tsyn
+                                      std/core/types/st
+                                      (tcon std/core/types/global)
                                       (tapp
                                         (tcon
-                                          (std/core/types/write H -> X))
-                                        (tcon
-                                          (std/core/types/global H)))
-                                      (tapp
-                                        (tcon
-                                          (std/core/types/effect-extend
-                                            (X, E) -> E))
+                                          std/core/types/effect-extend)
+                                        (tapp
+                                          (tcon std/core/types/read)
+                                          (tcon std/core/types/global))
                                         (tapp
                                           (tcon
-                                            (std/core/types/alloc H -> X))
-                                          (tcon
-                                            (std/core/types/global H)))
-                                        (tcon
-                                          (std/core/types/total E))))))
+                                            std/core/types/effect-extend)
+                                          (tapp
+                                            (tcon std/core/types/write)
+                                            (tcon std/core/types/global))
+                                          (tapp
+                                            (tcon
+                                              std/core/types/effect-extend)
+                                            (tapp
+                                              (tcon std/core/types/alloc)
+                                              (tcon std/core/types/global))
+                                            (tcon std/core/types/total)))))
+                                    (tcon
+                                      std/core/types/total))))))))
+                      (tcon std/core/types/total))))
+                (fun
+                  ()
+                  (tcon std/core/types/total)
+                  (tcon std/core/types/unit))
+                (fun
+                  ()
+                  (tsyn
+                    std/core/io-noexn
+                    (tapp
+                      (tcon
+                        std/core/types/effect-extend)
+                      (tcon std/core/types/div)
+                      (tapp
+                        (tcon
+                          std/core/types/effect-extend)
+                        (tsyn
+                          std/core/io-total
+                          (tapp
+                            (tcon
+                              std/core/types/effect-extend)
+                            (tcon std/core/types/ndet)
+                            (tapp
+                              (tcon
+                                std/core/types/effect-extend)
+                              (tcon std/core/console/console)
+                              (tapp
                                 (tcon
-                                  (std/core/types/total E)))))))))
-                  (tcon
-                    (std/core/types/total E)))))
-            (tcon (std/core/types/unit V))))
-        (var
-          (bootstrap/example/example1/@main/@expr
-            (fun
-              ()
-              (tcon (std/core/types/total E))
-              (tcon
-                (std/core/types/unit V)))))))))
+                                  std/core/types/effect-extend)
+                                (tcon std/core/net)
+                                (tapp
+                                  (tcon
+                                    std/core/types/effect-extend)
+                                  (tcon std/core/fsys)
+                                  (tapp
+                                    (tcon
+                                      std/core/types/effect-extend)
+                                    (tcon std/core/ui)
+                                    (tapp
+                                      (tcon
+                                        std/core/types/effect-extend)
+                                      (tsyn
+                                        std/core/types/st
+                                        (tcon std/core/types/global)
+                                        (tapp
+                                          (tcon
+                                            std/core/types/effect-extend)
+                                          (tapp
+                                            (tcon std/core/types/read)
+                                            (tcon std/core/types/global))
+                                          (tapp
+                                            (tcon
+                                              std/core/types/effect-extend)
+                                            (tapp
+                                              (tcon std/core/types/write)
+                                              (tcon std/core/types/global))
+                                            (tapp
+                                              (tcon
+                                                std/core/types/effect-extend)
+                                              (tapp
+                                                (tcon std/core/types/alloc)
+                                                (tcon std/core/types/global))
+                                              (tcon std/core/types/total)))))
+                                      (tcon
+                                        std/core/types/total))))))))
+                        (tcon std/core/types/total))))
+                  (tcon std/core/types/unit)))
+              (var
+                bootstrap/example/example1/@main/@expr))))
+        (def-fun () (no-fip False))))))
 /* end of initial (S-expressions) --------------- */
 
 [6n
