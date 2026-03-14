@@ -1,15 +1,20 @@
 module bootstrap/test-parser
 
+import std/os/env
+import std/os/file
+import std/os/path
+
 import std/os/path
 import std/os/file
+import bootstrap/lexer
 import bootstrap/parser
+import bootstrap/spretty
 import bootstrap/core
 
-pub fun main() {
-  val content = read-text-file("bootstrap/sexpr/example2.kk".path)
-  val cores = parse-core-file(content)
-  println("Successfully parsed " ++ cores.length.string ++ " core blocks.")
-  cores.map(fn(c) {
-    println("Core block has " ++ c.defs.length.string ++ " def groups.")
-  })
-}
+pub fun main()
+  val file = match get-args()
+    Cons(f, Nil) -> f
+    _ -> throw("Enter one file not found in args")
+  val content = read-text-file(file.realpath).extract-actual-string
+  val pprinted = content.parse-core.sexpr.show
+  content == pprinted || throw("Pprinted content does not match original content:\n" ++ pprinted ++ "\n\noriginal:\n" ++ content)

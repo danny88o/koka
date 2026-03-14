@@ -1,30 +1,9 @@
 module bootstrap/parser
 
-import std/text/parse
-import std/num/float64
-
 import bootstrap/core
+import bootstrap/lexer
 
-// Basic S-expression structure
-pub type sexpr
-  Atom(s: string)
-  List(l: list<sexpr>)
-
-fun p-atom(): <parse> sexpr
-  whitespace0()
-  val s = none-of-many1("() \t\n\r")
-  Atom(s)
-
-fun p-sexpr(): <div,parse> sexpr
-  whitespace0()
-  choose([p-list, p-atom])
-
-fun p-list(): <div,parse> sexpr
-  char('(')
-  val l = many(p-sexpr)
-  whitespace0()
-  char(')')
-  List(l)
+import std/num/float64
 
 // Conversion helpers
 fun expect-list(s: sexpr): <exn> list<sexpr>
@@ -228,33 +207,6 @@ pub fun sexpr-to-pattern(s: sexpr): <div,exn> pattern
     Atom("pat-wild") -> PatWild
     _ -> throw("Invalid pattern sexpr: " ++ s.sexpr/show)
 
-// Helper to parse a whole file containing multiple S-expressions between markers
-pub fun parse-core-file(input: string): <div,exn> list<core>
-  var res := []
-  val start-marker = "/* ----------------- initial (S-expressions) --------------- */"
-  val end-marker = "/* end of initial (S-expressions) --------------- */"
-
-  var cur := input
-  while { cur.find(start-marker).is-just }
-    match cur.find(start-marker)
-      Just(start) ->
-        val after-start = start.advance(start-marker.count)
-        match after-start.string.find(end-marker)
-          Just(end) ->
-            val content = after-start.take(after-start.count - end.count).string
-            match content.slice.parse(many(p-sexpr))
-              ParseOk(sexprs, _) ->
-                res := res ++ sexprs.map(sexpr-to-core)
-              ParseError(msg, rest) ->
-                throw("Parse error in Core file: " ++ msg ++ " at: " ++ rest.string.take(20))
-            cur := end.advance(end-marker.count)
-          Nothing ->
-            cur := after-start
-      Nothing -> ()
-
-  res
-
-pub fun sexpr/show(s: sexpr): div string
-  match s
-    Atom(a) -> a
-    List(l) -> "(" ++ l.map(sexpr/show).join(" ") ++ ")"
+pub fun parse-core(input: string): pure core
+  val sprogram = parse-sexpr(input)
+  sexpr-to-core(sprogram)
