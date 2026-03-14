@@ -169,9 +169,9 @@ typeCheck flags defs coreImports program0
     traceDefGroupsSExpr :: String -> Core.TypeDefGroups -> Core.CorePhase () ()
     traceDefGroupsSExpr title tdgs
       = do dgs <- Core.getCoreDefs
-           trace (unlines (["","/* -----------------", title, " (S-expressions) --------------- */"] ++
+           trace (unlines (["/*", title, "(S-expressions)\n*/"] ++
               [show (SP.prettyCoreToSExpr tdgs dgs)] ++
-              ["/* end of " ++ title ++ " (S-expressions) --------------- */"])) $ return ()
+              ["/*end of\n(S-expressions)\n*/"])) $ return ()
 
 
 

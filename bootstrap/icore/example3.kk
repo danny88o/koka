@@ -22,43 +22,23 @@ pub fip fun is-leaf : (^ tree : bootstrap/example/example3/tree) -> bool
          -> std/core/types/False;
     };
   };
-// Automatically generated. Tests for the `MyNode` constructor of the `:mytree` type.
-pub fip fun is-myNode : (^ mytree : bootstrap/example/example3/mytree) -> bool
-  = fn(mytree: bootstrap/example/example3/mytree){
-    match (mytree) {
-      (bootstrap/example/example3/MyNode(_, _, _, _) : bootstrap/example/example3/mytree )
-         -> std/core/types/True;
-      (@skip bootstrap/example/example3/MyLeaf() : bootstrap/example/example3/mytree )
-         -> std/core/types/False;
-    };
-  };
-// Automatically generated. Tests for the `MyLeaf` constructor of the `:mytree` type.
-pub fip fun is-myLeaf : (^ mytree : bootstrap/example/example3/mytree) -> bool
-  = fn(mytree: bootstrap/example/example3/mytree){
-    match (mytree) {
-      (bootstrap/example/example3/MyLeaf() : bootstrap/example/example3/mytree )
-         -> std/core/types/True;
-      (@skip bootstrap/example/example3/MyNode(_, _, _, _) : bootstrap/example/example3/mytree )
-         -> std/core/types/False;
-    };
-  };
-pub fip fun replace : (t : bootstrap/example/example3/tree, key : int, value : bool) -> bootstrap/example/example3/mytree
+pub fip fun replace : (t : bootstrap/example/example3/tree, key : int, value : bool) -> bootstrap/example/example3/tree
   = fn(t: bootstrap/example/example3/tree, key: int, value: bool){
     match (t) {
       (bootstrap/example/example3/Node((lchild: bootstrap/example/example3/tree), (k: int), _, (rchild: bootstrap/example/example3/tree)) : bootstrap/example/example3/tree )
          -> (match ((std/core/types/@open(std/core/int/(==))(k, key))) {
           (std/core/types/True() : bool )
-             -> bootstrap/example/example3/MyNode(lchild, k, value, rchild);
+             -> bootstrap/example/example3/Node(lchild, k, value, rchild);
           (@skip std/core/types/False() : bool )
              -> (match ((std/core/types/@open(std/core/int/(<))(k, key))) {
               (std/core/types/True() : bool )
-                 -> bootstrap/example/example3/MyNode(lchild, k, value, rchild);
+                 -> bootstrap/example/example3/Node(lchild, k, value, rchild);
               (@skip std/core/types/False() : bool )
-                 -> bootstrap/example/example3/MyNode(lchild, key, value, rchild);
+                 -> bootstrap/example/example3/Node(lchild, key, value, rchild);
             });
         });
       (@skip bootstrap/example/example3/Leaf() : bootstrap/example/example3/tree )
-         -> bootstrap/example/example3/MyLeaf;
+         -> bootstrap/example/example3/Leaf;
     };
   };
 pub fun show : (t : bootstrap/example/example3/tree) -> string

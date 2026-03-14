@@ -1,7 +1,7 @@
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ((type-def-group
       (data
@@ -25,29 +25,6 @@ initial
               ()
               (no-fip False)))
           True
-          normal)))
-    (type-def-group
-      (data
-        (data-info
-          bootstrap/example/example3/mytree
-          ()
-          ((con-info
-              bootstrap/example/example3/MyNode
-              ((lchild
-                  (tcon
-                    bootstrap/example/example3/tree))
-                (key (tcon std/core/types/int))
-                (value
-                  (tcon std/core/types/bool))
-                (rchild
-                  (tcon
-                    bootstrap/example/example3/tree)))
-              (no-fip False))
-            (con-info
-              bootstrap/example/example3/MyLeaf
-              ()
-              (no-fip False)))
-          False
           normal))))
   ((non-rec
       (def
@@ -197,152 +174,6 @@ initial
           (fip (at-most 0)))))
     (non-rec
       (def
-        bootstrap/example/example3/is-myNode
-        (fun
-          ((mytree
-              (tcon
-                bootstrap/example/example3/mytree)))
-          (tcon std/core/types/total)
-          (tcon std/core/types/bool))
-        (lam
-          ((mytree
-              (tcon
-                bootstrap/example/example3/mytree)))
-          (tcon std/core/types/total)
-          (case
-            ((var mytree))
-            ((branch
-                ((pat-con
-                    bootstrap/example/example3/MyNode
-                    (pat-wild
-                      pat-wild
-                      pat-wild
-                      pat-wild)
-                    (as-cons
-                      as-list
-                      (value-repr 1 3 8)
-                      bootstrap/example/example3/MyLeaf
-                      none
-                      1)
-                    ((tcon
-                        bootstrap/example/example3/tree)
-                      (tcon std/core/types/int)
-                      (tcon std/core/types/bool)
-                      (tcon
-                        bootstrap/example/example3/tree))))
-                ((guard
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2))
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2)))))
-              (branch
-                ((pat-con
-                    bootstrap/example/example3/MyLeaf
-                    ()
-                    (singleton
-                      as-list
-                      (value-repr 0 0 0)
-                      2)
-                    ()))
-                ((guard
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2))
-                    (con
-                      std/core/types/False
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        1))))))))
-        (def-fun
-          (borrow)
-          (fip (at-most 0)))))
-    (non-rec
-      (def
-        bootstrap/example/example3/is-myLeaf
-        (fun
-          ((mytree
-              (tcon
-                bootstrap/example/example3/mytree)))
-          (tcon std/core/types/total)
-          (tcon std/core/types/bool))
-        (lam
-          ((mytree
-              (tcon
-                bootstrap/example/example3/mytree)))
-          (tcon std/core/types/total)
-          (case
-            ((var mytree))
-            ((branch
-                ((pat-con
-                    bootstrap/example/example3/MyLeaf
-                    ()
-                    (singleton
-                      as-list
-                      (value-repr 0 0 0)
-                      2)
-                    ()))
-                ((guard
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2))
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2)))))
-              (branch
-                ((pat-con
-                    bootstrap/example/example3/MyNode
-                    (pat-wild
-                      pat-wild
-                      pat-wild
-                      pat-wild)
-                    (as-cons
-                      as-list
-                      (value-repr 1 3 8)
-                      bootstrap/example/example3/MyLeaf
-                      none
-                      1)
-                    ((tcon
-                        bootstrap/example/example3/tree)
-                      (tcon std/core/types/int)
-                      (tcon std/core/types/bool)
-                      (tcon
-                        bootstrap/example/example3/tree))))
-                ((guard
-                    (con
-                      std/core/types/True
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        2))
-                    (con
-                      std/core/types/False
-                      (enum
-                        enum
-                        (value-repr 0 0 0)
-                        1))))))))
-        (def-fun
-          (borrow)
-          (fip (at-most 0)))))
-    (non-rec
-      (def
         bootstrap/example/example3/replace
         (fun
           ((t
@@ -353,7 +184,7 @@ initial
               (tcon std/core/types/bool)))
           (tcon std/core/types/total)
           (tcon
-            bootstrap/example/example3/mytree))
+            bootstrap/example/example3/tree))
         (lam
           ((t
               (tcon
@@ -425,11 +256,11 @@ initial
                                   2))
                               (app
                                 (con
-                                  bootstrap/example/example3/MyNode
+                                  bootstrap/example/example3/Node
                                   (as-cons
                                     as-list
                                     (value-repr 1 3 8)
-                                    bootstrap/example/example3/MyLeaf
+                                    bootstrap/example/example3/Leaf
                                     none
                                     1))
                                 (var lchild)
@@ -484,11 +315,11 @@ initial
                                             2))
                                         (app
                                           (con
-                                            bootstrap/example/example3/MyNode
+                                            bootstrap/example/example3/Node
                                             (as-cons
                                               as-list
                                               (value-repr 1 3 8)
-                                              bootstrap/example/example3/MyLeaf
+                                              bootstrap/example/example3/Leaf
                                               none
                                               1))
                                           (var lchild)
@@ -510,11 +341,11 @@ initial
                                             2))
                                         (app
                                           (con
-                                            bootstrap/example/example3/MyNode
+                                            bootstrap/example/example3/Node
                                             (as-cons
                                               as-list
                                               (value-repr 1 3 8)
-                                              bootstrap/example/example3/MyLeaf
+                                              bootstrap/example/example3/Leaf
                                               none
                                               1))
                                           (var lchild)
@@ -538,7 +369,7 @@ initial
                         (value-repr 0 0 0)
                         2))
                     (con
-                      bootstrap/example/example3/MyLeaf
+                      bootstrap/example/example3/Leaf
                       (singleton
                         as-list
                         (value-repr 0 0 0)
@@ -868,12 +699,14 @@ initial
               (value-repr 0 0 0)
               1)))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ()
   ((non-rec
@@ -903,12 +736,14 @@ initial
               (var
                 bootstrap/example/example3/main))))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ()
   ((non-rec
@@ -1189,6 +1024,8 @@ initial
               (var
                 bootstrap/example/example3/@main/@expr))))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
 [6n

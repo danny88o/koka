@@ -1,7 +1,7 @@
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ()
   ((rec
@@ -143,12 +143,14 @@ initial
               (value-repr 0 0 0)
               1)))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ()
   ((non-rec
@@ -178,12 +180,14 @@ initial
               (var
                 bootstrap/example/example2/main))))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
-
-/* -----------------
+/*
 initial
- (S-expressions) --------------- */
+(S-expressions)
+*/
 (core
   ()
   ((non-rec
@@ -464,6 +468,8 @@ initial
               (var
                 bootstrap/example/example2/@main/@expr))))
         (def-fun () (no-fip False))))))
-/* end of initial (S-expressions) --------------- */
+/*end of
+(S-expressions)
+*/
 
 [6n
