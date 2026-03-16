@@ -15,7 +15,7 @@ pub type alloc-tree
 pub fun aclloc-tree/show(t: alloc-tree): div string
   match t
     Alloc(id) -> "Alloc(" ++ id.show ++ ")"
-    Call(f) -> "Call(" ++ f.show ++ ")"
+    Call(f) -> "Call(" ++ f.fip-alloc/show ++ ")"
     CallSelf(f) -> "CallSelf(" ++ f.show ++ ")"
     Seq(l, r) -> "Seq(" ++ show(l) ++ ", " ++ show(r) ++ ")"
     Match(ts) -> "Match(" ++ ts.map(show).join(", ") ++ ")"
@@ -37,38 +37,36 @@ pub fun output/(++) (o1 : output, o2 : output) : output
       (t1, t2)  -> Seq(t1, t2)
   )
 
-pub type fip-alloc
-  AllocUnlimited
-  AllocFinitely
-  AllocAtMost(n: int)
-
-pub fun fip-alloc/show(fa: fip-alloc): string
-  match fa
-    AllocUnlimited -> "AllocUnlimited"
-    AllocFinitely -> "AllocFinitely"
-    AllocAtMost(n) -> "AllocAtMost(" ++ n.show ++ ")"
-
-pub type fip-tag
-  Fip(fip-alloc: fip-alloc)
-  Fbip(fip-alloc: fip-alloc, tail: bool)
-  NoFip(tail: bool)
-
 pub struct env
   current-def : list<def> = []
   fip-tag : fip-tag = NoFip(False)
+
+pub fun env/show(e: env): div string
+  "Env(current-def: [" ++ e.current-def.map(fn(d) d.name).join(", ") ++ "], fip-tag: " ++ e.fip-tag.show ++ ")"
 
 pub struct input
   delta : list<string> = []
   def-group-names : list<string> = []
   is-tail-context : bool = True
 
-// --- Granular Effects for Modular Handling ---
+// --- Seperate effects for isolation ---
+// NOTE: unique state couldjust use read-only state with a counter, but this is more explicit
 
 pub effect rd<a>
   fun read(): a
 
 pub effect wrt<a>
   fun write(a: a): ()
+
+pub effect unique-state
+  fun fresh-id() : int
+
+pub effect fun warning( msg : string ): a
+
+pub alias chk = <rd<input>, rd<env>, wrt<output>, unique-state, warning>
+
+
+// Operation Helpers
 
 pub fun get-env(): rd<env> env
   read()
@@ -79,14 +77,8 @@ pub fun get-input(): rd<input> input
 pub fun write-output(o: output): wrt<output> ()
   write(o)
 
-// pub effect warning-writer
-//   fun emit-warning( msg : string ) : () TODO?
-
-pub effect unique-state
-  fun fresh-id() : int
-
-// Combined alias for the checker
-pub alias chk = <rd<input>, wrt<output>, unique-state> // doesnt work
+pub fun emit-warning(make-doc: env -> <rd<env>, warning|e> string): <rd<env>, warning|e> a
+  warning(make-doc(get-env()))
 
 pub fun read-only(initial: a, action : () -> <rd<a>|e> b ) : e b
   with fun read() initial
@@ -107,21 +99,29 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
     id
   action()
 
-pub fun chk-handler(action : () -> <rd<input>,rd<env>,unique-state,wrt<output>|e> a): e (a, output)
-  with write-only(Output(), (++))
-  with read-only(Env())
-  with read-only(Input())
-  with unique-id()
+
+// pub fun withDef2(d: def, action)
+//   with override withDefHelp(d, get-env())
+//   action()
+
+// pub fun withDefHelp(d: def, env: env, action : () -> <rd<env>|e> a): e a
+//   with read-only(env(current-def = Cons(d, env.current-def)))
+//   action()
+
+pub fun withDef(d: def, action : () -> <rd<env>,rd<env>|e> a): <rd<env>|e> a
+  val curr-env = get-env()
+  with read-only(curr-env(current-def = Cons(d, curr-env.current-def)))
   action()
 
-  //  <wrt<output>,unique-state,rd<input>,rd<env>|_e> _a
+pub fun withFipTag(tag: fip-tag, action)
+  val curr-env = get-env()
+  with read-only(curr-env(fip-tag = tag))
+  action()
 
-// pub fun chk(action : () -> <rd<input>,rd<env>,unique-state,wrt<output>|e> a): e (a, output)
-//   with read-only(Env())
-//   with read-only(Input())
-//   with unique-id()
-//   with write-only(Output(), (++))
-//   action()
+pub fun withBorrowed(names: list<string>, action : () -> <rd<input>,rd<input>|e> a): <rd<input>|e> a
+  val curr-input = get-input()
+  with read-only(curr-input(delta = names ++ curr-input.delta))
+  action()
 
 fun main()
   ()

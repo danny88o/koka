@@ -99,7 +99,7 @@ pub fun fip-alloc/sexpr( fa : fip-alloc ) : sexpr
     AllocFinitely -> Atom("finitely")
     AllocUnlimited -> Atom("unlimited")
 
-pub fun fip/sexpr( f : fip ) : div sexpr
+pub fun fip/sexpr( f : fip-tag ) : div sexpr
   match f
     Fip(alloc) -> List([Atom("fip"), alloc.sexpr])
     Fbip(alloc, tail) -> List([Atom("fbip"), alloc.sexpr, tail.bool/sexpr])
