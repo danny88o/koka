@@ -50,45 +50,56 @@ pub struct input
   is-tail-context : bool = True
 
 // --- Seperate effects for isolation ---
-// NOTE: unique state couldjust use read-only state with a counter, but this is more explicit
+// NOTE: unique state couldjust use read-only state with a counter, but this is more explicit also resolves effect polymorphism issues
 
-pub effect rd<a>
-  fun read(): a
+// pub effect rd<a>
+//   fun read(): a
 
-pub effect wrt<a>
-  fun write(a: a): ()
+// pub effect wrt<a>
+//   fun write(a: a): ()
+
+pub effect environment
+  fun get-env(): env
+
+pub effect inp
+  fun get-input(): input
+
+pub effect out
+  fun write-output(o: output): ()
 
 pub effect unique-state
   fun fresh-id() : int
 
 pub effect fun warning( msg : string ): a
 
-pub alias chk = <rd<input>, rd<env>, wrt<output>, unique-state, warning>
+pub alias chk = <environment, out, inp, unique-state, warning>
 
+// pub fun read-only(initial: a, action : () -> <rd<a>|e> b ) : e b
+//   with fun read() initial
+//   action()
 
-// Operation Helpers
+// pub fun write-only(initial: a, ?(++): (a, a) -> a, action: () -> <wrt<a>|e> b ) : e (b, a)
+//   var state := initial
+//   with handler
+//     return(x) (x, state)
+//     fun write(x) state := state ++ x
+//   action()
 
-pub fun get-env(): rd<env> env
-  read()
-
-pub fun get-input(): rd<input> input
-  read()
-
-pub fun write-output(o: output): wrt<output> ()
-  write(o)
-
-pub fun emit-warning(make-doc: env -> <rd<env>, warning|e> string): <rd<env>, warning|e> a
-  warning(make-doc(get-env()))
-
-pub fun read-only(initial: a, action : () -> <rd<a>|e> b ) : e b
-  with fun read() initial
+pub fun env-handler(initial: env, action: () -> <environment|e> a) : e a
+  var env := initial
+  with fun get-env() env
   action()
 
-pub fun write-only(initial: a, ?(++): (a, a) -> a, action: () -> <wrt<a>|e> b ) : e (b, a)
-  var state := initial
+pub fun input-handler(initial: input, action: () -> <inp|e> a) : e a
+  var input := initial
+  with fun get-input() input
+  action()
+
+pub fun extract-output(initial: output = Output(), action: () -> <out|e> a) : e output
+  var output := initial
   with handler
-    return(x) (x, state)
-    fun write(x) state := state ++ x
+    return(x) output
+    fun write-output(o) output := output ++ o
   action()
 
 pub fun unique-id(action: () -> <unique-state|e> a) : e a
@@ -100,27 +111,42 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
   action()
 
 
-// pub fun withDef2(d: def, action)
-//   with override withDefHelp(d, get-env())
-//   action()
+// Operation Helpers
 
-// pub fun withDefHelp(d: def, env: env, action : () -> <rd<env>|e> a): e a
-//   with read-only(env(current-def = Cons(d, env.current-def)))
-//   action()
+pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> a
+  warning(make-doc(get-env()))
 
-pub fun withDef(d: def, action : () -> <rd<env>,rd<env>|e> a): <rd<env>|e> a
-  val curr-env = get-env()
-  with read-only(curr-env(current-def = Cons(d, curr-env.current-def)))
+pub fun with-env(
+    env : env,
+    def : list<def>    = env.current-def,
+    fip-tag : fip-tag  = env.fip-tag,
+    action : () -> <environment,environment|e> a
+  ): <environment|e> a
+  with env-handler(env(current-def = def, fip-tag = fip-tag))
   action()
 
-pub fun withFipTag(tag: fip-tag, action)
-  val curr-env = get-env()
-  with read-only(curr-env(fip-tag = tag))
+pub fun with-input(
+    input : input,
+    delta : list<string>           = input.delta,
+    def-group-names : list<string> = input.def-group-names,
+    is-tail-context : bool         = input.is-tail-context,
+    action: () -> <inp,inp|e> a ): <inp|e> a
+  with input-handler(input(delta = delta, def-group-names = def-group-names, is-tail-context = is-tail-context))
   action()
 
-pub fun withBorrowed(names: list<string>, action : () -> <rd<input>,rd<input>|e> a): <rd<input>|e> a
+pub fun with-def(def: def, action)
+  val env = get-env()
+  with env-handler(env(current-def = Cons(def, env.current-def)))
+  action()
+
+pub fun with-fip-tag(tag: fip-tag, action)
+  val env = get-env()
+  with env-handler(env(fip-tag = tag))
+  action()
+
+pub fun with-borrowed(names: list<string>, action)
   val curr-input = get-input()
-  with read-only(curr-input(delta = names ++ curr-input.delta))
+  with input-handler(curr-input(delta = names ++ curr-input.delta))
   action()
 
 fun main()

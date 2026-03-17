@@ -2,6 +2,7 @@ module bootstrap/check-fbip
 
 import bootstrap/chk
 import bootstrap/core
+import bootstrap/parc-reuse
 
 // --- Entry Point ---
 
@@ -24,14 +25,13 @@ pub fun chk-def-group(dg : def-group )
       chk-top-level-def([def.name], def)
 
 pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
-  with withDef(d)
+  with with-def(d)
   match d.sort
     DefFun(borrows, fip-tag) | !fip-tag.is-no-fip ->
-      with withFipTag(fip-tag)
-      with read-only(Input())
-      chk-top-level-expr(borrows, d.expr)
-      val (_, out) = write-only(Output(), (++))
-        chk-top-level-expr(borrows, d.expr)
+      with with-fip-tag(fip-tag)
+      val out =
+        with input-handler(Input())
+        extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
     _ -> ()
   ()
@@ -51,8 +51,9 @@ pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): _ ()
         .filter(fn((pi, _)) pi.is-own)
         .map(fn((_, p)) p)
       val names = bpars.map(fn(p) p.name)
-      with withBorrowed(names)
-      chk-expr(body)
+      with with-borrowed(names)
+      val out = extract-output(action={chk-expr(body)})
+      write-output(opars.foldl(out, fn(out', p) bind-name(p.name, NotReusable, out')))
 
     TypeLam(_, body) -> chk-top-level-expr(borrows, body)
     TypeApp(body, _) -> chk-top-level-expr(borrows, body)
@@ -65,8 +66,13 @@ pub fun chk-expr( e : expr ): _ ()
     TypeLam(_, body) -> chk-expr(body)
     TypeApp(body, _) -> chk-expr(body)
     Lam(pars, eff, body) ->
-      // TODO: Implement lambda allocation check
+      chk-effect(eff)
       chk-expr(body)
+    // TODO:
+    // App (TypeApp (Var tname _) _) _ | getName tname `elem` [nameCCtxSetCtxPath,nameLazyMemoizeTarget,nameLazyEnter,nameLazyLeave]
+    //     -> return ()
+    // App (TypeApp (Var tname _) _) [_, conApp] | getName tname == nameLazyMemoize
+    //   -> chkExpr conApp
     App(f, args) -> chk-app(f, args)
     Var(name) -> () // TODO: markSeen
     Let(dgs, body) ->
@@ -82,7 +88,7 @@ pub fun chk-expr( e : expr ): _ ()
 // --- Effect Check ---
 pub fun chk-effect(tp: type-expr)
   if !is-fbip-extended(tp) then emit-warning(fn(env: env) -> "algebraic effects other than" ++ env.show ++ " pure may cause allocation.") // TODO use better than show
-  ()
+
 fun is-fbip(tau: type-expr)
   match tau
     TCon(name)              -> ["total", "div", "exn"].any(fn(n) n == name)
@@ -133,6 +139,11 @@ pub fun check-output-empty( out : output )
   ()
 
 // --- Helpers ---
+
+fun bind-name(nm: string, msize: reusable, out: output): _ output // TODO: Unfinished
+  match out.gamma-nm.lookup(fn(name) name == nm)
+    Nothing -> out
+    Just(size) -> out
 
 fun is-no-fip( f : fip-tag ) : bool
   match f
