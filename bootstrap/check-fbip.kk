@@ -74,7 +74,7 @@ pub fun chk-expr( e : expr ): _ ()
     // App (TypeApp (Var tname _) _) [_, conApp] | getName tname == nameLazyMemoize
     //   -> chkExpr conApp
     App(f, args) -> chk-app(f, args)
-    Var(name) -> () // TODO: markSeen
+    Var(tname) -> mark-seen(tname)
     Let(dgs, body) ->
       // TODO: Handle Let
       chk-expr(body)
@@ -137,6 +137,57 @@ pub fun chk-app( f : expr, args : list<expr> )
 pub fun check-output-empty( out : output )
   // TODO: Implementation of check-output-empty
   ()
+
+fun info-is-local(tname: tname): bool
+  !tname.is-qualified
+
+fun mark-seen(tname: tname): _ ()
+  if tname.info-is-local then
+    if tname.tp.needs-dup-drop-tp then
+       write-output(Output(gamma-nm = [(tname, 1)]))
+  else
+    chk-wrap(tname)
+
+fun mark-borrowed(nm: tname): _ ()
+  if !is-borrowed(nm) then
+    mark-seen(nm)
+    if nm.tp.needs-dup-drop-tp && nm.info-is-local then
+      require-capability(may-dealloc, fn(env)
+        Just("the last use of " ++ nm.name ++ " is borrowed (causing deallocation)")
+      )
+
+fun chk-wrap(tname: tname)
+  () // TODO
+
+fun may-dealloc(f: fip-tag): bool
+  match f
+    Fip -> False
+    _   -> True
+
+fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
+  val env = get-env()
+  if !cap(env.fip-tag) then
+    match test(env)
+      Just(warn) -> warning(warn)
+      Nothing -> ()
+
+// In the Haskell compiler, this information is stored in a Newtypes map for efficiency
+fun get-data-info(tp : type-expr) : <environment> maybe<data-info> //
+  val env = get-env()
+  fun find-info(t : type-expr) : maybe<data-info>
+    match t
+      TCon(name) -> env.type-infos.lookup(fn(n) n == name)
+      TApp(f, _) -> find-info(f)
+      TSyn(_, _, t') -> find-info(t')
+      _ -> Nothing
+  find-info(tp)
+
+pub fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
+  match tp.get-data-info
+    Nothing -> True // Assume heap-allocated if unknown
+    Just(di) ->
+      val is-value = match di.ddef { DataDefValue -> True; _ -> False }
+      (di.name != "std/core/int") && !is-value
 
 // --- Helpers ---
 

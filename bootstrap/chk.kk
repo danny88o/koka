@@ -40,13 +40,14 @@ pub fun output/(++) (o1 : output, o2 : output) : output
 pub struct env
   current-def : list<def> = []
   fip-tag : fip-tag = NoFip(False)
+  type-infos : list<(string, data-info)> = []
 
 pub fun env/show(e: env): div string
   "Env(current-def: [" ++ e.current-def.map(fn(d) d.name).join(", ") ++ "], fip-tag: " ++ e.fip-tag.show ++ ")"
 
 pub struct input
-  delta : list<string> = []
-  def-group-names : list<string> = []
+  delta : list<name> = []
+  def-group-names : list<name> = []
   is-tail-context : bool = True
 
 // --- Seperate effects for isolation ---
@@ -111,10 +112,7 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
   action()
 
 
-// Operation Helpers
-
-pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> a
-  warning(make-doc(get-env()))
+// --- Env Helpers
 
 pub fun with-env(
     env : env,
@@ -123,15 +121,6 @@ pub fun with-env(
     action : () -> <environment,environment|e> a
   ): <environment|e> a
   with env-handler(env(current-def = def, fip-tag = fip-tag))
-  action()
-
-pub fun with-input(
-    input : input,
-    delta : list<string>           = input.delta,
-    def-group-names : list<string> = input.def-group-names,
-    is-tail-context : bool         = input.is-tail-context,
-    action: () -> <inp,inp|e> a ): <inp|e> a
-  with input-handler(input(delta = delta, def-group-names = def-group-names, is-tail-context = is-tail-context))
   action()
 
 pub fun with-def(def: def, action)
@@ -144,10 +133,31 @@ pub fun with-fip-tag(tag: fip-tag, action)
   with env-handler(env(fip-tag = tag))
   action()
 
+// --- Input Helpers
+
+pub fun with-input(
+    input : input,
+    delta : list<string>           = input.delta,
+    def-group-names : list<string> = input.def-group-names,
+    is-tail-context : bool         = input.is-tail-context,
+    action: () -> <inp,inp|e> a ): <inp|e> a
+  with input-handler(input(delta = delta, def-group-names = def-group-names, is-tail-context = is-tail-context))
+  action()
+
+
 pub fun with-borrowed(names: list<string>, action)
   val curr-input = get-input()
   with input-handler(curr-input(delta = names ++ curr-input.delta))
   action()
+
+pub fun is-borrowed(tname: tname): inp bool
+  get-input().delta.any(fn(n) n == tname.name)
+
+// --- Warning Helpers
+
+pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> a
+  warning(make-doc(get-env()))
+
 
 fun main()
   ()
