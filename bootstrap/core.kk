@@ -33,8 +33,19 @@ pub fun (==)(t1: type-expr, t2: type-expr): div bool
     (TSyn(name1, args1, t1), TSyn(name2, args2, t2))   -> name1 == name2 && args1 == args2 && t1 == t2
     _ -> False
 
+pub alias name = string
+
 pub type tname
   TName(name: string, tp: type-expr)
+
+pub fun name/is-qualified(name : name) : bool
+  name.contains("/")
+
+pub fun tname/is-qualified(tn : tname) : bool
+  tn.name.is-qualified
+
+pub fun tname/(==)(tn1: tname, tn2: tname): bool
+  tn1.name == tn2.name
 
 pub type lit
   LitInt(i: int)
@@ -48,7 +59,7 @@ pub type value-repr
 
 pub type ctx-path
   CtxNone
-  CtxField(name: string)
+  CtxField(name: name)
 
 pub type data-repr
   DataEnum
@@ -68,16 +79,16 @@ pub type con-repr
   ConIso(dr: data-repr, vr: value-repr, tag: int)
   ConSingleton(dr: data-repr, vr: value-repr, tag: int)
   ConSingle(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
-  ConAsJust(dr: data-repr, vr: value-repr, name: string, tag: int)
+  ConAsJust(dr: data-repr, vr: value-repr, name: name, tag: int)
   ConStruct(dr: data-repr, vr: value-repr, tag: int)
-  ConAsCons(dr: data-repr, vr: value-repr, name: string, path: ctx-path, tag: int)
+  ConAsCons(dr: data-repr, vr: value-repr, name: name, path: ctx-path, tag: int)
   ConOpen(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
   ConNormal(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
 
 // Expressions
 pub type pattern
-  PatCon(name: string, args: list<pattern>, repr: con-repr, targs: list<type-expr>)
-  PatVar(name: string, pat: pattern)
+  PatCon(tname: tname, args: list<pattern>, repr: con-repr, targs: list<type-expr>)
+  PatVar(tname: tname, pat: pattern)
   PatLit(lit: lit)
   PatWild
 
@@ -89,11 +100,11 @@ pub type branch
 
 pub type expr
   Lam(tnames: list<tname>, eff: type-expr, body: expr)
-  Var(name: string)
+  Var(tname: tname)
   App(f: expr, args: list<expr>)
   TypeLam(tvs: list<int>, body: expr)
   TypeApp(f: expr, tps: list<type-expr>)
-  Con(name: string, repr: con-repr)
+  Con(tname: tname, repr: con-repr)
   Lit(lit: lit)
   Let(def-groups: list<def-group>, body: expr)
   Case(scruts: list<expr>, branches: list<branch>)
@@ -151,18 +162,24 @@ pub type data-def
   DataDefOpen(is-ext: bool)
   DataDefAuto(is-struct: bool)
 
-pub type con-info
-  ConInfo(name: string, params: list<(string, type-expr)>, lazy: fip-tag)
+pub struct con-info
+  name: name
+  tp: type-expr
+  params: list<(string, type-expr)>
+  lazy: fip-tag
 
-pub type data-info
-  DataInfo(name: string, params: list<int>, constrs: list<con-info>, is-rec: bool, ddef: data-def)
+pub struct data-info
+  name: name
+  params: list<int>
+  constrs: list<con-info>
+  is-rec: bool
+  ddef: data-def
 
 pub type type-def
-  Synonym(name: string, tp: type-expr)
+  Synonym(name: name, tp: type-expr)
   Data(info: data-info)
 
-pub type type-def-group
-  TypeDefGroup(tdefs: list<type-def>)
+pub alias type-def-group = list<type-def>
 
 pub type core
   Core(type-defs: list<type-def-group>, defs: list<def-group>)

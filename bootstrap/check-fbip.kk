@@ -53,7 +53,7 @@ pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): _ ()
       val names = bpars.map(fn(p) p.name)
       with with-borrowed(names)
       val out = extract-output(action={chk-expr(body)})
-      write-output(opars.foldl(out, fn(out', p) bind-name(p.name, NotReusable, out')))
+      write-output(opars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
 
     TypeLam(_, body) -> chk-top-level-expr(borrows, body)
     TypeApp(body, _) -> chk-top-level-expr(borrows, body)
@@ -140,8 +140,8 @@ pub fun check-output-empty( out : output )
 
 // --- Helpers ---
 
-fun bind-name(nm: string, msize: reusable, out: output): _ output // TODO: Unfinished
-  match out.gamma-nm.lookup(fn(name) name == nm)
+fun bind-name(nm: tname, msize: reusable, out: output): _ output // TODO: Unfinished
+  match out.gamma-nm.lookup(fn(tname) tname == nm)
     Nothing -> out
     Just(size) -> out
 

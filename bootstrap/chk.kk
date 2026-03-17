@@ -12,7 +12,7 @@ pub type alloc-tree
   Match(ts: list<alloc-tree>)
   Leaf
 
-pub fun aclloc-tree/show(t: alloc-tree): div string
+pub fun alloc-tree/show(t: alloc-tree): div string
   match t
     Alloc(id) -> "Alloc(" ++ id.show ++ ")"
     Call(f) -> "Call(" ++ f.fip-alloc/show ++ ")"
@@ -22,8 +22,8 @@ pub fun aclloc-tree/show(t: alloc-tree): div string
     Leaf -> "Leaf"
 
 pub struct output
-  gamma-nm : list<(string, int)> = []
-  gamma-dia : list<(int, list<(float64, list<(string, int)>)>)> = []
+  gamma-nm : list<(tname, int)> = []
+  gamma-dia : list<(int, list<(float64, list<(tname, int)>)>)> = []
   alloc-tree : alloc-tree = Leaf
 
 // Sequential composition of outputs

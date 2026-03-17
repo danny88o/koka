@@ -101,11 +101,11 @@ pub fun sexpr-to-expr(s: sexpr): <div,exn> expr
   match s.expect-list
     Cons(Atom("lam"), [List(tnames), eff, body]) ->
       Lam(tnames.map(sexpr-to-tname), eff.sexpr-to-type-expr, body.sexpr-to-expr)
-    Cons(Atom("var"), [name]) -> Var(name.expect-atom)
+    Cons(Atom("var"), [name]) -> Var(TName(name.expect-atom, TVar(-1))) // Note: Type is often reconstructed or irrelevant for some checks, but we need a tname
     Cons(Atom("app"), Cons(f, args)) -> App(f.sexpr-to-expr, args.map(sexpr-to-expr))
     Cons(Atom("type-lam"), [List(tvs), body]) -> TypeLam(tvs.map(fn(v) v.expect-atom.parse-int.default(0)), body.sexpr-to-expr)
     Cons(Atom("type-app"), Cons(f, tps)) -> TypeApp(f.sexpr-to-expr, tps.map(sexpr-to-type-expr))
-    Cons(Atom("con"), [name, repr]) -> Con(name.expect-atom, repr.sexpr-to-con-repr)
+    Cons(Atom("con"), [name, repr]) -> Con(TName(name.expect-atom, TVar(-1)), repr.sexpr-to-con-repr)
     Cons(Atom("let"), [List(dgs), body]) -> Let(dgs.map(sexpr-to-def-group), body.sexpr-to-expr)
     Cons(Atom("case"), [List(scruts), List(branches)]) -> Case(scruts.map(sexpr-to-expr), branches.map(sexpr-to-branch))
     [l] -> Lit(l.sexpr-to-lit)
@@ -130,7 +130,7 @@ pub fun sexpr-to-fip-alloc(s: sexpr): <div,exn> fip-alloc
     Atom("unlimited") -> AllocUnlimited
     _ -> throw("Invalid fip-alloc sexpr: " ++ s.sexpr/show)
 
-pub fun sexpr-to-fip(s: sexpr): <div,exn> fip
+pub fun sexpr-to-fip(s: sexpr): <div,exn> fip-tag
   match s.expect-list
     Cons(Atom("fip"), [alloc]) -> Fip(alloc.sexpr-to-fip-alloc)
     Cons(Atom("fbip"), [alloc, tail]) -> Fbip(alloc.sexpr-to-fip-alloc, tail.expect-atom == "True")
@@ -152,8 +152,7 @@ pub fun sexpr-to-def(s: sexpr): <div,exn> def
 
 // Type Definitions
 pub fun sexpr-to-type-def-group(s: sexpr): <div,exn> type-def-group
-  match s.expect-list.expect-tag("type-def-group")
-    tdefs -> TypeDefGroup(tdefs.map(sexpr-to-type-def))
+  s.expect-list.expect-tag("type-def-group").map(sexpr-to-type-def)
 
 pub fun sexpr-to-type-def(s: sexpr): <div,exn> type-def
   match s.expect-list
@@ -164,13 +163,13 @@ pub fun sexpr-to-type-def(s: sexpr): <div,exn> type-def
 pub fun sexpr-to-data-info(s: sexpr): <div,exn> data-info
   match s.expect-list.expect-tag("data-info")
     [name, List(params), List(constrs), is-rec, ddef] ->
-      DataInfo(name.expect-atom, params.map(fn(p) p.expect-atom.parse-int.default(0)), constrs.map(sexpr-to-con-info), is-rec.expect-atom == "True", ddef.sexpr-to-data-def)
+      Data-info(name.expect-atom, params.map(fn(p) p.expect-atom.parse-int.default(0)), constrs.map(sexpr-to-con-info), is-rec.expect-atom == "True", ddef.sexpr-to-data-def)
     _ -> throw("Invalid data-info sexpr")
 
 pub fun sexpr-to-con-info(s: sexpr): <div,exn> con-info
   match s.expect-list.expect-tag("con-info")
     [name, List(params), f] ->
-      ConInfo(name.expect-atom, params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-fip)
+      Con-info(name.expect-atom, TVar(-1), params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-fip)
     _ -> throw("Invalid con-info sexpr")
 
 pub fun sexpr-to-data-def(s: sexpr): <div,exn> data-def
@@ -201,8 +200,8 @@ pub fun sexpr-to-guard(s: sexpr): <div,exn> guard
 pub fun sexpr-to-pattern(s: sexpr): <div,exn> pattern
   match s
     List(Cons(Atom("pat-con"), [name, List(pats), repr, List(targs)])) ->
-      PatCon(name.expect-atom, pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, targs.map(sexpr-to-type-expr))
-    List(Cons(Atom("pat-var"), [name, p])) -> PatVar(name.expect-atom, p.sexpr-to-pattern)
+      PatCon(TName(name.expect-atom, TVar(-1)), pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, targs.map(sexpr-to-type-expr))
+    List(Cons(Atom("pat-var"), [name, p])) -> PatVar(TName(name.expect-atom, TVar(-1)), p.sexpr-to-pattern)
     List(Cons(Atom("pat-lit"), [l])) -> PatLit(l.sexpr-to-lit)
     Atom("pat-wild") -> PatWild
     _ -> throw("Invalid pattern sexpr: " ++ s.sexpr/show)

@@ -41,7 +41,7 @@ prettyParamToSExpr (name, tp) = SList [SAtom (show (pretty name)), prettyTypeToS
 prettySExpr :: Expr -> SExpr
 prettySExpr expr = case expr of
   Lam tnames eff body -> SList [SAtom "lam", SList (map prettyTNameToSExpr tnames), prettyTypeToSExpr eff, prettySExpr body]
-  Var tname _ -> SList [SAtom "var", SAtom (show (pretty (getName tname)))]
+  Var tname _ -> SList [SAtom "var", prettyTNameToSExpr tname]
   App f args -> SList (SAtom "app" : prettySExpr f : map prettySExpr args)
   TypeLam tvs body -> SList [SAtom "type-lam", SList (map (SAtom . show . typevarId) tvs), prettySExpr body]
   TypeApp f tps -> SList (SAtom "type-app" : prettySExpr f : map prettyTypeToSExpr tps)

@@ -64,9 +64,9 @@ pub fun con-repr/sexpr( cr : con-repr ) : div sexpr
 
 pub fun pattern/sexpr( p : pattern ) : div sexpr
   match p
-    PatCon(name, args, repr, targs) ->
-      List([Atom("pat-con"), Atom(name), List(args.map(sexpr)), repr.sexpr, List(targs.map(sexpr))])
-    PatVar(name, pat) -> List([Atom("pat-var"), Atom(name), pat.sexpr])
+    PatCon(tn, args, repr, targs) ->
+      List([Atom("pat-con"), Atom(tn.name), List(args.map(sexpr)), repr.sexpr, List(targs.map(sexpr))])
+    PatVar(tn, pat) -> List([Atom("pat-var"), Atom(tn.name), pat.sexpr])
     PatLit(l) -> List([Atom("pat-lit"), l.sexpr])
     PatWild -> Atom("pat-wild")
 
@@ -79,11 +79,11 @@ pub fun branch/sexpr( b : branch ) : div sexpr
 pub fun expr/sexpr( e : expr ) : div sexpr
   match e
     Lam(tnames, eff, body) -> List([Atom("lam"), List(tnames.map(fn(tn) List([Atom(tn.name), tn.tp.sexpr]))), eff.sexpr, body.sexpr])
-    Var(name) -> List([Atom("var"), Atom(name)])
+    Var(tn) -> List([Atom("var"), Atom(tn.name)])
     App(f, args) -> List(Cons(Atom("app"), Cons(f.sexpr, args.map(sexpr))))
     TypeLam(tvs, body) -> List([Atom("type-lam"), List(tvs.map(fn(v) Atom(v.show))), body.sexpr])
     TypeApp(f, tps) -> List(Cons(Atom("type-app"), Cons(f.sexpr, tps.map(sexpr))))
-    Con(name, repr) -> List([Atom("con"), Atom(name), repr.sexpr])
+    Con(tn, repr) -> List([Atom("con"), Atom(tn.name), repr.sexpr])
     Lit(l) -> l.sexpr
     Let(dgs, body) -> List([Atom("let"), List(dgs.map(sexpr)), body.sexpr])
     Case(scruts, branches) -> List([Atom("case"), List(scruts.map(sexpr)), List(branches.map(sexpr))])
@@ -139,7 +139,7 @@ pub fun type-def/sexpr( td : type-def ) : div sexpr
     Data(info) -> List([Atom("data"), info.sexpr])
 
 pub fun type-def-group/sexpr( tdg : type-def-group ) : div sexpr
-  List(Cons(Atom("type-def-group"), tdg.tdefs.map(sexpr)))
+  List(Cons(Atom("type-def-group"), tdg.map(sexpr)))
 
 pub fun core/sexpr( c : core ) : div sexpr
   List([Atom("core"), List(c.type-defs.map(sexpr)), List(c.defs.map(sexpr))])
