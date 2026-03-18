@@ -41,6 +41,7 @@ pub struct env
   current-def : list<def> = []
   fip-tag : fip-tag = NoFip(False)
   type-infos : list<(string, data-info)> = []
+  borrowed : list<(string, list<param-info>)> = []
 
 pub fun env/show(e: env): div string
   "Env(current-def: [" ++ e.current-def.map(fn(d) d.name).join(", ") ++ "], fip-tag: " ++ e.fip-tag.show ++ ")"
@@ -152,6 +153,11 @@ pub fun with-borrowed(names: list<string>, action)
 
 pub fun is-borrowed(tname: tname): inp bool
   get-input().delta.any(fn(n) n == tname.name)
+
+pub fun with-non-tail(action : () -> <inp|e> a) : <inp|e> a
+  val curr = get-input()
+  with input-handler(curr(is-tail-context = False))
+  action()
 
 // --- Warning Helpers
 

@@ -30,7 +30,7 @@ pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
     DefFun(borrows, fip-tag) | !fip-tag.is-no-fip ->
       with with-fip-tag(fip-tag)
       val out =
-        with input-handler(Input())
+        with input-handler(Input(def-group-names=def-group-names))
         extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
     _ -> ()
@@ -38,7 +38,7 @@ pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
 
 // --- Top-level Expression Check ---
 
-pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): _ ()
+pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
@@ -61,30 +61,45 @@ pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): _ ()
 
 // --- Expression Check ---
 
-pub fun chk-expr( e : expr ): _ ()
+pub fun chk-expr( e : expr ): <div, chk> ()
   match e
     TypeLam(_, body) -> chk-expr(body)
     TypeApp(body, _) -> chk-expr(body)
     Lam(pars, eff, body) ->
       chk-effect(eff)
-      chk-expr(body)
-    // TODO:
-    // App (TypeApp (Var tname _) _) _ | getName tname `elem` [nameCCtxSetCtxPath,nameLazyMemoizeTarget,nameLazyEnter,nameLazyLeave]
-    //     -> return ()
-    // App (TypeApp (Var tname _) _) [_, conApp] | getName tname == nameLazyMemoize
-    //   -> chkExpr conApp
+      require-capability(may-alloc, fn(_) Just("allocating a lambda expression"))
+      val out = extract-output(action={chk-expr(body)})
+      write-output(pars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
+    App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
+    App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
+
     App(f, args) -> chk-app(f, args)
     Var(tname) -> mark-seen(tname)
-    Let(dgs, body) ->
-      // TODO: Handle Let
-      chk-expr(body)
+    Let(dgs, body) -> match dgs
+      [] -> chk-expr(body)
+      Cons(DefNonRec(def), dgs') ->
+        val out = extract-output(action={chk-expr(Let(dgs', body))})
+        val gamma2 = bind-name(TName(def.name, def.tp), NotReusable, out)
+        write-output(gamma2)
+        val names = gamma2.gamma-nm.map(fn((tn, _)) tn.name)
+        with with-borrowed(names)
+        with with-tail-mod([Let(dgs', body)])
+        chk-expr(def.expr)
+      _ -> emit-warning(fn(_) "internal: currently the fip analysis cannot handle nested function bindings")
+
     Case(scruts, branches) ->
       // TODO: chk-branches
       ()
-    Con(name, repr) -> ()
-    Lit(lit) -> ()
+    Con(_, _) -> ()
+    Lit(lit) -> chk-lit(lit)
 
+fun is-ignored-primitive(name : string) : bool
+  ["std/core/cctx-set-ctx-path", "std/core/lazy-memoize-target", "std/core/lazy-enter", "std/core/lazy-leave"].any(fn(n) n == name)
 
+fun chk-lit(lit: lit): _ ()
+  match lit
+    LitString -> () // Implement for diss? Probably not as out of scope for project
+    _ -> ()
 // --- Effect Check ---
 pub fun chk-effect(tp: type-expr)
   if !is-fbip-extended(tp) then emit-warning(fn(env: env) -> "algebraic effects other than" ++ env.show ++ " pure may cause allocation.") // TODO use better than show
@@ -128,6 +143,75 @@ fun expand-syn(l: type-expr): type-expr
 fun chk-pars(pars: list<(string, type-expr)>, borrows)
   pars.foreach(fn((_, tp)) chk-effect(tp))
 
+fun has-total-effect(tp : type-expr) : _ bool
+  match tp.expand-syn
+    TFun(_, eff, _) -> eff.is-effect-fixed
+    TForall(_, t) -> t.has-total-effect
+    _ -> False
+
+fun type-of(e : expr) : _ type-expr
+  match e
+    Lam(tnames, eff, res) -> TFun(tnames.map(fn(tn) (tn.name, tn.tp)), eff, type-of(res))
+    Var(tn) -> tn.tp
+    App(f, args) ->
+      match type-of(f).expand-syn
+        TFun(_, _, res) -> res
+        _ -> TVar(0)
+    TypeLam(tvs, body) -> TForall(tvs, type-of(body))
+    TypeApp(f, _) ->
+      match type-of(f).expand-syn
+        TForall(_, t) -> t
+        _ -> TVar(0)
+    Con(tn, _) -> tn.tp
+    Lit(l) -> match l
+      LitInt -> TCon("std/core/int")
+      LitFloat -> TCon("std/core/float64")
+      LitChar -> TCon("std/core/char")
+      LitString -> TCon("std/core/string")
+    Let(_, body) -> type-of(body)
+    Case(_, branches) ->
+      match branches
+        Cons(Branch(_, guards), _) ->
+          match guards
+            Cons(Guard(_, e'), _) -> type-of(e')
+            _ -> TVar(0)
+        _ -> TVar(0)
+
+fun is-mod-cons(e : expr) : _ bool
+  match e
+    Var -> True
+    TypeLam(_, b) -> b.is-mod-cons
+    TypeApp(b, _) -> b.is-mod-cons
+    Con -> True
+    Lit -> True
+    Let(dgs, b) -> dgs.all(is-mod-cons-dg) && b.is-mod-cons
+    App(f, args) -> f.is-mod-cons-fun && args.all(is-mod-cons)
+    _ -> False
+
+fun is-mod-cons-dg(dg : def-group) : _ bool
+  match dg
+    DefRec(defs) -> defs.all(fn(d) d.expr.is-mod-cons)
+    DefNonRec(d) -> d.expr.is-mod-cons
+
+fun is-mod-cons-fun(e : expr): div bool
+  match e
+    TypeLam(_, b) -> b.is-mod-cons-fun
+    TypeApp(b, _) -> b.is-mod-cons-fun
+    Con           -> True
+    Let(dgs, b)   -> dgs.all(is-mod-cons-dg) && b.is-mod-cons-fun
+    App(f, args)  ->
+      val a = type-of(e).has-total-effect
+      val b = f.is-mod-cons-fun
+      val c = args.all(is-mod-cons)
+      a && b && c
+    _ -> False
+
+pub fun with-tail-mod(mod-exprs: list<expr>, action)
+  val curr = get-input()
+  val is-tail = curr.is-tail-context && mod-exprs.all(is-mod-cons)
+  with-input(curr(is-tail-context = is-tail), action=action)
+
+
 pub fun chk-app( f : expr, args : list<expr> )
   // TODO: Full app logic
   ()
@@ -141,28 +225,56 @@ pub fun check-output-empty( out : output )
 fun info-is-local(tname: tname): bool
   !tname.is-qualified
 
+fun is-cctx-name(name : string) : bool
+  match name.starts-with("cctx")
+    Just(_) -> True
+    Nothing -> False
+
+pub fun needs-dup-drop(tname : tname)
+  if tname.name.is-cctx-name then False
+  else tname.tp.needs-dup-drop-tp
+
 fun mark-seen(tname: tname): _ ()
   if tname.info-is-local then
-    if tname.tp.needs-dup-drop-tp then
+    if tname.needs-dup-drop then
        write-output(Output(gamma-nm = [(tname, 1)]))
   else
     chk-wrap(tname)
 
 fun mark-borrowed(nm: tname): _ ()
-  if !is-borrowed(nm) then
+  if !nm.is-borrowed then
     mark-seen(nm)
-    if nm.tp.needs-dup-drop-tp && nm.info-is-local then
+    if nm.needs-dup-drop && nm.info-is-local then
       require-capability(may-dealloc, fn(env)
         Just("the last use of " ++ nm.name ++ " is borrowed (causing deallocation)")
       )
 
-fun chk-wrap(tname: tname)
-  () // TODO
+fun chk-wrap(tname: tname): _ ()
+  val bs = get-param-infos(tname.name)
+  if bs.any(fn(pi) pi.is-borrow) then
+    emit-warning(fn(env) "a function with borrowed parameters is passed as an argument and implicitly wrapped (causing allocation)")
+
+fun get-param-infos(name : string) : <environment> list<param-info>
+  val env = get-env()
+  match env.borrowed.lookup(fn(n) n == name)
+    Just(pinfos) -> pinfos
+    Nothing -> []
 
 fun may-dealloc(f: fip-tag): bool
   match f
     Fip -> False
     _   -> True
+
+fun get-fip-alloc(f : fip-tag) : fip-alloc
+  match f
+    Fip(a) -> a
+    Fbip(a, _) -> a
+    NoFip -> AllocUnlimited
+
+fun may-alloc(f : fip-tag) : bool
+  match f.get-fip-alloc
+    AllocUnlimited -> True
+    _ -> False
 
 fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
   val env = get-env()
@@ -191,10 +303,15 @@ pub fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
 
 // --- Helpers ---
 
-fun bind-name(nm: tname, msize: reusable, out: output): _ output // TODO: Unfinished
-  match out.gamma-nm.lookup(fn(tname) tname == nm)
-    Nothing -> out
-    Just(size) -> out
+fun bind-name(nm: tname, msize: reusable, out: output): _ output
+  match out.gamma-nm.find(fn((tn, _)) tn == nm)
+    Nothing ->
+      // TODO: Full logic (addTypeReuseInfo, provideToken, chkDrop)
+      out
+    Just((_, n)) ->
+      if n > 1 && nm.needs-dup-drop then
+        require-capability(may-alloc, fn(_) Just("the variable " ++ nm.name ++ " is used multiple times (causing sharing and preventing reuse)"))
+      out(gamma-nm = out.gamma-nm.filter(fn((tn, _)) tn != nm))
 
 fun is-no-fip( f : fip-tag ) : bool
   match f
