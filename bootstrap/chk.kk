@@ -97,6 +97,10 @@ pub fun input-handler(initial: input, action: () -> <inp|e> a) : e a
   with fun get-input() input
   action()
 
+pub fun input-override(new-input: input, action: () -> <inp|e> a) : <inp|e> a
+  with override fun get-input() new-input
+  action()
+
 pub fun extract-output(initial: output = Output(), action: () -> <out|e> a) : e output
   var output := initial
   with handler
@@ -115,48 +119,43 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
 
 // --- Env Helpers
 
-pub fun with-env(
-    env : env,
-    def : list<def>    = env.current-def,
-    fip-tag : fip-tag  = env.fip-tag,
-    action : () -> <environment,environment|e> a
-  ): <environment|e> a
-  with env-handler(env(current-def = def, fip-tag = fip-tag))
-  action()
+// pub fun with-env(
+//     env : env,
+//     def : list<def>    = env.current-def,
+//     fip-tag : fip-tag  = env.fip-tag,
+//     action : () -> <environment,environment|e> a
+//   ): <environment|e> a
+//   with env-handler(env(current-def = def, fip-tag = fip-tag))
+//   action()
 
-pub fun with-def(def: def, action)
+pub fun def(def: def, action)
   val env = get-env()
   with env-handler(env(current-def = Cons(def, env.current-def)))
   action()
 
-pub fun with-fip-tag(tag: fip-tag, action)
+pub fun fip-tag(tag: fip-tag, action)
   val env = get-env()
   with env-handler(env(fip-tag = tag))
   action()
 
 // --- Input Helpers
 
-pub fun with-input(
-    input : input,
-    delta : list<string>           = input.delta,
-    def-group-names : list<string> = input.def-group-names,
-    is-tail-context : bool         = input.is-tail-context,
-    action: () -> <inp,inp|e> a ): <inp|e> a
-  with input-handler(input(delta = delta, def-group-names = def-group-names, is-tail-context = is-tail-context))
+pub fun input(input: input, action)
+  with fun get-input() input
   action()
 
-
-pub fun with-borrowed(names: list<string>, action)
-  val curr-input = get-input()
-  with input-handler(curr-input(delta = names ++ curr-input.delta))
+pub fun borrowed(names: list<string>, action)
+  val temp = get-input()
+  val input = temp(delta = names ++ temp.delta)
+  with override fun get-input() input
   action()
 
 pub fun is-borrowed(tname: tname): inp bool
   get-input().delta.any(fn(n) n == tname.name)
 
-pub fun with-non-tail(action : () -> <inp|e> a) : <inp|e> a
+pub fun non-tail(action)
   val curr = get-input()
-  with input-handler(curr(is-tail-context = False))
+  with input-override(curr(is-tail-context = False))
   action()
 
 // --- Warning Helpers

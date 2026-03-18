@@ -183,3 +183,36 @@ pub alias type-def-group = list<type-def>
 
 pub type core
   Core(type-defs: list<type-def-group>, defs: list<def-group>)
+
+pub fun expand-syn(l: type-expr): type-expr
+  match l
+    TSyn(_, _, tp) -> expand-syn(tp)
+    _ -> l
+
+pub fun type-of(e : expr) : _ type-expr
+  match e
+    Lam(tnames, eff, res) -> TFun(tnames.map(fn(tn) (tn.name, tn.tp)), eff, type-of(res))
+    Var(tn) -> tn.tp
+    App(f, _) -> // Note very different core line 1223 in core
+      match type-of(f).expand-syn
+        TFun(_, _, res) -> res
+        _ -> TVar(0)
+    TypeLam(tvs, body) -> TForall(tvs, type-of(body))
+    TypeApp(f, _) ->
+      match type-of(f).expand-syn // Also quite different
+        TForall(_, t) -> t
+        _ -> TVar(0)
+    Con(tn, _) -> tn.tp
+    Lit(l) -> match l
+      LitInt -> TCon("std/core/int")
+      LitFloat -> TCon("std/core/float64")
+      LitChar -> TCon("std/core/char")
+      LitString -> TCon("std/core/string")
+    Let(_, body) -> type-of(body)
+    Case(_, branches) ->
+      match branches
+        Cons(Branch(_, guards), _) ->
+          match guards
+            Cons(Guard(_, e'), _) -> type-of(e')
+            _ -> TVar(0)
+        _ -> TVar(0)

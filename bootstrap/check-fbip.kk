@@ -25,12 +25,12 @@ pub fun chk-def-group(dg : def-group )
       chk-top-level-def([def.name], def)
 
 pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
-  with with-def(d)
+  with def(d)
   match d.sort
-    DefFun(borrows, fip-tag) | !fip-tag.is-no-fip ->
-      with with-fip-tag(fip-tag)
+    DefFun(borrows, ft) | !ft.is-no-fip ->
+      with fip-tag(ft)
       val out =
-        with input-handler(Input(def-group-names=def-group-names))
+        with input(Input(def-group-names=def-group-names))
         extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
     _ -> ()
@@ -51,7 +51,7 @@ pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
         .filter(fn((pi, _)) pi.is-own)
         .map(fn((_, p)) p)
       val names = bpars.map(fn(p) p.name)
-      with with-borrowed(names)
+      with borrowed(names)
       val out = extract-output(action={chk-expr(body)})
       write-output(opars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
 
@@ -72,34 +72,142 @@ pub fun chk-expr( e : expr ): <div, chk> ()
       write-output(pars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
     App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
     App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
-
     App(f, args) -> chk-app(f, args)
     Var(tname) -> mark-seen(tname)
-    Let(dgs, body) -> match dgs
-      [] -> chk-expr(body)
-      Cons(DefNonRec(def), dgs') ->
-        val out = extract-output(action={chk-expr(Let(dgs', body))})
+    Let([], body) ->
+      chk-expr(body)
+    Let(Cons(DefNonRec(def), dgs), body) ->
+        val out = extract-output(action={chk-expr(Let(dgs, body))})
         val gamma2 = bind-name(TName(def.name, def.tp), NotReusable, out)
         write-output(gamma2)
         val names = gamma2.gamma-nm.map(fn((tn, _)) tn.name)
-        with with-borrowed(names)
-        with with-tail-mod([Let(dgs', body)])
+        with borrowed(names)
+        with tail-mod([Let(dgs, body)])
         chk-expr(def.expr)
-      _ -> emit-warning(fn(_) "internal: currently the fip analysis cannot handle nested function bindings")
+    Let(_, _) -> emit-warning(fn(_) "internal: currently the fip analysis cannot handle nested function bindings")
 
     Case(scruts, branches) ->
-      // TODO: chk-branches
-      ()
+      chk-branches(scruts, branches)
     Con(_, _) -> ()
     Lit(lit) -> chk-lit(lit)
 
 fun is-ignored-primitive(name : string) : bool
-  ["std/core/cctx-set-ctx-path", "std/core/lazy-memoize-target", "std/core/lazy-enter", "std/core/lazy-leave"].any(fn(n) n == name)
+  ["std/core/cctx-set-ctx-path", "std/core/lazy-memoize-target", "std/core/lazy-enter", "std/core/lazy-leave"].any(fn(n) n == name) // TODO where does this go
 
 fun chk-lit(lit: lit): _ ()
   match lit
     LitString -> () // Implement for diss? Probably not as out of scope for project
     _ -> ()
+
+// --- Case Check ---
+
+pub fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk> ()
+  val which-borrowed = scrutinees.map(is-borrowed-scrutinee)
+  val branches-filtered = branches.filter(fn(b) !b.is-pattern-match-error)
+  val stypes = scrutinees.map(type-of)
+
+  val outs = branches-filtered.map(fn(b)
+    extract-output(action={chk-branch(which-borrowed, stypes, b)})
+  )
+  val gamma2 = join-contexts(branches-filtered.map(patterns), outs)
+  write-output(gamma2)
+
+  val names = gamma2.gamma-nm.map(fn((tn, _)) tn.name)
+  with borrowed(names)
+  with tail-mod-product(branches-filtered)
+  scrutinees.zip(which-borrowed).foreach(fn((s, wb)) chk-scrutinee(wb, s))
+
+fun is-borrowed-scrutinee(e: expr): inp param-info
+  match e
+    Var(tn) -> if is-borrowed(tn) then Borrow else Own
+    _ -> Own
+
+fun chk-scrutinee(wb: param-info, s: expr): <div, chk> ()
+  match (wb, s)
+    (Borrow, Var) -> ()
+    _ -> chk-expr(s)
+
+fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: branch): <div, chk> ()
+  val bor-pats = which-borrowed.zip(b.patterns.zip(stypes)).filter(fn((wb, _)) wb.is-borrow).map(fn((_, p)) p)
+  val own-pats = which-borrowed.zip(b.patterns.zip(stypes)).filter(fn((wb, _)) wb.is-own).map(fn((_, p)) p)
+
+  val bor-names = bor-pats.map(fn((p, _)) p.bv).concat.map(fn(tn) tn.name)
+  val outs =
+    with borrowed(bor-names)
+    b.guards.map(fn(g) extract-output(action={chk-guard(g)}))
+  val out = join-contexts(b.guards.map(fn(_) b.patterns), outs)
+  write-output(own-pats.foldl(out, fn(acc, p) bind-pattern(p, acc)))
+
+fun chk-guard(g: guard): <div, chk> ()
+  val out = extract-output(action={chk-expr(g.expr)})
+  val names = out.gamma-nm.map(fn((tn, _)) tn.name)
+  borrowed(names) // Dont include wrtie-oupt in borrow context
+    with non-tail
+    chk-expr(g.test)
+  write-output(out)
+
+fun is-pattern-match-error(b: branch): bool
+  match b
+    Branch(pats, [Guard(test, App(App(_, [TypeApp(Var(tn), _)]), _))]) ->
+      pats.all(is-patWild) && test.is-expr-true && tn.name == "std/core/pattern-match-error"
+    _ -> False
+
+fun is-expr-true(e: expr): bool // TODO is uqui in both?
+  match e
+    Con(tn, _) -> tn.name == "std/core/True"
+    _ -> False
+
+fun tail-mod-product(branches: list<branch>, action: () -> <div, inp|e> a) : <div, inp|e> a
+  match branches
+    [Branch(_, [Guard(test, e)])] | test.is-expr-true ->
+      with tail-mod([e])
+      action()
+    _ ->
+      with non-tail()
+      action()
+
+fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk> output
+  val (p, tp) = pt
+  match p
+    PatCon(tn, pats, crepr, targs) ->
+      // TODO: provideToken
+      pats.zip(targs).foldl(out, fn(acc, p') bind-pattern(p', acc))
+    PatVar(tn, p') ->
+      bind-name(tn, NotReusable, bind-pattern((p', tp), out))
+    PatLit -> out
+    PatWild ->
+      if tp.needs-dup-drop-tp then
+        require-capability(may-dealloc, fn(_) Just("binding a wildcard pattern causes deallocation"))
+      out
+
+fun bv(p: pattern): div list<tname>
+  match p
+    PatCon(_, pats, _, _) -> pats.flatmap(bv)
+    PatVar(tn, p') -> Cons(tn, bv(p'))
+    _ -> []
+
+// --- Context Merging ---
+
+fun join-contexts(pats: list<list<pattern>>, outs: list<output>): <div, chk> output // TODO
+    val d = fn()
+      val union-nm = outs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
+      // // TODO: Full logic (tryReuse, gamma-dia, alloc-tree)
+      Output(gamma-nm = union-nm)
+    try(d, fn(e:exception) Output())
+
+fun union-with(m1: list<(tname, int)>, m2: list<(tname, int)>, f: (int, int) -> int): div list<(tname, int)>
+  val keys = (m1.map(fst) ++ m2.map(fst)).unique
+  keys.map(fn(k)
+    val v1 = match m1.lookup(fn(tn) tn == k) { Just(v) -> v; Nothing -> 0 }
+    val v2 = match m2.lookup(fn(tn) tn == k) { Just(v) -> v; Nothing -> 0 }
+    (k, f(v1, v2))
+  )
+
+fun unique(ts: list<tname>): div list<tname>
+  match ts
+    [] -> []
+    Cons(x, xs) -> Cons(x, xs.filter(fn(y) y != x).unique)
+
 // --- Effect Check ---
 pub fun chk-effect(tp: type-expr)
   if !is-fbip-extended(tp) then emit-warning(fn(env: env) -> "algebraic effects other than" ++ env.show ++ " pure may cause allocation.") // TODO use better than show
@@ -114,7 +222,7 @@ fun is-fbip-extended(tp: type-expr)
     val (taus:list<type-expr>, _) = extract-effect-extend(tp)
     taus.all(fn(t:type-expr) t.is-fbip)
 
-pub fun extract-effect-extend(t: type-expr)
+pub fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
   match expand-syn(t)
     TApp(TCon(name), [l, e]) | name == "effect-extend" ->
       val (ls, tl) = extract-effect-extend(e)
@@ -122,62 +230,29 @@ pub fun extract-effect-extend(t: type-expr)
       (ls0 ++ ls, tl)
     _ -> ([], t)
 
-pub fun extract-label(l: type-expr): _ list<type-expr>
+pub fun extract-label(l: type-expr): div list<type-expr>
     match expand-syn(l)
       TApp(TCon(name), [_, _]) | name == "effect-extend" ->
         val (ls, _) = extract-effect-extend(l)
         ls
       _ -> []
 
-fun is-effect-fixed(tp : type-expr): _ bool
+fun is-effect-fixed(tp : type-expr): div bool
   val (_, tau) = extract-effect-extend(tp)
   match tau
     TCon(name) | name == "total" -> True
     _ -> False
 
-fun expand-syn(l: type-expr): type-expr
-  match l
-    TSyn(_, _, tp) -> expand-syn(tp)
-    _ -> l
-
 fun chk-pars(pars: list<(string, type-expr)>, borrows)
   pars.foreach(fn((_, tp)) chk-effect(tp))
 
-fun has-total-effect(tp : type-expr) : _ bool
+fun has-total-effect(tp : type-expr) : div bool
   match tp.expand-syn
     TFun(_, eff, _) -> eff.is-effect-fixed
     TForall(_, t) -> t.has-total-effect
     _ -> False
 
-fun type-of(e : expr) : _ type-expr
-  match e
-    Lam(tnames, eff, res) -> TFun(tnames.map(fn(tn) (tn.name, tn.tp)), eff, type-of(res))
-    Var(tn) -> tn.tp
-    App(f, args) ->
-      match type-of(f).expand-syn
-        TFun(_, _, res) -> res
-        _ -> TVar(0)
-    TypeLam(tvs, body) -> TForall(tvs, type-of(body))
-    TypeApp(f, _) ->
-      match type-of(f).expand-syn
-        TForall(_, t) -> t
-        _ -> TVar(0)
-    Con(tn, _) -> tn.tp
-    Lit(l) -> match l
-      LitInt -> TCon("std/core/int")
-      LitFloat -> TCon("std/core/float64")
-      LitChar -> TCon("std/core/char")
-      LitString -> TCon("std/core/string")
-    Let(_, body) -> type-of(body)
-    Case(_, branches) ->
-      match branches
-        Cons(Branch(_, guards), _) ->
-          match guards
-            Cons(Guard(_, e'), _) -> type-of(e')
-            _ -> TVar(0)
-        _ -> TVar(0)
-
-fun is-mod-cons(e : expr) : _ bool
+fun is-mod-cons(e : expr) : div bool
   match e
     Var -> True
     TypeLam(_, b) -> b.is-mod-cons
@@ -197,19 +272,17 @@ fun is-mod-cons-fun(e : expr): div bool
   match e
     TypeLam(_, b) -> b.is-mod-cons-fun
     TypeApp(b, _) -> b.is-mod-cons-fun
-    Con           -> True
-    Let(dgs, b)   -> dgs.all(is-mod-cons-dg) && b.is-mod-cons-fun
-    App(f, args)  ->
-      val a = type-of(e).has-total-effect
-      val b = f.is-mod-cons-fun
-      val c = args.all(is-mod-cons)
-      a && b && c
+    Con -> True
+    Let(dgs, b) -> dgs.all(is-mod-cons-dg) && b.is-mod-cons-fun
+    App(f, args) ->
+      type-of(e).has-total-effect && f.is-mod-cons-fun && args.all(is-mod-cons)
     _ -> False
 
-pub fun with-tail-mod(mod-exprs: list<expr>, action)
+pub fun tail-mod(mod-exprs: list<expr>, action)
   val curr = get-input()
   val is-tail = curr.is-tail-context && mod-exprs.all(is-mod-cons)
-  with-input(curr(is-tail-context = is-tail), action=action)
+  with input-override(curr(is-tail-context = is-tail))
+  action()
 
 
 pub fun chk-app( f : expr, args : list<expr> )
