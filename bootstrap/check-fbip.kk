@@ -3,6 +3,7 @@ module bootstrap/check-fbip
 import bootstrap/chk
 import bootstrap/core
 import bootstrap/parc-reuse
+import std/num/float64
 
 // --- Entry Point ---
 
@@ -170,10 +171,15 @@ fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk> output
   val (p, tp) = pt
   match p
     PatCon(tn, pats, crepr, targs) ->
-      // TODO: provideToken
-      pats.zip(targs).foldl(out, fn(acc, p') bind-pattern(p', acc))
-    PatVar(tn, p') ->
-      bind-name(tn, NotReusable, bind-pattern((p', tp), out))
+      val size = get-constructor-alloc-size(crepr)
+      provide-token(tn.name, size, pats.zip(targs).foldl(out, fn(acc, p') bind-pattern(p', acc)))
+    PatVar(tn, pat) ->
+      match pat
+        PatCon(_, _, crepr, _) ->
+          val size = get-constructor-alloc-size(crepr)
+          bind-name(tn, size, out)
+        PatWild -> bind-name(tn, NotReusable, out)
+        _ -> bind-pattern((pat, tp), out)
     PatLit -> out
     PatWild ->
       if tp.needs-dup-drop-tp then
@@ -215,7 +221,7 @@ pub fun chk-effect(tp: type-expr)
 fun is-fbip(tau: type-expr)
   match tau
     TCon(name)              -> ["total", "div", "exn"].any(fn(n) n == name)
-    TApp(tc1, [TCon(name)]) -> name == "exn" // TODO: && eqType tc1 tconHandled
+    TApp(_, [TCon(name)])   -> name == "exn" // TODO: && eqType tc1 tconHandled
     _                       -> False
 
 fun is-fbip-extended(tp: type-expr)
@@ -376,6 +382,91 @@ fun chk-allocation(tn: tname, repr: con-repr): <div, chk> ()
     val size = get-constructor-alloc-size(repr)
     get-allocation(tn, size)
 
+// --- Allocation Credit Calculation ---
+
+struct alloc-in-loop
+  has-alloc: bool = False
+  has-self-call: bool = False
+  has-both-in-sequence: bool = False
+
+val alloc-in-loop-empty = Alloc-in-loop()
+
+fun sequential(a: alloc-in-loop, b: alloc-in-loop): alloc-in-loop
+  Alloc-in-loop(
+    a.has-alloc || b.has-alloc,
+    a.has-self-call || b.has-self-call,
+    a.has-both-in-sequence || b.has-both-in-sequence || (a.has-alloc && b.has-self-call) || (a.has-self-call && b.has-alloc)
+  )
+
+fun parallel(a: alloc-in-loop, b: alloc-in-loop): alloc-in-loop
+  Alloc-in-loop(
+    a.has-alloc || b.has-alloc,
+    a.has-self-call || b.has-self-call,
+    a.has-both-in-sequence || b.has-both-in-sequence
+  )
+
+fun (<=)(fa1: fip-alloc, fa2: fip-alloc): bool
+  match (fa1, fa2)
+    (AllocAtMost(n1), AllocAtMost(n2)) -> n1 <= n2
+    (AllocAtMost, AllocFinitely) -> True
+    (AllocAtMost, AllocUnlimited) -> True
+    (AllocFinitely, AllocFinitely) -> True
+    (AllocFinitely, AllocUnlimited) -> True
+    (AllocUnlimited, AllocUnlimited) -> True
+    _ -> False
+
+fun max(fa1: fip-alloc, fa2: fip-alloc): fip-alloc
+  if fa1 <= fa2 then fa2 else fa1
+
+fun get-alloc-credits(not-reused: list<int>, tree: alloc-tree): div (fip-alloc, alloc-in-loop)
+  match tree
+    Alloc(id) ->
+      if not-reused.any(fn(i) i == id) then
+        (AllocAtMost(1), Alloc-in-loop(has-alloc = True))
+      else
+        (AllocAtMost(0), alloc-in-loop-empty)
+    Call(fa) -> (fa, alloc-in-loop-empty)
+    CallSelf(fa) -> (fa, Alloc-in-loop(has-self-call = True))
+    Seq(l, r) ->
+      val (fa1, loop1) = get-alloc-credits(not-reused, l)
+      val (fa2, loop2) = get-alloc-credits(not-reused, r)
+      val fa = match (fa1, fa2)
+        (AllocAtMost(n1), AllocAtMost(n2)) -> AllocAtMost(n1 + n2)
+        _ -> max(fa1, fa2)
+      (fa, sequential(loop1, loop2))
+    Match(ts) ->
+      val results = ts.map(fn(t) get-alloc-credits(not-reused, t))
+      val fa = results.map(fst).foldl(AllocAtMost(0), max)
+      val loop = results.map(snd).foldl(alloc-in-loop-empty, parallel)
+      (fa, loop)
+    Leaf -> (AllocAtMost(0), alloc-in-loop-empty)
+
+// --- Reuse and Token Logic ---
+
+fun provide-token(debug-name: name, sz: reusable, out: output): <warning, environment> output
+  match sz
+    NotReusable -> out
+    ReusableWithSize(size) ->
+      match out.gamma-dia.lookup(fn(s) s == size)
+        Nothing ->
+          require-capability(may-dealloc, fn(_)
+            Just("the matched constructor " ++ debug-name ++ "/" ++ size.show ++ " is not reused")
+          )
+          out
+        Just(allocs) ->
+          // check probabilities
+          match allocs
+            Cons((p, _), _) | p != 1.0 ->
+              require-capability(may-dealloc, fn(_)
+                Just("not all branches can reuse the space provided by " ++ debug-name ++ "/" ++ size.show)
+              )
+            _ -> ()
+          // update gamma-dia by removing one token
+          val next-allocs = match allocs { Cons(_, rest) -> rest; [] -> [] }
+          val next-dia = if next-allocs.is-empty then out.gamma-dia.filter(fn((s, _)) s != size)
+                         else out.gamma-dia.map(fn((s, as')) if s == size then (s, next-allocs) else (s, as'))
+          out(gamma-dia = next-dia)
+
 fun chk-args(args: list<(param-info, expr)>): <div, chk> ()
   args.foreach(chk-arg)
 
@@ -433,8 +524,20 @@ fun may-recurse(f: fip-tag): bool
 // --- Output Verification ---
 
 pub fun check-output-empty( out : output )
-  // TODO: Implementation of check-output-empty
-  ()
+  // unbound names
+  match out.gamma-nm.head
+    Just((nm, _)) -> emit-warning(fn(_) "unbound name (which may have been used despite being borrowed): " ++ nm.name)
+    Nothing -> ()
+
+  // extract not-reused IDs
+  val not-reused = out.gamma-dia.flatmap(fn((_, allocs)) allocs.flatmap(fn((_, ids)) ids.map(snd)))
+
+  val (allocs, loop) = get-alloc-credits(not-reused, out.alloc-tree)
+  val final-allocs = if loop.has-both-in-sequence then AllocUnlimited else allocs
+
+  val permission = get-fip().get-fip-alloc
+  if !(final-allocs <= permission) then
+    emit-warning(fn(_) "function allocates " ++ final-allocs.show ++ " but was declared as allocating " ++ permission.show)
 
 fun info-is-local(tname: tname): bool
   !tname.is-qualified
@@ -520,8 +623,18 @@ pub fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
 fun bind-name(nm: tname, msize: reusable, out: output): _ output
   match out.gamma-nm.find(fn((tn, _)) tn == nm)
     Nothing ->
-      // TODO: Full logic (addTypeReuseInfo, provideToken, chkDrop)
-      out
+      val is-reusable = match msize
+        ReusableWithSize(sz) -> ReusableWithSize(sz)
+        NotReusable -> NotReusable // Simplified: should call addTypeReuseInfo
+      
+      val out2 = match is-reusable
+        NotReusable -> out
+        ReusableWithSize -> provide-token(nm.name, is-reusable, out)
+      
+      // chkDrop logic simplified:
+      if nm.needs-dup-drop then
+        require-capability(may-dealloc, fn(_) Just("the variable " ++ nm.name ++ " is unused (causing deallocation)"))
+      out2
     Just((_, n)) ->
       if n > 1 && nm.needs-dup-drop then
         require-capability(may-alloc, fn(_) Just("the variable " ++ nm.name ++ " is used multiple times (causing sharing and preventing reuse)"))
