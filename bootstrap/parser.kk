@@ -104,18 +104,23 @@ pub fun sexpr-to-con-repr(s: sexpr): <div,exn> con-repr
 
 // Expressions
 pub fun sexpr-to-expr(s: sexpr): <div,exn> expr
-  match s.expect-list
-    Cons(Atom("lam"), [List(tnames), eff, body]) ->
-      Lam(tnames.map(sexpr-to-tname), eff.sexpr-to-type-expr, body.sexpr-to-expr)
-    Cons(Atom("var"), [tn]) -> Var(tn.sexpr-to-tname)
-    Cons(Atom("app"), Cons(f, args)) -> App(f.sexpr-to-expr, args.map(sexpr-to-expr))
-    Cons(Atom("type-lam"), [List(tvs), body]) -> TypeLam(tvs.map(fn(v) v.expect-atom.parse-int.default(0)), body.sexpr-to-expr)
-    Cons(Atom("type-app"), Cons(f, tps)) -> TypeApp(f.sexpr-to-expr, tps.map(sexpr-to-type-expr))
-    Cons(Atom("con"), [name, repr]) -> Con(TName(name.expect-atom, TVar(-1)), repr.sexpr-to-con-repr)
-    Cons(Atom("let"), [List(dgs), body]) -> Let(dgs.map(sexpr-to-def-group), body.sexpr-to-expr)
-    Cons(Atom("case"), [List(scruts), List(branches)]) -> Case(scruts.map(sexpr-to-expr), branches.map(sexpr-to-branch))
-    [l] -> Lit(l.sexpr-to-lit)
-    _ -> throw("Invalid expr sexpr: " ++ s.sexpr/show)
+  match s
+    Atom(_) -> Lit(s.sexpr-to-lit)
+    List(l) ->
+      match l
+        Cons(Atom("lam"), [List(tnames), eff, body]) ->
+          Lam(tnames.map(sexpr-to-tname), eff.sexpr-to-type-expr, body.sexpr-to-expr)
+        Cons(Atom("var"), [tn]) ->
+          Var(match tn { List(_) -> tn.sexpr-to-tname; Atom(name) -> TName(name, TVar(-1)) })
+        Cons(Atom("app"), Cons(f, args)) -> App(f.sexpr-to-expr, args.map(sexpr-to-expr))
+        Cons(Atom("type-lam"), [List(tvs), body]) -> TypeLam(tvs.map(fn(v) v.expect-atom.parse-int.default(0)), body.sexpr-to-expr)
+        Cons(Atom("type-app"), Cons(f, tps)) -> TypeApp(f.sexpr-to-expr, tps.map(sexpr-to-type-expr))
+        Cons(Atom("con"), [name, repr]) ->
+          val tn = match name { List(_) -> name.sexpr-to-tname; Atom(n) -> TName(n, TVar(-1)) }
+          Con(tn, repr.sexpr-to-con-repr)
+        Cons(Atom("let"), [List(dgs), body]) -> Let(dgs.map(sexpr-to-def-group), body.sexpr-to-expr)
+        Cons(Atom("case"), [List(scruts), List(branches)]) -> Case(scruts.map(sexpr-to-expr), branches.map(sexpr-to-branch))
+        _ -> throw("Invalid expr sexpr (list): " ++ s.sexpr/show)
 
 pub fun sexpr-to-def-group(s: sexpr): <div,exn> def-group
   match s.expect-list
@@ -205,12 +210,18 @@ pub fun sexpr-to-guard(s: sexpr): <div,exn> guard
 
 pub fun sexpr-to-pattern(s: sexpr): <div,exn> pattern
   match s
-    List(Cons(Atom("pat-con"), [name, List(pats), repr, List(targs)])) ->
-      PatCon(TName(name.expect-atom, TVar(-1)), pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, targs.map(sexpr-to-type-expr))
-    List(Cons(Atom("pat-var"), [name, p])) -> PatVar(TName(name.expect-atom, TVar(-1)), p.sexpr-to-pattern)
-    List(Cons(Atom("pat-lit"), [l])) -> PatLit(l.sexpr-to-lit)
-    Atom("pat-wild") -> PatWild
-    _ -> throw("Invalid pattern sexpr: " ++ s.sexpr/show)
+    Atom(_) -> throw("Expected list for pattern, found atom: " ++ s.expect-atom)
+    List(l) ->
+      match l
+        Cons(Atom("pat-con"), [name, List(pats), repr, List(targs)]) ->
+          val tn = match name { List(_) -> name.sexpr-to-tname; Atom(n) -> TName(n, TVar(-1)) }
+          PatCon(tn, pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, targs.map(sexpr-to-type-expr))
+        Cons(Atom("pat-var"), [name, p]) ->
+          val tn = match name { List(_) -> name.sexpr-to-tname; Atom(n) -> TName(n, TVar(-1)) }
+          PatVar(tn, p.sexpr-to-pattern)
+        Cons(Atom("pat-lit"), [l']) -> PatLit(l'.sexpr-to-lit)
+        [Atom("pat-wild")] -> PatWild
+        _ -> throw("Invalid pattern sexpr: " ++ s.sexpr/show)
 
 pub fun parse-core(input: string): pure core
   val sprogram = parse-sexpr(input)

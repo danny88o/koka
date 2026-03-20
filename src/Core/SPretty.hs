@@ -14,7 +14,7 @@ data SExpr = SAtom String
            | SList [SExpr]
 
 prettySExprToDoc :: SExpr -> Doc
-prettySExprToDoc (SAtom s) = text s
+prettySExprToDoc (SAtom s) = text (show s)
 prettySExprToDoc (SList []) = text "()"
 prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExprToDoc (x:xs))
 

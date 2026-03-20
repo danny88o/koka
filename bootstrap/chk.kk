@@ -47,6 +47,9 @@ pub struct env
 pub fun current-def-names(): <environment> list<string>
   get-env().current-def.map(fn(d) d.name)
 
+pub fun get-fip(): <environment> fip-tag
+  get-env().fip-tag
+
 pub fun write-call-allocation(name: string, fip: fip-tag): <environment, out> ()
   val defs = current-def-names()
   val call = if defs.any(fn(n) n == name) then CallSelf else Call

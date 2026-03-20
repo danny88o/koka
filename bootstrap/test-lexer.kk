@@ -13,5 +13,5 @@ fun main()
     _ -> throw("Enter one file not found in args")
   val content = read-text-file(file.realpath).extract-actual-string
   val pprinted = parse-sexpr(content).show
-  content == pprinted || throw("Pprinted content does not match original content:\n" ++ pprinted ++ "\n\noriginal:\n" ++ content)
+  content == pprinted || throw(content)
 
