@@ -83,25 +83,31 @@ pub fun sexpr-to-data-repr(s: sexpr): <exn> data-repr
     Atom("open") -> DataOpen
     _ -> throw("Invalid data-repr sexpr")
 
+pub fun sexpr-to-maybe(s: sexpr, f: (sexpr) -> <div|e> a): <div|e> maybe<a>
+  match s
+    Atom("nothing") -> Nothing
+    List(Cons(Atom("just"), [x])) -> Just(f(x))
+    _ -> Nothing
+
 pub fun sexpr-to-con-repr(s: sexpr): <div,exn> con-repr
   match s.expect-list
-    Cons(Atom("enum"), [dr, vr, tag]) -> ConEnum(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("iso"), [dr, vr, tag]) -> ConIso(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("singleton"), [dr, vr, tag]) -> ConSingleton(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("single"), [dr, vr, path, tag]) -> ConSingle(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("as-just"), [dr, vr, name, tag]) -> ConAsJust(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, name.expect-atom, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("struct"), [dr, vr, tag]) -> ConStruct(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("as-cons"), [dr, vr, name, path, tag]) -> ConAsCons(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, name.expect-atom, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("open"), [dr, vr, path, tag]) -> ConOpen(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
-    Cons(Atom("normal"), [dr, vr, path, tag]) -> ConNormal(dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
-    _ -> throw("Invalid con-repr sexpr")
+    Cons(Atom("enum"), [tn, dr, vr, tag]) -> ConEnum(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("iso"), [tn, dr, vr, tag]) -> ConIso(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("singleton"), [tn, dr, vr, tag]) -> ConSingleton(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("single"), [tn, dr, vr, path, tag]) -> ConSingle(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("as-just"), [tn, dr, vr, name, tag]) -> ConAsJust(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, name.expect-atom, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("struct"), [tn, dr, vr, tag]) -> ConStruct(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("as-cons"), [tn, dr, vr, name, path, tag]) -> ConAsCons(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, name.expect-atom, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("open"), [tn, dr, vr, path, tag]) -> ConOpen(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
+    Cons(Atom("normal"), [tn, dr, vr, path, tag]) -> ConNormal(tn.expect-atom, dr.sexpr-to-data-repr, vr.sexpr-to-value-repr, path.sexpr-to-ctx-path, tag.expect-atom.parse-int.default(0))
+    l -> throw("Invalid con-repr sexpr:\n" ++ l.show)
 
 // Expressions
 pub fun sexpr-to-expr(s: sexpr): <div,exn> expr
   match s.expect-list
     Cons(Atom("lam"), [List(tnames), eff, body]) ->
       Lam(tnames.map(sexpr-to-tname), eff.sexpr-to-type-expr, body.sexpr-to-expr)
-    Cons(Atom("var"), [name]) -> Var(TName(name.expect-atom, TVar(-1))) // Note: Type is often reconstructed or irrelevant for some checks, but we need a tname
+    Cons(Atom("var"), [tn]) -> Var(tn.sexpr-to-tname)
     Cons(Atom("app"), Cons(f, args)) -> App(f.sexpr-to-expr, args.map(sexpr-to-expr))
     Cons(Atom("type-lam"), [List(tvs), body]) -> TypeLam(tvs.map(fn(v) v.expect-atom.parse-int.default(0)), body.sexpr-to-expr)
     Cons(Atom("type-app"), Cons(f, tps)) -> TypeApp(f.sexpr-to-expr, tps.map(sexpr-to-type-expr))
@@ -169,7 +175,7 @@ pub fun sexpr-to-data-info(s: sexpr): <div,exn> data-info
 pub fun sexpr-to-con-info(s: sexpr): <div,exn> con-info
   match s.expect-list.expect-tag("con-info")
     [name, List(params), f] ->
-      Con-info(name.expect-atom, TVar(-1), params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-fip)
+      Con-info(name.expect-atom, TVar(-1), params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-maybe(sexpr-to-fip))
     _ -> throw("Invalid con-info sexpr")
 
 pub fun sexpr-to-data-def(s: sexpr): <div,exn> data-def

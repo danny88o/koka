@@ -285,9 +285,150 @@ pub fun tail-mod(mod-exprs: list<expr>, action)
   action()
 
 
-pub fun chk-app( f : expr, args : list<expr> )
-  // TODO: Full app logic
-  ()
+pub fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
+  match f
+    TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
+    TypeApp(body, _) -> chk-app(body, args)
+    App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/effect-open" -> chk-app(f, args) // TODO: Check effect-open @open
+    Con(cname, repr) ->
+      chk-mod-cons(args)
+      chk-lazy-con(cname, repr)
+      chk-allocation(cname, repr)
+    Var(tn) | !tn.info-is-local ->
+      val bs = get-param-infos(tn.name)
+      non-tail({chk-args(bs.zip-param-info(args))})
+      chk-fun-callable(tn.name)
+      val input = get-input()
+      if !(input.is-tail-context || !input.def-group-names.any(fn(n) n == tn.name)) then
+        require-capability(may-recurse, fn(_)
+          Just("non-tail call to a (mutually) recursive function: " ++ tn.name)
+        )
+    _ ->
+      with non-tail()
+      args.foreach(chk-expr)
+      val is-bapp = match f
+        Var(tn) -> is-borrowed(tn)
+        _ -> False
+      if !is-bapp then
+        require-capability(may-dealloc, fn(_)
+          Just("owned calls to functions require deallocation")
+        )
+        chk-expr(f)
+
+fun chk-mod-cons(args: list<expr>): <div, chk> ()
+  match args
+    [] -> ()
+    Cons(a, rest) ->
+      with tail-mod(rest)
+      chk-expr(a)
+      chk-mod-cons(rest)
+
+fun get-data-info-by-name(name: string): <environment> maybe<data-info>
+  get-env().type-infos.lookup(fn(n) n == name)
+
+fun is-lazy-callable-from(fip-prime: fip-tag, fip: fip-tag): bool
+  match (fip-prime, fip)
+    (NoFip, Fip) -> False
+    (NoFip, Fbip) -> False
+    _ -> True
+
+fun chk-lazy-con(tn: tname, repr: con-repr): <div, chk> ()
+  val env = get-env()
+  match get-data-info-by-name(repr.typename)
+    Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
+    Just(di) ->
+      match di.constrs.find(fn(ci) ci.name == tn.name)
+        Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
+        Just(ci) ->
+          val fip-prime = ci.lazy.default(NoFip(False))
+          if ci.lazy.is-nothing || fip-prime.is-lazy-callable-from(env.fip-tag) then
+            write-call-allocation(tn.name, fip-prime)
+          else
+            emit-warning(fn(_) "allocating a non-fip lazy constructor: " ++ tn.name)
+
+fun is-con-as-just(repr: con-repr): bool
+  match repr
+    ConAsJust -> True
+    _ -> False
+
+fun get-constructor-alloc-size(repr: con-repr): <environment> reusable
+  match repr
+    ConEnum -> NotReusable
+    ConSingleton -> NotReusable
+    _ -> ReusableWithSize(8) // Simplified for MVP: assume 8 bytes for pointer-sized fields
+
+fun get-allocation(tn: tname, sz: reusable): <chk> ()
+  match sz
+    NotReusable -> ()
+    ReusableWithSize(size) ->
+      val id = fresh-id()
+      val prob = 1.0 // Simplified for MVP: assume all constructors are always allocated
+      // Note: probability is 1.0 (represented as float64 1.0 for now)
+      write-output(Output(gamma-dia = [(size, [(prob, [(tn, id)])])], alloc-tree = Alloc(id)))
+
+fun chk-allocation(tn: tname, repr: con-repr): <div, chk> ()
+  if repr.is-con-as-just then ()
+  elif repr.typename.ends-with("_noreuse").is-just then
+    require-capability(may-alloc, fn(_)
+      Just("types suffixed with _noreuse are not reused: " ++ repr.typename)
+    )
+  else
+    val size = get-constructor-alloc-size(repr)
+    get-allocation(tn, size)
+
+fun chk-args(args: list<(param-info, expr)>): <div, chk> ()
+  args.foreach(chk-arg)
+
+fun chk-arg(arg: (param-info, expr)): <div, chk> ()
+  val (pi, e) = arg
+  match pi
+    Own -> chk-expr(e)
+    Borrow ->
+      match e
+        TypeLam(_, body) -> chk-arg((Borrow, body))
+        TypeApp(body, _) -> chk-arg((Borrow, body))
+        App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/effect-open" -> chk-arg((Borrow, f))
+        Var(tn) -> mark-borrowed(tn)
+        Lit(_) -> ()
+        _ ->
+          chk-expr(e)
+          if e.type-of.needs-dup-drop-tp then
+            require-capability(may-dealloc, fn(_)
+               Just("passing owned expressions as borrowed causes deallocation")
+            )
+
+fun zip-param-info(pinfos: list<param-info>, args: list<expr>): div list<(param-info, expr)>
+  match (pinfos, args)
+    (Cons(p, ps), Cons(a, rest)) -> Cons((p, a), zip-param-info(ps, rest))
+    ([], Cons(a, rest)) -> Cons((Own, a), zip-param-info([], rest))
+    _ -> []
+
+fun chk-fun-callable(name: string): <environment, out, warning> ()
+  val env = get-env()
+  match env.gamma.lookup(fn(n) n == name)
+    Nothing ->
+      if name == "std/core/cctx-set-ctx-path" || name == "std/core/field-addr-of" then
+        write-call-allocation(name, Fip(AllocAtMost(0)))
+      else
+        emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
+    Just(fip') ->
+      if fip'.is-callable-from(env.fip-tag) then
+        write-call-allocation(name, fip')
+      else
+        emit-warning(fn(_) "calling a non-fip function: " ++ name)
+
+fun is-callable-from(fip': fip-tag, fip: fip-tag): bool
+  match (fip', fip)
+    (Fip, _) -> True
+    (Fbip, Fbip) -> True
+    (_, NoFip) -> True
+    _ -> False
+
+fun may-recurse(f: fip-tag): bool
+  match f
+    Fip(_) -> False
+    Fbip(_, is-tail) -> !is-tail
+    NoFip(is-tail) -> !is-tail
 
 // --- Output Verification ---
 

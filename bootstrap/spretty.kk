@@ -50,17 +50,22 @@ pub fun data-repr/sexpr( dr : data-repr ) : sexpr
     DataNormal(has) -> List([Atom("normal"), has.bool/sexpr])
     DataOpen -> Atom("open")
 
+pub fun maybe/sexpr( m : maybe<a>, f : (a) -> div sexpr ) : div sexpr
+  match m
+    Nothing -> Atom("nothing")
+    Just(x) -> List([Atom("just"), f(x)])
+
 pub fun con-repr/sexpr( cr : con-repr ) : div sexpr
   match cr
-    ConEnum(dr, vr, tag) -> List([Atom("enum"), dr.sexpr, vr.sexpr, Atom(tag.show)])
-    ConIso(dr, vr, tag) -> List([Atom("iso"), dr.sexpr, vr.sexpr, Atom(tag.show)])
-    ConSingleton(dr, vr, tag) -> List([Atom("singleton"), dr.sexpr, vr.sexpr, Atom(tag.show)])
-    ConSingle(dr, vr, path, tag) -> List([Atom("single"), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
-    ConAsJust(dr, vr, name, tag) -> List([Atom("as-just"), dr.sexpr, vr.sexpr, Atom(name), Atom(tag.show)])
-    ConStruct(dr, vr, tag) -> List([Atom("struct"), dr.sexpr, vr.sexpr, Atom(tag.show)])
-    ConAsCons(dr, vr, name, path, tag) -> List([Atom("as-cons"), dr.sexpr, vr.sexpr, Atom(name), path.sexpr, Atom(tag.show)])
-    ConOpen(dr, vr, path, tag) -> List([Atom("open"), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
-    ConNormal(dr, vr, path, tag) -> List([Atom("normal"), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
+    ConEnum(tn, dr, vr, tag) -> List([Atom("enum"), Atom(tn), dr.sexpr, vr.sexpr, Atom(tag.show)])
+    ConIso(tn, dr, vr, tag) -> List([Atom("iso"), Atom(tn), dr.sexpr, vr.sexpr, Atom(tag.show)])
+    ConSingleton(tn, dr, vr, tag) -> List([Atom("singleton"), Atom(tn), dr.sexpr, vr.sexpr, Atom(tag.show)])
+    ConSingle(tn, dr, vr, path, tag) -> List([Atom("single"), Atom(tn), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
+    ConAsJust(tn, dr, vr, name, tag) -> List([Atom("as-just"), Atom(tn), dr.sexpr, vr.sexpr, Atom(name), Atom(tag.show)])
+    ConStruct(tn, dr, vr, tag) -> List([Atom("struct"), Atom(tn), dr.sexpr, vr.sexpr, Atom(tag.show)])
+    ConAsCons(tn, dr, vr, name, path, tag) -> List([Atom("as-cons"), Atom(tn), dr.sexpr, vr.sexpr, Atom(name), path.sexpr, Atom(tag.show)])
+    ConOpen(tn, dr, vr, path, tag) -> List([Atom("open"), Atom(tn), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
+    ConNormal(tn, dr, vr, path, tag) -> List([Atom("normal"), Atom(tn), dr.sexpr, vr.sexpr, path.sexpr, Atom(tag.show)])
 
 pub fun pattern/sexpr( p : pattern ) : div sexpr
   match p
@@ -76,10 +81,13 @@ pub fun guard/sexpr( g : guard ) : div sexpr
 pub fun branch/sexpr( b : branch ) : div sexpr
   List([Atom("branch"), List(b.patterns.map(sexpr)), List(b.guards.map(sexpr))])
 
+pub fun tname/sexpr( tn : tname ) : div sexpr
+  List([Atom(tn.name), tn.tp.sexpr])
+
 pub fun expr/sexpr( e : expr ) : div sexpr
   match e
-    Lam(tnames, eff, body) -> List([Atom("lam"), List(tnames.map(fn(tn) List([Atom(tn.name), tn.tp.sexpr]))), eff.sexpr, body.sexpr])
-    Var(tn) -> List([Atom("var"), Atom(tn.name)])
+    Lam(tnames, eff, body) -> List([Atom("lam"), List(tnames.map(tname/sexpr)), eff.sexpr, body.sexpr])
+    Var(tn) -> List([Atom("var"), tn.sexpr])
     App(f, args) -> List(Cons(Atom("app"), Cons(f.sexpr, args.map(sexpr))))
     TypeLam(tvs, body) -> List([Atom("type-lam"), List(tvs.map(fn(v) Atom(v.show))), body.sexpr])
     TypeApp(f, tps) -> List(Cons(Atom("type-app"), Cons(f.sexpr, tps.map(sexpr))))
@@ -128,7 +136,7 @@ pub fun data-def/sexpr( dd : data-def ) : div sexpr
     DataDefAuto(is-struct) -> List([Atom("auto"), is-struct.bool/sexpr])
 
 pub fun con-info/sexpr( ci : con-info ) : div sexpr
-  List([Atom("con-info"), Atom(ci.name), List(ci.params.map(fn(p) { val (n,t) = p; List([Atom(n), t.sexpr]) })), ci.lazy.sexpr])
+  List([Atom("con-info"), Atom(ci.name), List(ci.params.map(fn(p) { val (n,t) = p; List([Atom(n), t.sexpr]) })), ci.lazy.maybe/sexpr(fip/sexpr)])
 
 pub fun data-info/sexpr( di : data-info ) : div sexpr
   List([Atom("data-info"), Atom(di.name), List(di.params.map(fn(p) Atom(p.show))), List(di.constrs.map(sexpr)), di.is-rec.bool/sexpr, di.ddef.sexpr])

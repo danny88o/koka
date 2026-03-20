@@ -75,15 +75,15 @@ pub type data-repr
   DataOpen
 
 pub type con-repr
-  ConEnum(dr: data-repr, vr: value-repr, tag: int)
-  ConIso(dr: data-repr, vr: value-repr, tag: int)
-  ConSingleton(dr: data-repr, vr: value-repr, tag: int)
-  ConSingle(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
-  ConAsJust(dr: data-repr, vr: value-repr, name: name, tag: int)
-  ConStruct(dr: data-repr, vr: value-repr, tag: int)
-  ConAsCons(dr: data-repr, vr: value-repr, name: name, path: ctx-path, tag: int)
-  ConOpen(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
-  ConNormal(dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
+  ConEnum(typename: name, dr: data-repr, vr: value-repr, tag: int)
+  ConIso(typename: name, dr: data-repr, vr: value-repr, tag: int)
+  ConSingleton(typename: name, dr: data-repr, vr: value-repr, tag: int)
+  ConSingle(typename: name, dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
+  ConAsJust(typename: name, dr: data-repr, vr: value-repr, name: name, tag: int)
+  ConStruct(typename: name, dr: data-repr, vr: value-repr, tag: int)
+  ConAsCons(typename: name, dr: data-repr, vr: value-repr, name: name, path: ctx-path, tag: int)
+  ConOpen(typename: name, dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
+  ConNormal(typename: name, dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
 
 // Expressions
 pub type pattern
@@ -166,7 +166,7 @@ pub struct con-info
   name: name
   tp: type-expr
   params: list<(string, type-expr)>
-  lazy: fip-tag
+  lazy: maybe<fip-tag>
 
 pub struct data-info
   name: name

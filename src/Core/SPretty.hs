@@ -91,6 +91,10 @@ prettyFipAllocToSExpr (AllocAtMost n) = SList [SAtom "at-most", SAtom (show n)]
 prettyFipAllocToSExpr AllocFinitely = SAtom "finitely"
 prettyFipAllocToSExpr AllocUnlimited = SAtom "unlimited"
 
+prettyMaybeToSExpr :: (a -> SExpr) -> Maybe a -> SExpr
+prettyMaybeToSExpr f Nothing  = SAtom "nothing"
+prettyMaybeToSExpr f (Just x) = SList [SAtom "just", f x]
+
 -- Type Definitions
 prettyTypeDefGroupToSExpr :: TypeDefGroup -> SExpr
 prettyTypeDefGroupToSExpr (TypeDefGroup tdefs) = SList (SAtom "type-def-group" : map prettyTypeDefToSExpr tdefs)
@@ -103,7 +107,7 @@ prettyDataInfoToSExpr :: DataInfo -> SExpr
 prettyDataInfoToSExpr info = SList [SAtom "data-info", SAtom (show (pretty (dataInfoName info))), SList (map (SAtom . show . typevarId) (dataInfoParams info)), SList (map prettyConInfoToSExpr (dataInfoConstrs info)), SAtom (show (dataInfoIsRec info)), prettyDataDefToSExpr (dataInfoDef info)]
 
 prettyConInfoToSExpr :: ConInfo -> SExpr
-prettyConInfoToSExpr info = SList [SAtom "con-info", SAtom (show (pretty (conInfoName info))), SList (map prettyParamToSExpr (conInfoParams info)), prettyFipToSExpr (fromMaybe noFip (conInfoLazy info))]
+prettyConInfoToSExpr info = SList [SAtom "con-info", SAtom (show (pretty (conInfoName info))), SList (map prettyParamToSExpr (conInfoParams info)), prettyMaybeToSExpr prettyFipToSExpr (conInfoLazy info)]
 
 prettyDataDefToSExpr :: DataDef -> SExpr
 prettyDataDefToSExpr def = case def of
@@ -119,15 +123,15 @@ prettyValueReprToSExpr (ValueRepr raw scan align) = SList [SAtom "value-repr", S
 -- Representations
 prettyConReprToSExpr :: ConRepr -> SExpr
 prettyConReprToSExpr repr = case repr of
-  ConEnum _ dr vr tag -> SList [SAtom "enum", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
-  ConIso _ dr vr tag -> SList [SAtom "iso", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
-  ConSingleton _ dr vr tag -> SList [SAtom "singleton", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
-  ConSingle _ dr vr path tag -> SList [SAtom "single", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
-  ConAsJust _ dr vr name tag -> SList [SAtom "as-just", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show (pretty name)), SAtom (show tag)]
-  ConStruct _ dr vr tag -> SList [SAtom "struct", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
-  ConAsCons _ dr vr name path tag -> SList [SAtom "as-cons", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show (pretty name)), prettyCtxPathToSExpr path, SAtom (show tag)]
-  ConOpen _ dr vr path tag -> SList [SAtom "open", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
-  ConNormal _ dr vr path tag -> SList [SAtom "normal", prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
+  ConEnum tn dr vr tag -> SList [SAtom "enum", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
+  ConIso tn dr vr tag -> SList [SAtom "iso", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
+  ConSingleton tn dr vr tag -> SList [SAtom "singleton", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
+  ConSingle tn dr vr path tag -> SList [SAtom "single", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
+  ConAsJust tn dr vr name tag -> SList [SAtom "as-just", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show (pretty name)), SAtom (show tag)]
+  ConStruct tn dr vr tag -> SList [SAtom "struct", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show tag)]
+  ConAsCons tn dr vr name path tag -> SList [SAtom "as-cons", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, SAtom (show (pretty name)), prettyCtxPathToSExpr path, SAtom (show tag)]
+  ConOpen tn dr vr path tag -> SList [SAtom "open", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
+  ConNormal tn dr vr path tag -> SList [SAtom "normal", SAtom (show (pretty tn)), prettyDataReprToSExpr dr, prettyValueReprToSExpr vr, prettyCtxPathToSExpr path, SAtom (show tag)]
 
 prettyDataReprToSExpr :: DataRepr -> SExpr
 prettyDataReprToSExpr dr = case dr of

@@ -40,8 +40,20 @@ pub fun output/(++) (o1 : output, o2 : output) : output
 pub struct env
   current-def : list<def> = []
   fip-tag : fip-tag = NoFip(False)
-  type-infos : list<(string, data-info)> = []
-  borrowed : list<(string, list<param-info>)> = []
+  type-infos : list<(name, data-info)> = []
+  borrowed : list<(name, list<param-info>)> = []
+  gamma : list<(name, fip-tag)> = []
+
+pub fun current-def-names(): <environment> list<string>
+  get-env().current-def.map(fn(d) d.name)
+
+pub fun write-call-allocation(name: string, fip: fip-tag): <environment, out> ()
+  val defs = current-def-names()
+  val call = if defs.any(fn(n) n == name) then CallSelf else Call
+  match fip
+    Fip(n) -> write-output(Output(alloc-tree = call(n)))
+    Fbip(n, _) -> write-output(Output(alloc-tree = call(n)))
+    _ -> ()
 
 pub fun env/show(e: env): div string
   "Env(current-def: [" ++ e.current-def.map(fn(d) d.name).join(", ") ++ "], fip-tag: " ++ e.fip-tag.show ++ ")"
