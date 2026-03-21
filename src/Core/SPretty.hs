@@ -19,7 +19,7 @@ prettySExprToDoc (SList []) = text "()"
 prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExprToDoc (x:xs))
 
 instance Show SExpr where
-  show sexpr = displayS (renderPretty 0.4 80 (prettySExprToDoc sexpr)) ""
+  show sexpr = displayS (renderPretty 1.0 80 (prettySExprToDoc sexpr)) ""
 
 prettyCoreToSExpr :: TypeDefGroups -> DefGroups -> SExpr
 prettyCoreToSExpr tdgs dgs = SList [SAtom "core", SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]

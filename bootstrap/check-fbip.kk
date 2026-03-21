@@ -1,7 +1,7 @@
 module bootstrap/check-fbip
 
 import bootstrap/chk
-import bootstrap/core
+import bootstrap/core/core
 import bootstrap/parc-reuse
 import std/num/float64
 
@@ -626,11 +626,11 @@ fun bind-name(nm: tname, msize: reusable, out: output): _ output
       val is-reusable = match msize
         ReusableWithSize(sz) -> ReusableWithSize(sz)
         NotReusable -> NotReusable // Simplified: should call addTypeReuseInfo
-      
+
       val out2 = match is-reusable
         NotReusable -> out
         ReusableWithSize -> provide-token(nm.name, is-reusable, out)
-      
+
       // chkDrop logic simplified:
       if nm.needs-dup-drop then
         require-capability(may-dealloc, fn(_) Just("the variable " ++ nm.name ++ " is unused (causing deallocation)"))

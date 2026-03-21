@@ -114,10 +114,8 @@ typeCheck flags defs coreImports program0
         let borrowed = borrowedExtendICore (coreProgram{ Core.coreProgDefs = coreDefs1 }) (defsBorrowed defs)
         when (showInitialCore flags) $ do
           traceDefGroups "initial"
-        when (showScore flags) $ do
-          traceDefGroupsSExpr "initial" (Core.coreProgTypeDefs coreProgram)
 
-        checkFBIP penv (platform flags) newtypes borrowed gamma
+        checkFBIP penv (platform flags) newtypes borrowed gamma (Core.coreProgTypeDefs coreProgram) (showScore flags)
 
 
         -- trace ("\nFBIP check finished for module: " ++ show progName ++ "\n") $ return ()
@@ -165,13 +163,6 @@ typeCheck flags defs coreImports program0
       where
         showDef def = show (Core.Pretty.prettyDef (penv{coreShowDef=True}) def)
         penv = prettyEnvFromFlags flags
-
-    traceDefGroupsSExpr :: String -> Core.TypeDefGroups -> Core.CorePhase () ()
-    traceDefGroupsSExpr title tdgs
-      = do dgs <- Core.getCoreDefs
-           trace (unlines (["/*", title, "(S-expressions)\n*/"] ++
-              [show (SP.prettyCoreToSExpr tdgs dgs)] ++
-              ["/*end of\n(S-expressions)\n*/"])) $ return ()
 
 
 

@@ -1,9 +1,14 @@
-module bootstrap/parser
+module bootstrap/parser/parser
 
-import bootstrap/core
-import bootstrap/lexer
+import bootstrap/parser/lexer
+import bootstrap/core/core
+import bootstrap/core/sexpr
 
 import std/num/float64
+
+pub fun parse(input: string): <div,exn> core
+  val sprogram = parse-sexpr(input)
+  sprogram.sexpr-to-core
 
 // Conversion helpers
 fun expect-list(s: sexpr): <exn> list<sexpr>
@@ -210,7 +215,8 @@ pub fun sexpr-to-guard(s: sexpr): <div,exn> guard
 
 pub fun sexpr-to-pattern(s: sexpr): <div,exn> pattern
   match s
-    Atom(_) -> throw("Expected list for pattern, found atom: " ++ s.expect-atom)
+    Atom("pat-wild") -> PatWild
+    Atom(a) -> throw("Expected list for pattern, found atom: " ++ a)
     List(l) ->
       match l
         Cons(Atom("pat-con"), [name, List(pats), repr, List(targs)]) ->

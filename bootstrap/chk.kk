@@ -1,6 +1,6 @@
 module bootstrap/chk
 
-import bootstrap/core
+import bootstrap/core/core
 
 // --- Data Types from CheckFBIP.hs ---
 

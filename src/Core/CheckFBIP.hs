@@ -16,7 +16,7 @@ module Core.CheckFBIP( checkFBIP
 
 import qualified Lib.Trace
 import Control.Monad
-import Data.List (foldl', tails, uncons, isSuffixOf, foldl1', partition, sortOn)
+import Data.List (foldl', tails, uncons, isSuffixOf, isInfixOf, foldl1', partition, sortOn)
 import qualified Data.Set as S
 import qualified Data.Map as M
 
@@ -49,15 +49,19 @@ import Control.Monad.Reader
 import Control.Monad.Writer
 import Common.Id
 
+import qualified Core.SPretty as SP
+
 trace s x =
   Lib.Trace.trace s
     x
 
 
-checkFBIP :: Pretty.Env ->  Platform -> Newtypes -> Borrowed -> Gamma -> CorePhase b ()
-checkFBIP penv platform newtypes borrowed gamma
+checkFBIP :: Pretty.Env ->  Platform -> Newtypes -> Borrowed -> Gamma -> Core.TypeDefGroups -> Bool -> CorePhase b ()
+checkFBIP penv platform newtypes borrowed gamma tdgs showScore
   = do uniq      <- unique
        defGroups <- getCoreDefs
+       when (showScore && not ("@" `isInfixOf` show (Pretty.context penv))) $
+         trace (show (SP.prettyCoreToSExpr tdgs defGroups)) $ return ()
        let (_,warns) = runChk penv uniq platform newtypes borrowed gamma (chkDefGroups defGroups)
        liftError (warningMsgs [warningMessageKind ErrStatic range doc | (range,doc) <- warns])
 

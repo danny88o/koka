@@ -1,4 +1,4 @@
-module bootstrap/core
+module bootstrap/core/core
 
 // Types
 // data Type   = TForall  ![TypeVar] !Rho  -- ^ forall a b c. phi, psi => rho

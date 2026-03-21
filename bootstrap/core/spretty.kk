@@ -1,7 +1,7 @@
-module bootstrap/spretty
+module bootstrap/core/spretty
 
-import bootstrap/core
-import bootstrap/lexer
+import bootstrap/core/core
+import bootstrap/core/sexpr
 
 import std/num/float64
 
