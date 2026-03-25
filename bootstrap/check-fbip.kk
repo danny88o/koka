@@ -5,19 +5,24 @@ import bootstrap/core/core
 import bootstrap/parc-reuse
 import std/num/float64
 
-// --- Entry Point ---
 
-// pub fun check-fbip( c : core ) : <div,exn> list<string>
-//   val (_, warnings) = run-chk( NoFip(False) )
-//     chk-def-groups( c.defs )
-//   warnings
+pub fun check-fbip( c : core )
+    chk-def-groups(c.defs)
 
-// --- Check Definition Groups ---
 
-pub fun chk-def-groups(dgs : list<def-group>)
+fun chk-def-groups(dgs : list<def-group>) : div list<string>
+  with run-chk()
   dgs.foreach(chk-def-group)
 
-pub fun chk-def-group(dg : def-group )
+fun run-chk(action: () -> <chk|e> a) : e list<string>
+  with warning-handler()
+  with input-handler(Input())
+  with env-handler(Env())
+  with unique-id()
+  with extract-output(Output())
+  action()
+
+fun chk-def-group(dg : def-group )
   match dg
     DefRec(defs) ->
       val names = defs.map(fn(d) d.name)
@@ -25,7 +30,7 @@ pub fun chk-def-group(dg : def-group )
     DefNonRec(def) ->
       chk-top-level-def([def.name], def)
 
-pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
+fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
   with def(d)
   match d.sort
     DefFun(borrows, ft) | !ft.is-no-fip ->
@@ -39,7 +44,7 @@ pub fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
 
 // --- Top-level Expression Check ---
 
-pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
+fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
@@ -62,7 +67,7 @@ pub fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
 
 // --- Expression Check ---
 
-pub fun chk-expr( e : expr ): <div, chk> ()
+fun chk-expr( e : expr ): <div, chk> ()
   match e
     TypeLam(_, body) -> chk-expr(body)
     TypeApp(body, _) -> chk-expr(body)
@@ -102,7 +107,7 @@ fun chk-lit(lit: lit): _ ()
 
 // --- Case Check ---
 
-pub fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk> ()
+fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk> ()
   val which-borrowed = scrutinees.map(is-borrowed-scrutinee)
   val branches-filtered = branches.filter(fn(b) !b.is-pattern-match-error)
   val stypes = scrutinees.map(type-of)
@@ -215,7 +220,7 @@ fun unique(ts: list<tname>): div list<tname>
     Cons(x, xs) -> Cons(x, xs.filter(fn(y) y != x).unique)
 
 // --- Effect Check ---
-pub fun chk-effect(tp: type-expr)
+fun chk-effect(tp: type-expr)
   if !is-fbip-extended(tp) then emit-warning(fn(env: env) -> "algebraic effects other than" ++ env.show ++ " pure may cause allocation.") // TODO use better than show
 
 fun is-fbip(tau: type-expr)
@@ -228,7 +233,7 @@ fun is-fbip-extended(tp: type-expr)
     val (taus:list<type-expr>, _) = extract-effect-extend(tp)
     taus.all(fn(t:type-expr) t.is-fbip)
 
-pub fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
+fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
   match expand-syn(t)
     TApp(TCon(name), [l, e]) | name == "effect-extend" ->
       val (ls, tl) = extract-effect-extend(e)
@@ -236,7 +241,7 @@ pub fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
       (ls0 ++ ls, tl)
     _ -> ([], t)
 
-pub fun extract-label(l: type-expr): div list<type-expr>
+fun extract-label(l: type-expr): div list<type-expr>
     match expand-syn(l)
       TApp(TCon(name), [_, _]) | name == "effect-extend" ->
         val (ls, _) = extract-effect-extend(l)
@@ -284,14 +289,14 @@ fun is-mod-cons-fun(e : expr): div bool
       type-of(e).has-total-effect && f.is-mod-cons-fun && args.all(is-mod-cons)
     _ -> False
 
-pub fun tail-mod(mod-exprs: list<expr>, action)
+fun tail-mod(mod-exprs: list<expr>, action)
   val curr = get-input()
   val is-tail = curr.is-tail-context && mod-exprs.all(is-mod-cons)
   with input-override(curr(is-tail-context = is-tail))
   action()
 
 
-pub fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
+fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
   match f
     TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
     TypeApp(body, _) -> chk-app(body, args)
@@ -523,7 +528,7 @@ fun may-recurse(f: fip-tag): bool
 
 // --- Output Verification ---
 
-pub fun check-output-empty( out : output )
+fun check-output-empty( out : output )
   // unbound names
   match out.gamma-nm.head
     Just((nm, _)) -> emit-warning(fn(_) "unbound name (which may have been used despite being borrowed): " ++ nm.name)
@@ -547,7 +552,7 @@ fun is-cctx-name(name : string) : bool
     Just(_) -> True
     Nothing -> False
 
-pub fun needs-dup-drop(tname : tname)
+fun needs-dup-drop(tname : tname)
   if tname.name.is-cctx-name then False
   else tname.tp.needs-dup-drop-tp
 
@@ -611,7 +616,7 @@ fun get-data-info(tp : type-expr) : <environment> maybe<data-info> //
       _ -> Nothing
   find-info(tp)
 
-pub fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
+fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
   match tp.get-data-info
     Nothing -> True // Assume heap-allocated if unknown
     Just(di) ->

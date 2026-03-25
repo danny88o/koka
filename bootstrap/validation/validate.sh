@@ -5,6 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Default options
 test_lexer=true
 test_parser=true
+test_fbip=true
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -12,16 +13,25 @@ while [[ $# -gt 0 ]]; do
     -a|--all)
       test_lexer=true
       test_parser=true
+      test_fbip=true
       shift
       ;;
     -l|--lexer)
       test_lexer=true
       test_parser=false
+      test_fbip=false
       shift
       ;;
     -p|--parser)
       test_lexer=false
       test_parser=true
+      test_fbip=false
+      shift
+      ;;
+    -f|--fbip)
+      test_lexer=false
+      test_parser=false
+      test_fbip=true
       shift
       ;;
     *)
@@ -53,6 +63,16 @@ do
       echo -e "\033[1;33mResult:\033[0m $parser"
     else
       echo -e "\033[1;32mParser test passed for $base\033[0m"
+    fi
+  fi
+
+  if [ "$test_fbip" = true ]; then
+    fbip=$(koka -e -v0 $DIR/test-fbip.kk -- $DIR/sexpr/$base.kk | sed 's/\x1b\[6n//g' )
+    if [ "$fbip" != "Test passed" ]; then
+      echo -e "\033[1;31mFBIP test failed for $base\033[0m"
+      echo -e "\033[1;33mResult:\033[0m $fbip"
+    else
+      echo -e "\033[1;32mFBIP test passed for $base\033[0m"
     fi
   fi
 

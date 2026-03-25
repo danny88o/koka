@@ -4,7 +4,7 @@ type tree
 
 
 fip fun replace(t: tree, key: int, value: bool) : tree {
-  match t {
+  match t
     Node(lchild, k, _, rchild) ->
       if k == key then
         Node(lchild, k, value, rchild)
@@ -13,7 +13,7 @@ fip fun replace(t: tree, key: int, value: bool) : tree {
       else
         Node(lchild, key, value, rchild)
     Leaf -> Leaf
-  }
+
 }
 
 fun show(t: tree) : string {

@@ -87,7 +87,7 @@ pub effect out
 pub effect unique-state
   fun fresh-id() : int
 
-pub effect fun warning( msg : string ): a
+pub effect fun warning( msg : string ): ()
 
 pub alias chk = <environment, out, inp, unique-state, warning>
 
@@ -129,6 +129,13 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
     val id = next-id
     next-id := next-id + 1
     id
+  action()
+
+pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
+  var warnings := []
+  with handler
+    return(x) warnings
+    fun warning(msg) warnings := Cons(msg, warnings)
   action()
 
 
@@ -175,7 +182,7 @@ pub fun non-tail(action)
 
 // --- Warning Helpers
 
-pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> a
+pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
   warning(make-doc(get-env()))
 
 
