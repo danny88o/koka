@@ -3,14 +3,18 @@ module bootstrap/check-fbip
 import bootstrap/chk
 import bootstrap/core/core
 import bootstrap/parc-reuse
+
+import bootstrap/debug
+
 import std/num/float64
 
 
 pub fun check-fbip( c : core )
+    with dbg-handler
     chk-def-groups(c.defs)
 
 
-fun chk-def-groups(dgs : list<def-group>) : div list<string>
+fun chk-def-groups(dgs : list<def-group>) : _ list<string>
   with run-chk()
   dgs.foreach(chk-def-group)
 
@@ -34,6 +38,7 @@ fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
   with def(d)
   match d.sort
     DefFun(borrows, ft) | !ft.is-no-fip ->
+      info("Borrows for function " ++ d.name ++ ": " ++ borrows.show())
       with fip-tag(ft)
       val out =
         with input(Input(def-group-names=def-group-names))
@@ -44,7 +49,7 @@ fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
 
 // --- Top-level Expression Check ---
 
-fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
+fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
@@ -56,6 +61,10 @@ fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk> ()
         .zip(pars)
         .filter(fn((pi, _)) pi.is-own)
         .map(fn((_, p)) p)
+
+      info("Borrows:" ++ borrows.show())
+      info("Borrowed parameters: " ++ bpars.map(fn(p) p.name).join(", "))
+      info("Owned parameters: " ++ opars.map(fn(p) p.name).join(", "))
       val names = bpars.map(fn(p) p.name)
       with borrowed(names)
       val out = extract-output(action={chk-expr(body)})
@@ -199,25 +208,44 @@ fun bv(p: pattern): div list<tname>
 
 // --- Context Merging ---
 
-fun join-contexts(pats: list<list<pattern>>, outs: list<output>): <div, chk> output // TODO
-    val d = fn()
-      val union-nm = outs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
-      // // TODO: Full logic (tryReuse, gamma-dia, alloc-tree)
-      Output(gamma-nm = union-nm)
-    try(d, fn(e:exception) Output())
+fun join-contexts(pats: list<list<pattern>>, outs: list<output>): div output
+  match outs
+    Nil -> Output()
+    Cons(out, Nil) -> out
+    outs ->
+      val g = fn ()
+        val union-nm = outs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
+        // Adjust probabilities for gamma-dia
+        val n = outs.length.float64
+        val union-dia = outs.map(gamma-dia).map(fn(dia) dia.map(fn((sz, as')) (sz, as'.map(fn((p, ids)) (p / n, ids))))).foldl1(fn(m1, m2) m1.union-with(m2, zip-tokens))
+        Output(gamma-nm = union-nm, gamma-dia = union-dia, alloc-tree = Match(outs.map(alloc-tree)))
+      try(g, fn(_) Output())
 
-fun union-with(m1: list<(tname, int)>, m2: list<(tname, int)>, f: (int, int) -> int): div list<(tname, int)>
-  val keys = (m1.map(fst) ++ m2.map(fst)).unique
-  keys.map(fn(k)
-    val v1 = match m1.lookup(fn(tn) tn == k) { Just(v) -> v; Nothing -> 0 }
-    val v2 = match m2.lookup(fn(tn) tn == k) { Just(v) -> v; Nothing -> 0 }
-    (k, f(v1, v2))
-  )
+fun zip-tokens(as1: list<(float64, list<(tname, int)>)>, as2: list<(float64, list<(tname, int)>)>): div list<(float64, list<(tname, int)>)>
+  match (as1, as2)
+    (Cons((p1, ids1), rest1), Cons((p2, ids2), rest2)) -> Cons((p1 + p2, ids1 ++ ids2), zip-tokens(rest1, rest2))
+    (Nil, rest2) -> rest2
+    (rest1, Nil) -> rest1
+    _ -> []
 
-fun unique(ts: list<tname>): div list<tname>
+fun union-with(m1: list<(a, b)>, m2: list<(a, b)>, f: (b, b) -> <exn,div|e> b, ?(==): (a, a) -> bool): <div|e> list<(a, b)>
+  val keys = (m1.map(fst) ++ m2.map(fst)).unique-by-eq
+  val union = fn()
+    keys.map(fn(k)
+      val v1 = match m1.find(fn((k1, _)) k1 == k) { Just((_, v)) -> Just(v); Nothing -> Nothing }
+      val v2 = match m2.find(fn((k2, _)) k2 == k) { Just((_, v)) -> Just(v); Nothing -> Nothing }
+      match (v1, v2)
+        (Just(val1), Just(val2)) -> (k, f(val1, val2))
+        (Just(val1), Nothing) -> (k, val1)
+        (Nothing, Just(val2)) -> (k, val2)
+    )
+  try(union, fn(_) Nil)
+
+fun unique-by-eq(ts: list<a>, ?(==): (a, a) -> bool): div list<a>
   match ts
-    [] -> []
-    Cons(x, xs) -> Cons(x, xs.filter(fn(y) y != x).unique)
+    Nil -> Nil
+    Cons(x, xs) -> Cons(x, xs.filter(fn(y) !(y == x)).unique-by-eq)
+
 
 // --- Effect Check ---
 fun chk-effect(tp: type-expr)

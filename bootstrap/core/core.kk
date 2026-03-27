@@ -33,10 +33,20 @@ pub fun (==)(t1: type-expr, t2: type-expr): div bool
     (TSyn(name1, args1, t1), TSyn(name2, args2, t2))   -> name1 == name2 && args1 == args2 && t1 == t2
     _ -> False
 
+pub fun type-expr/show(t: type-expr): div string
+  match t
+    TForall(vars, t) -> "forall " ++ vars.map(fn(v) v.show).join(" ") ++ ". " ++ t.show
+    TFun(args, eff, res) -> "(" ++ args.map(fn((n, t)) n ++ ": " ++ t.show).join(", ") ++ ") -> " ++ eff.show ++ " " ++ res.show
+    TVar(id) -> "TVar(" ++ id.show ++ ")"
+    TCon(name) -> name
+    TApp(f, args) -> f.show ++ " " ++ args.map(type-expr/show).join(" ")
+    TSyn(name, args, _) -> name ++ " " ++ args.map(type-expr/show).join(" ")
+
+
 pub alias name = string
 
 pub type tname
-  TName(name: string, tp: type-expr)
+  TName(name: name, tp: type-expr)
 
 pub fun name/is-qualified(name : name) : bool
   name.contains("/")
@@ -46,6 +56,9 @@ pub fun tname/is-qualified(tn : tname) : bool
 
 pub fun tname/(==)(tn1: tname, tn2: tname): bool
   tn1.name == tn2.name
+
+pub fun tname/show(tn: tname): div string
+  tn.name ++ ": " ++ tn.tp.show
 
 pub type lit
   LitInt(i: int)
@@ -113,6 +126,11 @@ pub type expr
 pub type param-info
   Borrow
   Own
+
+pub fun param-infow/show(p: param-info): div string
+  match p
+    Borrow -> "Borrow"
+    Own -> "Own"
 
 pub fun param-info/(==)(p1: param-info, p2: param-info): bool
   match (p1, p2)

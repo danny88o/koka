@@ -107,6 +107,10 @@ pub fun env-handler(initial: env, action: () -> <environment|e> a) : e a
   with fun get-env() env
   action()
 
+pub fun env-override(new-env: env, action: () -> <environment|e> a) : <environment|e> a
+  with override fun get-env() new-env
+  action()
+
 pub fun input-handler(initial: input, action: () -> <inp|e> a) : e a
   var input := initial
   with fun get-input() input
@@ -152,12 +156,12 @@ pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
 
 pub fun def(def: def, action)
   val env = get-env()
-  with env-handler(env(current-def = Cons(def, env.current-def)))
+  with env-override(env(current-def = Cons(def, env.current-def)))
   action()
 
 pub fun fip-tag(tag: fip-tag, action)
   val env = get-env()
-  with env-handler(env(fip-tag = tag))
+  with env-override(env(fip-tag = tag))
   action()
 
 // --- Input Helpers
@@ -167,9 +171,8 @@ pub fun input(input: input, action)
   action()
 
 pub fun borrowed(names: list<string>, action)
-  val temp = get-input()
-  val input = temp(delta = names ++ temp.delta)
-  with override fun get-input() input
+  val input = get-input()
+  with input-override(input(delta = names ++ input.delta))
   action()
 
 pub fun is-borrowed(tname: tname): inp bool
