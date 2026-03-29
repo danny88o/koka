@@ -200,13 +200,14 @@ pub fun sexpr-to-data-def(s: sexpr): <div,exn> data-def
 // Core
 pub fun sexpr-to-core(s: sexpr): <div,exn> core
   match s.expect-list.expect-tag("core")
-    [List(gamma-sexpr), List(tdefs), List(defs)] ->
+    [List(gamma-sexpr), List(type-infos-sexpr), List(tdefs), List(defs)] ->
       val gamma = gamma-sexpr.map(fn(g)
         match g
           List([Atom(name), fip-sexpr]) -> (name, fip-sexpr.sexpr-to-fip)
           _ -> throw("Invalid gamma entry: " ++ g.sexpr/show)
       )
-      Core(gamma, tdefs.map(sexpr-to-type-def-group), defs.map(sexpr-to-def-group))
+      val type-infos = type-infos-sexpr.map(sexpr-to-data-info)
+      Core(gamma, type-infos, tdefs.map(sexpr-to-type-def-group), defs.map(sexpr-to-def-group))
     _ -> throw("Invalid core sexpr: " ++ s.sexpr/show)
 
 pub fun sexpr-to-branch(s: sexpr): <div,exn> branch

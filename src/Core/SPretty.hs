@@ -10,6 +10,8 @@ import Data.Maybe (fromMaybe)
 import qualified Type.Pretty as TP
 import Common.ColorScheme
 import Type.Assumption
+import Kind.Newtypes
+import qualified Common.NameMap as NM
 import qualified Data.Set as S
 import qualified Data.List as L
 
@@ -24,14 +26,19 @@ prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExp
 instance Show SExpr where
   show sexpr = displayS (renderPretty 1.0 80 (prettySExprToDoc sexpr)) ""
 
-prettyCoreToSExpr :: Gamma -> TypeDefGroups -> DefGroups -> SExpr
-prettyCoreToSExpr gamma tdgs dgs = SList [SAtom "core", prettyGamma gamma, SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
+prettyCoreToSExpr :: Gamma -> Newtypes -> TypeDefGroups -> DefGroups -> SExpr
+prettyCoreToSExpr gamma newtypes tdgs dgs = SList [SAtom "core", prettyGamma gamma, prettyNewtypes newtypes, SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
 
 prettyGamma :: Gamma -> SExpr
 prettyGamma gamma =
   let infos = map snd (gammaList gamma)
       extInfos = filter isExternalInfo infos
   in SList (map prettyNameInfoToSExpr extInfos)
+
+prettyNewtypes :: Newtypes -> SExpr
+prettyNewtypes newtypes =
+  let infos = NM.elems (newtypesTypeDefs newtypes)
+  in SList (map prettyDataInfoToSExpr infos)
 
 isExternalInfo :: NameInfo -> Bool
 isExternalInfo info = case info of

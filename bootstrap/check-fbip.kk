@@ -11,17 +11,17 @@ import std/num/float64
 
 pub fun check-fbip( c : core )
     with dbg-handler
-    chk-def-groups(c.gamma, c.defs)
+    chk-def-groups(c.gamma, c.type-infos, c.defs)
 
 
-fun chk-def-groups(gamma: list<(string, fip-tag)>, dgs : list<def-group>) : _ list<string>
-  with run-chk(gamma)
+fun chk-def-groups(gamma: list<(string, fip-tag)>, type-infos: list<data-info>, dgs : list<def-group>) : _ list<string>
+  with run-chk(gamma, type-infos)
   dgs.foreach(chk-def-group)
 
-fun run-chk(gamma, action: () -> <chk|e> a) : e list<string>
+fun run-chk(gamma, type-infos: list<data-info>, action: () -> <chk|e> a) : e list<string>
   with warning-handler()
   with input-handler(Input())
-  with env-handler(Env(gamma = gamma))
+  with env-handler(Env(gamma = gamma, new-types = type-infos.map(fn(di) (di.name, di))))
   with unique-id()
   with extract-output(Output())
   action()
@@ -72,7 +72,7 @@ fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
 
 // --- Expression Check ---
 
-fun chk-expr( e : expr ): <div, chk> ()
+fun chk-expr( e : expr ): <div, chk, dbg> ()
   match e
     TypeLam(_, body) -> chk-expr(body)
     TypeApp(body, _) -> chk-expr(body)
@@ -112,7 +112,7 @@ fun chk-lit(lit: lit): _ ()
 
 // --- Case Check ---
 
-fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk> ()
+fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk, dbg> ()
   val which-borrowed = scrutinees.map(is-borrowed-scrutinee)
   val branches-filtered = branches.filter(fn(b) !b.is-pattern-match-error)
   val stypes = scrutinees.map(type-of)
@@ -133,12 +133,12 @@ fun is-borrowed-scrutinee(e: expr): inp param-info
     Var(tn) -> if is-borrowed(tn) then Borrow else Own
     _ -> Own
 
-fun chk-scrutinee(wb: param-info, s: expr): <div, chk> ()
+fun chk-scrutinee(wb: param-info, s: expr): <div, chk, dbg> ()
   match (wb, s)
     (Borrow, Var) -> ()
     _ -> chk-expr(s)
 
-fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: branch): <div, chk> ()
+fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: branch): <div, chk, dbg> ()
   val bor-pats = which-borrowed.zip(b.patterns.zip(stypes)).filter(fn((wb, _)) wb.is-borrow).map(fn((_, p)) p)
   val own-pats = which-borrowed.zip(b.patterns.zip(stypes)).filter(fn((wb, _)) wb.is-own).map(fn((_, p)) p)
 
@@ -149,7 +149,7 @@ fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: bra
   val out = join-contexts(b.guards.map(fn(_) b.patterns), outs)
   write-output(own-pats.foldl(out, fn(acc, p) bind-pattern(p, acc)))
 
-fun chk-guard(g: guard): <div, chk> ()
+fun chk-guard(g: guard): <div, chk, dbg> ()
   val out = extract-output(action={chk-expr(g.expr)})
   val names = out.gamma-nm.map(fn((tn, _)) tn.name)
   borrowed(names) // Dont include wrtie-oupt in borrow context
@@ -177,7 +177,7 @@ fun tail-mod-product(branches: list<branch>, action: () -> <div, inp|e> a) : <di
       with non-tail()
       action()
 
-fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk> output
+fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk, dbg> output
   val (p, tp) = pt
   match p
     PatCon(tn, pats, crepr, targs) ->
@@ -193,6 +193,7 @@ fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk> output
     PatLit -> out
     PatWild ->
       if tp.needs-dup-drop-tp then
+        info("binding a wildcard pattern of type " ++ tp.show ++ " causes deallocation")
         require-capability(may-dealloc, fn(_) Just("binding a wildcard pattern causes deallocation"))
       out
 
@@ -320,7 +321,7 @@ fun tail-mod(mod-exprs: list<expr>, action)
   action()
 
 
-fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
+fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
   match f
     TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
     TypeApp(body, _) -> chk-app(body, args)
@@ -350,7 +351,7 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
         )
         chk-expr(f)
 
-fun chk-mod-cons(args: list<expr>): <div, chk> ()
+fun chk-mod-cons(args: list<expr>): <div, chk, dbg> ()
   match args
     [] -> ()
     Cons(a, rest) ->
@@ -498,10 +499,10 @@ fun provide-token(debug-name: name, sz: reusable, out: output): <warning, enviro
                          else out.gamma-dia.map(fn((s, as')) if s == size then (s, next-allocs) else (s, as'))
           out(gamma-dia = next-dia)
 
-fun chk-args(args: list<(param-info, expr)>): <div, chk> ()
+fun chk-args(args: list<(param-info, expr)>): <div, chk, dbg> ()
   args.foreach(chk-arg)
 
-fun chk-arg(arg: (param-info, expr)): <div, chk> ()
+fun chk-arg(arg: (param-info, expr)): <div, chk, dbg> ()
   val (pi, e) = arg
   match pi
     Own -> chk-expr(e)
@@ -640,7 +641,7 @@ fun get-data-info(tp : type-expr) : <environment> maybe<data-info> // TODO In th
       _ -> Nothing
   find-info(tp)
 
-fun needs-dup-drop-tp(tp : type-expr) : <environment> bool
+fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
   match tp.get-data-info
     Nothing -> True // Assume heap-allocated if unknown
     Just(di) ->
