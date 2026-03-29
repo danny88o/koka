@@ -528,5 +528,3 @@ pub fun @main : () -> <st<global>,console/console,div,fsys,ndet,net,ui> ()
     std/core/types/@open(bootstrap/validation/example/fp-finger-trees/@main/@expr)();
   };
 
-bootstrap/validation/example/fp-finger-trees.kk(61,12): warning: fip fun buncons: the matched constructor Tuple4/32 is not reused
-

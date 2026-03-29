@@ -26,7 +26,7 @@ value type bseq<a>
   BSeq(s : seq<a>, q : buffer)
 
 // Isomorphic to (a,b,c,d) but unboxed value
-type tuple4<a,b,c,d>
+value type tuple4<a,b,c,d>
   Tuple4(fst:a, snd:b, thd:c, field4:d)
 
 fun bhead(^bs : bseq<a>) : exn a

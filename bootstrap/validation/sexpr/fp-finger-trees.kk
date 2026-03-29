@@ -152,7 +152,7 @@
                 ("field4" ("tvar" "37")))
               "nothing"))
           "False"
-          "normal"))))
+          ("value" ("value-repr" "0" "4" "8"))))))
   (("non-rec"
       ("def"
         "bootstrap/validation/example/fp-finger-trees/#reuse3/a"
@@ -2363,7 +2363,7 @@
                         ("pat-var" "@x" "pat-wild"))
                       ("single"
                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                        ("single" "False")
+                        "single-struct"
                         ("value-repr" "0" "4" "8")
                         "none"
                         "1")
@@ -2426,7 +2426,7 @@
                         "pat-wild")
                       ("single"
                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                        ("single" "False")
+                        "single-struct"
                         ("value-repr" "0" "4" "8")
                         "none"
                         "1")
@@ -2489,7 +2489,7 @@
                         "pat-wild")
                       ("single"
                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                        ("single" "False")
+                        "single-struct"
                         ("value-repr" "0" "4" "8")
                         "none"
                         "1")
@@ -2552,7 +2552,7 @@
                         "pat-wild")
                       ("single"
                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                        ("single" "False")
+                        "single-struct"
                         ("value-repr" "0" "4" "8")
                         "none"
                         "1")
@@ -3160,7 +3160,7 @@
                     "bootstrap/validation/example/fp-finger-trees/Tuple4"
                     ("single"
                       "bootstrap/validation/example/fp-finger-trees/tuple4"
-                      ("single" "False")
+                      "single-struct"
                       ("value-repr" "0" "4" "8")
                       "none"
                       "1"))
@@ -8360,7 +8360,7 @@
                             "bootstrap/validation/example/fp-finger-trees/Tuple4"
                             ("single"
                               "bootstrap/validation/example/fp-finger-trees/tuple4"
-                              ("single" "False")
+                              "single-struct"
                               ("value-repr" "0" "4" "8")
                               "none"
                               "1"))
@@ -8515,7 +8515,7 @@
                                       "bootstrap/validation/example/fp-finger-trees/Tuple4"
                                       ("single"
                                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                                        ("single" "False")
+                                        "single-struct"
                                         ("value-repr" "0" "4" "8")
                                         "none"
                                         "1"))
@@ -8843,7 +8843,7 @@
                             "bootstrap/validation/example/fp-finger-trees/Tuple4"
                             ("single"
                               "bootstrap/validation/example/fp-finger-trees/tuple4"
-                              ("single" "False")
+                              "single-struct"
                               ("value-repr" "0" "4" "8")
                               "none"
                               "1"))
@@ -9188,7 +9188,7 @@
                                       "bootstrap/validation/example/fp-finger-trees/Tuple4"
                                       ("single"
                                         "bootstrap/validation/example/fp-finger-trees/tuple4"
-                                        ("single" "False")
+                                        "single-struct"
                                         ("value-repr" "0" "4" "8")
                                         "none"
                                         "1"))
@@ -9662,7 +9662,7 @@
                                   ("pat-var" "b'" "pat-wild"))
                                 ("single"
                                   "bootstrap/validation/example/fp-finger-trees/tuple4"
-                                  ("single" "False")
+                                  "single-struct"
                                   ("value-repr" "0" "4" "8")
                                   "none"
                                   "1")
@@ -12048,5 +12048,3 @@
               ("value-repr" "0" "0" "0")
               "1")))
         ("def-fun" () ("no-fip" "False"))))))
-bootstrap/validation/example/fp-finger-trees.kk(61,12): warning: fip fun buncons: the matched constructor Tuple4/32 is not reused
-

@@ -16,7 +16,7 @@ fip fun tree/is-red(^t : tree) : bool
     _ -> False
 
 
-fbip fun bal-left(l : tree, k : int, v : bool, r : tree) : tree
+fbip(1) fun bal-left(l : tree, k : int, v : bool, r : tree) : tree
   match l
     Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry)
       -> Node(Red, Node(Black, lx, kx, vx, rx), ky, vy, Node(Black, ry, k, v, r))
@@ -27,7 +27,7 @@ fbip fun bal-left(l : tree, k : int, v : bool, r : tree) : tree
     Leaf -> Leaf
 
 
-fbip fun bal-right(l : tree, k : int, v : bool, r : tree) : tree
+fbip(1) fun bal-right(l : tree, k : int, v : bool, r : tree) : tree
   match r
     Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry)
       -> Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, rx, ky, vy, ry))

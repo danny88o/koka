@@ -811,7 +811,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1"))))))))
-        ("def-fun" () ("fbip" ("at-most" "0") "False"))))
+        ("def-fun" () ("fbip" ("at-most" "1") "False"))))
     ("non-rec"
       ("def"
         "bootstrap/validation/example/perc-red-black-tree/bal-right"
@@ -1209,7 +1209,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1"))))))))
-        ("def-fun" () ("fbip" ("at-most" "0") "False"))))
+        ("def-fun" () ("fbip" ("at-most" "1") "False"))))
     ("rec"
       ("def"
         "bootstrap/validation/example/perc-red-black-tree/ins"
@@ -3254,9 +3254,5 @@
               ("value-repr" "0" "0" "0")
               "1")))
         ("def-fun" () ("no-fip" "False"))))))
-bootstrap/validation/example/perc-red-black-tree.kk(19,10): warning: fip fun bal-left: function allocates at most 1 but was declared as allocating nothing
-
-bootstrap/validation/example/perc-red-black-tree.kk(30,10): warning: fip fun bal-right: function allocates at most 1 but was declared as allocating nothing
-
 bootstrap/validation/example/perc-red-black-tree.kk(41,10): warning: fip fun ins: function allocates at most 1 but was declared as allocating nothing
 

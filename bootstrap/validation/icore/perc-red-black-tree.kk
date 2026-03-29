@@ -51,7 +51,7 @@ pub fip fun tree/is-red : (^ t : bootstrap/validation/example/perc-red-black-tre
          -> std/core/types/False;
     };
   };
-pub fbip fun bal-left : (l : bootstrap/validation/example/perc-red-black-tree/tree, k : int, v : bool, r : bootstrap/validation/example/perc-red-black-tree/tree) -> bootstrap/validation/example/perc-red-black-tree/tree
+pub fbip(1) fun bal-left : (l : bootstrap/validation/example/perc-red-black-tree/tree, k : int, v : bool, r : bootstrap/validation/example/perc-red-black-tree/tree) -> bootstrap/validation/example/perc-red-black-tree/tree
   = fn(l: bootstrap/validation/example/perc-red-black-tree/tree, k: int, v: bool, r: bootstrap/validation/example/perc-red-black-tree/tree){
     match (l) {
       (bootstrap/validation/example/perc-red-black-tree/Node(_, (bootstrap/validation/example/perc-red-black-tree/Node((bootstrap/validation/example/perc-red-black-tree/Red() : bootstrap/validation/example/perc-red-black-tree/color ), (lx: bootstrap/validation/example/perc-red-black-tree/tree), (kx: int), (vx: bool), (rx: bootstrap/validation/example/perc-red-black-tree/tree)) : bootstrap/validation/example/perc-red-black-tree/tree ), (ky: int), (vy: bool), (ry: bootstrap/validation/example/perc-red-black-tree/tree)) : bootstrap/validation/example/perc-red-black-tree/tree )
@@ -64,7 +64,7 @@ pub fbip fun bal-left : (l : bootstrap/validation/example/perc-red-black-tree/tr
          -> bootstrap/validation/example/perc-red-black-tree/Leaf;
     };
   };
-pub fbip fun bal-right : (l : bootstrap/validation/example/perc-red-black-tree/tree, k : int, v : bool, r : bootstrap/validation/example/perc-red-black-tree/tree) -> bootstrap/validation/example/perc-red-black-tree/tree
+pub fbip(1) fun bal-right : (l : bootstrap/validation/example/perc-red-black-tree/tree, k : int, v : bool, r : bootstrap/validation/example/perc-red-black-tree/tree) -> bootstrap/validation/example/perc-red-black-tree/tree
   = fn(l: bootstrap/validation/example/perc-red-black-tree/tree, k: int, v: bool, r: bootstrap/validation/example/perc-red-black-tree/tree){
     match (r) {
       (bootstrap/validation/example/perc-red-black-tree/Node(_, (bootstrap/validation/example/perc-red-black-tree/Node((bootstrap/validation/example/perc-red-black-tree/Red() : bootstrap/validation/example/perc-red-black-tree/color ), (lx: bootstrap/validation/example/perc-red-black-tree/tree), (kx: int), (vx: bool), (rx: bootstrap/validation/example/perc-red-black-tree/tree)) : bootstrap/validation/example/perc-red-black-tree/tree ), (ky: int), (vy: bool), (ry: bootstrap/validation/example/perc-red-black-tree/tree)) : bootstrap/validation/example/perc-red-black-tree/tree )
@@ -162,10 +162,6 @@ pub fun @main : () -> <st<global>,console/console,div,fsys,ndet,net,ui> ()
   = fn<io-noexn>(){
     std/core/types/@open(bootstrap/validation/example/perc-red-black-tree/@main/@expr)();
   };
-
-bootstrap/validation/example/perc-red-black-tree.kk(19,10): warning: fip fun bal-left: function allocates at most 1 but was declared as allocating nothing
-
-bootstrap/validation/example/perc-red-black-tree.kk(30,10): warning: fip fun bal-right: function allocates at most 1 but was declared as allocating nothing
 
 bootstrap/validation/example/perc-red-black-tree.kk(41,10): warning: fip fun ins: function allocates at most 1 but was declared as allocating nothing
 
