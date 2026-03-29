@@ -1,6 +1,6 @@
 module Core.SPretty (prettyCoreToSExpr, prettyDefToSExpr, prettyTypeDefGroupToSExpr) where
 
-import Core.Core
+import Core.Core hiding (InfoExternal)
 import Common.Name
 import Common.Syntax
 import Type.Type
@@ -9,6 +9,9 @@ import Lib.PPrint
 import Data.Maybe (fromMaybe)
 import qualified Type.Pretty as TP
 import Common.ColorScheme
+import Type.Assumption
+import qualified Data.Set as S
+import qualified Data.List as L
 
 data SExpr = SAtom String
            | SList [SExpr]
@@ -21,8 +24,27 @@ prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExp
 instance Show SExpr where
   show sexpr = displayS (renderPretty 1.0 80 (prettySExprToDoc sexpr)) ""
 
-prettyCoreToSExpr :: TypeDefGroups -> DefGroups -> SExpr
-prettyCoreToSExpr tdgs dgs = SList [SAtom "core", SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
+prettyCoreToSExpr :: Gamma -> TypeDefGroups -> DefGroups -> SExpr
+prettyCoreToSExpr gamma tdgs dgs = SList [SAtom "core", prettyGamma gamma, SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
+
+prettyGamma :: Gamma -> SExpr
+prettyGamma gamma =
+  let infos = map snd (gammaList gamma)
+      extInfos = filter isExternalInfo infos
+  in SList (map prettyNameInfoToSExpr extInfos)
+
+isExternalInfo :: NameInfo -> Bool
+isExternalInfo info = case info of
+  InfoFun{} -> True
+  InfoExternal{} -> True
+  _ -> False
+
+prettyNameInfoToSExpr :: NameInfo -> SExpr
+prettyNameInfoToSExpr info = case info of
+  InfoFun _ name _ _ _ fip _ _ -> SList [SAtom (show (pretty name)), prettyFipToSExpr fip]
+  InfoExternal _ name _ _ fip _ _ -> SList [SAtom (show (pretty name)), prettyFipToSExpr fip]
+  _ -> SList []
+
 
 -- Types
 prettyTypeToSExpr :: Type -> SExpr

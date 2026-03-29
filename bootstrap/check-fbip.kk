@@ -9,25 +9,13 @@ import bootstrap/debug
 import std/num/float64
 
 
-fun extract-gamma( dgs : list<def-group> ) : list<(string, fip-tag)>
-  dgs.flatmap(fn(dg)
-    match dg
-      DefRec(defs) -> defs.filter-map(get-fip-info)
-      DefNonRec(d) -> get-fip-info(d).maybe([], fn(info) [info])
-  )
-fun get-fip-info( d : def ) : maybe<(string, fip-tag)>
-  match d.sort
-    DefFun(_, fip) -> Just((d.name, fip))
-    _ -> Nothing
-
 pub fun check-fbip( c : core )
     with dbg-handler
-    chk-def-groups(c.defs)
+    chk-def-groups(c.gamma, c.defs)
 
 
-fun chk-def-groups(dgs : list<def-group>) : _ list<string>
-  val global-gamma = extract-gamma(dgs) // TODO does this come precomputed from the parser?
-  with run-chk(global-gamma)
+fun chk-def-groups(gamma: list<(string, fip-tag)>, dgs : list<def-group>) : _ list<string>
+  with run-chk(gamma)
   dgs.foreach(chk-def-group)
 
 fun run-chk(gamma, action: () -> <chk|e> a) : e list<string>

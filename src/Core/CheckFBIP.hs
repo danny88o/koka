@@ -61,7 +61,7 @@ checkFBIP penv platform newtypes borrowed gamma tdgs showScore
   = do uniq      <- unique
        defGroups <- getCoreDefs
        when (showScore && not ("@" `isInfixOf` show (Pretty.context penv))) $
-         trace (show (SP.prettyCoreToSExpr tdgs defGroups)) $ return ()
+         trace (show (SP.prettyCoreToSExpr gamma tdgs defGroups)) $ return ()
        let (_,warns) = runChk penv uniq platform newtypes borrowed gamma (chkDefGroups defGroups)
        liftError (warningMsgs [warningMessageKind ErrStatic range doc | (range,doc) <- warns])
 

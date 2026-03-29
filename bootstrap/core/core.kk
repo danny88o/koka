@@ -282,7 +282,7 @@ pub type type-def
 pub alias type-def-group = list<type-def>
 
 pub type core
-  Core(type-defs: list<type-def-group>, defs: list<def-group>)
+  Core(gamma: list<(name, fip-tag)>, type-defs: list<type-def-group>, defs: list<def-group>)
 
 pub fun expand-syn(l: type-expr): type-expr
   match l
