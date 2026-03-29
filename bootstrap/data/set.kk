@@ -94,17 +94,18 @@ pub fun hset/new( length: int = 16, ?(==): (a,a) -> bool, ?hash: a -> int, ?show
 //   hash-set[idx] := Cons(key, hash-set.at(idx).default(Nil))
 
 
+fun ex( s1, s2)
+  s1.add(1)
+  s2.add(2)
+  println(s1.show)
+  println(s2.show)
+
+
 fun main()
   fun hash(x: int) : int
     x
   val set: set<int> = hset/new()
+
   val a = fn()
-    set.add(1)
-    set.add(17)
-    set.add(1)
-    set.add(33)
-    // set.remove(17)
-    if set.contains(1) && set.contains(33) && !set.contains(2) && !set.contains(18) && !set.contains(17)
-    then set.show()
-    else "Test failed"
+    ex(set,set)
   a()

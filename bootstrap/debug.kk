@@ -6,6 +6,10 @@ pub effect dbg
   fun info(msg: string): ()
   fun error(msg: string): ()
 
+// pub fun show/debug(t:a, ?show: a -> <dbg|e> string): <dbg, div|e> string
+//   debug(t.show)
+
+
 fun colour-debug(action: () -> <dbg|e> a) : <dbg|e> a
   with override
     fun debug(msg) debug("\x1b[34m[DEBUG]\x1b[0m " ++ msg)

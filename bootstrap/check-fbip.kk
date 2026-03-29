@@ -9,19 +9,31 @@ import bootstrap/debug
 import std/num/float64
 
 
+fun extract-gamma( dgs : list<def-group> ) : list<(string, fip-tag)>
+  dgs.flatmap(fn(dg)
+    match dg
+      DefRec(defs) -> defs.filter-map(get-fip-info)
+      DefNonRec(d) -> get-fip-info(d).maybe([], fn(info) [info])
+  )
+fun get-fip-info( d : def ) : maybe<(string, fip-tag)>
+  match d.sort
+    DefFun(_, fip) -> Just((d.name, fip))
+    _ -> Nothing
+
 pub fun check-fbip( c : core )
     with dbg-handler
     chk-def-groups(c.defs)
 
 
 fun chk-def-groups(dgs : list<def-group>) : _ list<string>
-  with run-chk()
+  val global-gamma = extract-gamma(dgs) // TODO does this come precomputed from the parser?
+  with run-chk(global-gamma)
   dgs.foreach(chk-def-group)
 
-fun run-chk(action: () -> <chk|e> a) : e list<string>
+fun run-chk(gamma, action: () -> <chk|e> a) : e list<string>
   with warning-handler()
   with input-handler(Input())
-  with env-handler(Env())
+  with env-handler(Env(gamma = gamma))
   with unique-id()
   with extract-output(Output())
   action()
@@ -37,34 +49,30 @@ fun chk-def-group(dg : def-group )
 fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
   with def(d)
   match d.sort
-    DefFun(borrows, ft) | !ft.is-no-fip ->
-      info("Borrows for function " ++ d.name ++ ": " ++ borrows.show())
+    DefFun(borrows, ft) | !ft.is-no-fip -> // is fip or fbip
       with fip-tag(ft)
       val out =
         with input(Input(def-group-names=def-group-names))
         extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
-    _ -> ()
+    _ -> () // Not a function
   ()
 
 // --- Top-level Expression Check ---
+
 
 fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
       val bpars = borrows
-        .zip(pars)
+        .zip-param-info(pars)
         .filter(fn((pi, _)) pi.is-borrow)
         .map(fn((_, p)) p)
       val opars = borrows
-        .zip(pars)
+        .zip-param-info(pars)
         .filter(fn((pi, _)) pi.is-own)
         .map(fn((_, p)) p)
-
-      info("Borrows:" ++ borrows.show())
-      info("Borrowed parameters: " ++ bpars.map(fn(p) p.name).join(", "))
-      info("Owned parameters: " ++ opars.map(fn(p) p.name).join(", "))
       val names = bpars.map(fn(p) p.name)
       with borrowed(names)
       val out = extract-output(action={chk-expr(body)})
@@ -328,7 +336,7 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk> ()
   match f
     TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
     TypeApp(body, _) -> chk-app(body, args)
-    App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/effect-open" -> chk-app(f, args) // TODO: Check effect-open @open
+    App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/types/@open" -> chk-app(f, args)
     Con(cname, repr) ->
       chk-mod-cons(args)
       chk-lazy-con(cname, repr)
@@ -362,8 +370,8 @@ fun chk-mod-cons(args: list<expr>): <div, chk> ()
       chk-expr(a)
       chk-mod-cons(rest)
 
-fun get-data-info-by-name(name: string): <environment> maybe<data-info>
-  get-env().type-infos.lookup(fn(n) n == name)
+fun get-data-info-by-name(name: name): <environment> maybe<data-info>
+  newtype-lookup-any(name)
 
 fun is-lazy-callable-from(fip-prime: fip-tag, fip: fip-tag): bool
   match (fip-prime, fip)
@@ -372,18 +380,20 @@ fun is-lazy-callable-from(fip-prime: fip-tag, fip: fip-tag): bool
     _ -> True
 
 fun chk-lazy-con(tn: tname, repr: con-repr): <div, chk> ()
-  val env = get-env()
-  match get-data-info-by-name(repr.typename)
-    Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
-    Just(di) ->
-      match di.constrs.find(fn(ci) ci.name == tn.name)
-        Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
-        Just(ci) ->
-          val fip-prime = ci.lazy.default(NoFip(False))
-          if ci.lazy.is-nothing || fip-prime.is-lazy-callable-from(env.fip-tag) then
-            write-call-allocation(tn.name, fip-prime)
-          else
-            emit-warning(fn(_) "allocating a non-fip lazy constructor: " ++ tn.name)
+  // FIP analysis doesnt work for lazy cons, so we ignore proper implementation for now
+  write-call-allocation(tn.name, NoFip(False))
+  // val env = get-env()
+  // match get-data-info-by-name(repr.typename)
+  //   Nothing -> emit-warning(fn(_) "internal1: fip analysis could not find fip information for constructor: " ++ tn.name)
+  //   Just(di) ->
+  //     match di.constrs.find(fn(ci) ci.name == tn.name)
+  //       Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
+  //       Just(ci) ->
+  //         val fip-prime = ci.lazy.default(NoFip(False))
+  //         if ci.lazy.is-nothing || fip-prime.is-lazy-callable-from(env.fip-tag) then
+  //           write-call-allocation(tn.name, fip-prime)
+  //         else
+  //           emit-warning(fn(_) "allocating a non-fip lazy constructor: " ++ tn.name)
 
 fun is-con-as-just(repr: con-repr): bool
   match repr
@@ -521,7 +531,7 @@ fun chk-arg(arg: (param-info, expr)): <div, chk> ()
                Just("passing owned expressions as borrowed causes deallocation")
             )
 
-fun zip-param-info(pinfos: list<param-info>, args: list<expr>): div list<(param-info, expr)>
+fun zip-param-info(pinfos: list<param-info>, args: list<a>): div list<(param-info, a)>
   match (pinfos, args)
     (Cons(p, ps), Cons(a, rest)) -> Cons((p, a), zip-param-info(ps, rest))
     ([], Cons(a, rest)) -> Cons((Own, a), zip-param-info([], rest))
@@ -529,12 +539,11 @@ fun zip-param-info(pinfos: list<param-info>, args: list<expr>): div list<(param-
 
 fun chk-fun-callable(name: string): <environment, out, warning> ()
   val env = get-env()
-  match env.gamma.lookup(fn(n) n == name)
+  match env.gamma.lookup(fn(n) n == name) // TODO
     Nothing ->
-      if name == "std/core/cctx-set-ctx-path" || name == "std/core/field-addr-of" then
-        write-call-allocation(name, Fip(AllocAtMost(0)))
-      else
-        emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
+      if   name == "std/core/cctx-set-ctx-path" || name == "std/core/field-addr-of"
+      then write-call-allocation(name, Fip(AllocAtMost(0)))
+      else emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
     Just(fip') ->
       if fip'.is-callable-from(env.fip-tag) then
         write-call-allocation(name, fip')
@@ -633,12 +642,11 @@ fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
       Just(warn) -> warning(warn)
       Nothing -> ()
 
-// In the Haskell compiler, this information is stored in a Newtypes map for efficiency
-fun get-data-info(tp : type-expr) : <environment> maybe<data-info> //
-  val env = get-env()
-  fun find-info(t : type-expr) : maybe<data-info>
+
+fun get-data-info(tp : type-expr) : <environment> maybe<data-info> // TODO In the Haskell compiler, this information is stored in a Newtypes map for efficiency
+  fun find-info(t : type-expr)
     match t
-      TCon(name) -> env.type-infos.lookup(fn(n) n == name)
+      TCon(name) -> newtype-lookup-any(name)
       TApp(f, _) -> find-info(f)
       TSyn(_, _, t') -> find-info(t')
       _ -> Nothing

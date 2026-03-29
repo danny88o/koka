@@ -1,5 +1,7 @@
 module bootstrap/core/core
 
+import std/num/float64
+
 // Types
 // data Type   = TForall  ![TypeVar] !Rho  -- ^ forall a b c. phi, psi => rho
 //                                              -- there is at least one variable
@@ -33,8 +35,8 @@ pub fun (==)(t1: type-expr, t2: type-expr): div bool
     (TSyn(name1, args1, t1), TSyn(name2, args2, t2))   -> name1 == name2 && args1 == args2 && t1 == t2
     _ -> False
 
-pub fun type-expr/show(t: type-expr): div string
-  match t
+pub fun type-expr/show(type-expr: type-expr): div string
+  match type-expr
     TForall(vars, t) -> "forall " ++ vars.map(fn(v) v.show).join(" ") ++ ". " ++ t.show
     TFun(args, eff, res) -> "(" ++ args.map(fn((n, t)) n ++ ": " ++ t.show).join(", ") ++ ") -> " ++ eff.show ++ " " ++ res.show
     TVar(id) -> "TVar(" ++ id.show ++ ")"
@@ -66,13 +68,28 @@ pub type lit
   LitChar(c: char)
   LitString(s: string)
 
+pub fun lit/show(l: lit): div string
+  match l
+    LitInt(i) -> i.show
+    LitFloat(d) -> d.show
+    LitChar(c) -> c.show
+    LitString(s) -> "\"" ++ s ++ "\""
+
 // Representations
 pub type value-repr
   ValueRepr(raw-val: int, scan: int, align: int)
 
+pub fun value-repr/show(vr: value-repr): div string
+  "ValueRepr(raw-val: " ++ vr.raw-val.show ++ ", scan: " ++ vr.scan.show ++ ", align: " ++ vr.align.show ++ ")"
+
 pub type ctx-path
   CtxNone
   CtxField(name: name)
+
+pub fun ctx-path/show(cp: ctx-path): div string
+  match cp
+    CtxNone -> "CtxNone"
+    CtxField(name) -> "CtxField(" ++ name ++ ")"
 
 pub type data-repr
   DataEnum
@@ -87,6 +104,20 @@ pub type data-repr
   DataNormal(has-singletons: bool)
   DataOpen
 
+pub fun data-repr/show(dr: data-repr): string
+  match dr
+    DataEnum -> "DataEnum"
+    DataIso -> "DataIso"
+    DataSingleStruct -> "DataSingleStruct"
+    DataStructAsMaybe -> "DataStructAsMaybe"
+    DataStruct -> "DataStruct"
+    DataSingle(has-singletons) -> "DataSingle(" ++ has-singletons.bool/show ++ ")"
+    DataAsMaybe -> "DataAsMaybe"
+    DataAsList -> "DataAsList"
+    DataSingleNormal -> "DataSingleNormal"
+    DataNormal(has-singletons) -> "DataNormal(" ++ has-singletons.bool/show ++ ")"
+    DataOpen -> "DataOpen"
+
 pub type con-repr
   ConEnum(typename: name, dr: data-repr, vr: value-repr, tag: int)
   ConIso(typename: name, dr: data-repr, vr: value-repr, tag: int)
@@ -98,6 +129,18 @@ pub type con-repr
   ConOpen(typename: name, dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
   ConNormal(typename: name, dr: data-repr, vr: value-repr, path: ctx-path, tag: int)
 
+pub fun con-repr/show(cr: con-repr): div string
+  match cr
+    ConEnum(typename, dr, vr, tag) -> "ConEnum(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ tag.show ++ ")"
+    ConIso(typename, dr, vr, tag) -> "ConIso(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ tag.show ++ ")"
+    ConSingleton(typename, dr, vr, tag) -> "ConSingleton(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ tag.show ++ ")"
+    ConSingle(typename, dr, vr, path, tag) -> "ConSingle(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ path.show ++ ", " ++ tag.show ++ ")"
+    ConAsJust(typename, dr, vr, name, tag) -> "ConAsJust(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ name.show ++ ", " ++ tag.show ++ ")"
+    ConStruct(typename, dr, vr, tag) -> "ConStruct(" ++ typename ++ ", " ++ dr.show ++ ", " ++ vr.show ++ ", " ++ tag.show ++ ")"
+    ConAsCons(typename, dr, vr, name, path, tag) -> "ConAsCons("++ typename++", "++dr.show++", "++vr.show++", "++name.show++", "++path.show++", "++tag.show++")"
+    ConOpen(typename, dr, vr, path, tag) -> "ConOpen("++ typename++", "++dr.show++", "++vr.show++", "++path.show++", "++tag.show++")"
+    ConNormal(typename, dr, vr, path, tag) -> "ConNormal("++ typename++", "++dr.show++", "++vr.show++", "++path.show++", "++tag.show++")"
+
 // Expressions
 pub type pattern
   PatCon(tname: tname, args: list<pattern>, repr: con-repr, targs: list<type-expr>)
@@ -108,8 +151,21 @@ pub type pattern
 pub type guard
   Guard(test: expr, expr: expr)
 
+pub fun guard/show(g: guard): div string
+  "Guard(test: " ++ g.test.show ++ ", expr: " ++ g.expr.show ++ ")"
+
 pub type branch
   Branch(patterns: list<pattern>, guards: list<guard>)
+
+pub fun pattern/show(p: pattern): div string
+  match p
+    PatCon(tname, args, repr, targs) -> "PatCon(" ++ tname.show ++ ", [" ++ args.map(pattern/show).join(", ") ++ "], " ++ repr.show ++ ", [" ++ targs.map(type-expr/show).join(", ") ++ "])"
+    PatVar(tname, pat) -> "PatVar(" ++ tname.show ++ ", " ++ pat.show ++ ")"
+    PatLit(lit) -> "PatLit(" ++ lit.show ++ ")"
+    PatWild -> "PatWild"
+
+pub fun branch/show(b: branch): div string
+  "Branch([" ++ b.patterns.map(fn(p) p.show).join(", ") ++ "], [" ++ b.guards.map(fn(g) g.show).join(", ") ++ "])"
 
 pub type expr
   Lam(tnames: list<tname>, eff: type-expr, body: expr)
@@ -121,6 +177,18 @@ pub type expr
   Lit(lit: lit)
   Let(def-groups: list<def-group>, body: expr)
   Case(scruts: list<expr>, branches: list<branch>)
+
+pub fun expr/show(e: expr): div string
+  match e
+    Lam(tnames, eff, body) -> "Lam(" ++ tnames.map(tname/show).join(", ") ++ ", " ++ eff.show ++ ", " ++ body.show ++ ")"
+    Var(tn) -> "Var(" ++ tn.show ++ ")"
+    App(f, args) -> "App(" ++ f.show ++ ", [" ++ args.map(expr/show).join(", ") ++ "])"
+    TypeLam(tvs, body) -> "TypeLam([" ++ tvs.map(fn(v) v.show).join(", ") ++ "], " ++ body.show ++ ")"
+    TypeApp(f, tps) -> "TypeApp(" ++ f.show ++ ", [" ++ tps.map(type-expr/show).join(", ") ++ "])"
+    Con(tn, repr) -> "Con(" ++ tn.show ++ ", " ++ repr.show ++ ")"
+    Lit(lit) -> "Lit(" ++ lit.show ++ ")"
+    Let(def-groups, body) -> "Let([" ++ def-groups.map(show).join(", ") ++ "], " ++ body.show ++ ")"
+    Case(scruts, branches) -> "Case([" ++ scruts.map(expr/show).join(", ") ++ "], [" ++ branches.map(show).join(", ") ++ "])"
 
 // Definitions
 pub type param-info
@@ -165,12 +233,26 @@ pub type def-sort
   DefVal
   DefVar
 
+pub fun def-sort/show(s: def-sort): div string
+  match s
+    DefFun(pinfos, fip-tag) -> "DefFun([" ++ pinfos.map(show).join(", ") ++ "], " ++ fip-tag.show ++ ")"
+    DefVal -> "DefVal"
+    DefVar -> "DefVar"
+
 pub type def
   Def(name: string, tp: type-expr, expr: expr, sort: def-sort)
+
+pub fun def/show(d: def): div string
+  "Def(" ++ d.name ++ ": " ++ d.tp.show ++ " = " ++ d.expr.show ++ ", sort: " ++  d.sort.show ++ ")"
 
 pub type def-group
   DefRec(defs: list<def>)
   DefNonRec(def: def)
+
+pub fun def-group/show(dg: def-group): div string
+  match dg
+    DefRec(defs) -> "DefRec([" ++ defs.map(show).join(", ") ++ "])"
+    DefNonRec(def) -> "DefNonRec(" ++ def.show ++ ")"
 
 // Type Definitions
 pub type data-def

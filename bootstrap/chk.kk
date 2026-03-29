@@ -39,10 +39,10 @@ pub fun output/(++) (o1 : output, o2 : output) : output
 
 pub struct env
   current-def : list<def> = []
-  fip-tag : fip-tag = NoFip(False)
-  type-infos : list<(name, data-info)> = []
+  new-types : list<(name, data-info)> = []
   borrowed : list<(name, list<param-info>)> = []
   gamma : list<(name, fip-tag)> = []
+  fip-tag : fip-tag = NoFip(False)
 
 pub fun current-def-names(): <environment> list<string>
   get-env().current-def.map(fn(d) d.name)
@@ -163,6 +163,9 @@ pub fun fip-tag(tag: fip-tag, action)
   val env = get-env()
   with env-override(env(fip-tag = tag))
   action()
+
+pub fun newtype-lookup-any(name: name): environment maybe<data-info>
+  get-env().new-types.lookup(fn(n) n == name)
 
 // --- Input Helpers
 
