@@ -1,6 +1,9 @@
 module bootstrap/chk
 
+import bootstrap/data/ratio
 import bootstrap/core/core
+
+import bootstrap/debug
 
 // --- Data Types from CheckFBIP.hs ---
 
@@ -21,21 +24,50 @@ pub fun alloc-tree/show(t: alloc-tree): div string
     Match(ts) -> "Match(" ++ ts.map(show).join(", ") ++ ")"
     Leaf -> "Leaf"
 
+pub alias tokens = list<(ratio, list<(tname, int)>)>
+
+// pub fun gamma-dia/(++) (d1: gamma-dia, d2: gamma-dia): _ gamma-dia
+//   d1.union-with(d2)
+//     fn(l1, l2) l1 ++ l2
+
 pub struct output
   gamma-nm : list<(tname, int)> = []
-  gamma-dia : list<(int, list<(float64, list<(tname, int)>)>)> = []
+  gamma-dia : list<(int, tokens)> = []
   alloc-tree : alloc-tree = Leaf
 
+
 // Sequential composition of outputs
-pub fun output/(++) (o1 : output, o2 : output) : output
-  Output(
-    o1.gamma-nm ++ o2.gamma-nm, // TODO: Implement Map-style unionWith (+)
-    o1.gamma-dia ++ o2.gamma-dia,
-    match (o1.alloc-tree, o2.alloc-tree)
-      (Leaf, t) -> t
-      (t, Leaf) -> t
-      (t1, t2)  -> Seq(t1, t2)
-  )
+pub fun output/(++) (o1 : output, o2 : output) : div output
+  match (o1, o2)
+    (Output(gamma-nm1, gamma-dia1, alloc-tree1), Output(gamma-nm2, gamma-dia2, alloc-tree2)) ->
+      val gamma-nm = gamma-nm1.union-with(gamma-nm2, (+))
+      val gamma-dia = gamma-dia1.union-with(gamma-dia2, list/(++)) // TODO Missing Sort
+      val alloc-tree = Seq(alloc-tree1, alloc-tree2)
+      Output(gamma-nm, gamma-dia, alloc-tree)
+
+
+pub fun union-with(m1: list<(a, b)>, m2: list<(a, b)>, f: (b, b) -> <exn,div|e> b, ?(==): (a, a) -> bool): <div|e> list<(a, b)>
+  val keys = (m1.map(fst) ++ m2.map(fst)).unique-by-eq
+  val union = fn()
+    keys.map(fn(k)
+      val v1 = m1.lookup(fn(k1) k1 == k)
+      val v2 = m2.lookup(fn(k2) k2 == k)
+      match (v1, v2)
+        (Just(val1), Just(val2)) -> (k, f(val1, val2))
+        (Just(val1), Nothing) -> (k, val1)
+        (Nothing, Just(val2)) -> (k, val2)
+    )
+  try(union, fn(_) Nil)
+
+pub fun unique-by-eq(ts: list<a>, ?(==): (a, a) -> bool): div list<a>
+  match ts
+    Nil -> Nil
+    Cons(x, xs) -> Cons(x, xs.filter(fn(y) !(y == x)).unique-by-eq)
+
+pub fun normalize-name(name : string) : string
+  match name.starts-with("std/core/types/open-")
+    Just(_) -> "std/core/types/@open"
+    Nothing -> name
 
 pub struct env
   current-def : list<def> = []
@@ -120,7 +152,7 @@ pub fun input-override(new-input: input, action: () -> <inp|e> a) : <inp|e> a
   with override fun get-input() new-input
   action()
 
-pub fun extract-output(initial: output = Output(), action: () -> <out|e> a) : e output
+pub fun extract-output(initial: output = Output(), action: () -> <out, div|e> a) : <div|e> output
   var output := initial
   with handler
     return(x) output
@@ -133,6 +165,13 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
     val id = next-id
     next-id := next-id + 1
     id
+  action()
+
+pub fun debug-warning(action: () -> <warning, dbg, environment|e> a) : <dbg, environment, warning|e> a
+  with override fun warning(msg)
+    val f = get-env().current-def.head.maybe("Unknown", fn(d) d.name)
+    warn(f ++ ": " ++ msg)
+    warning(msg)
   action()
 
 pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
@@ -191,6 +230,7 @@ pub fun non-tail(action)
 pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
   warning(make-doc(get-env()))
 
+pub val name-effect-open: name = "std/core/types/@open"
 
 fun main()
   ()

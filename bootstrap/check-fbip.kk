@@ -6,7 +6,7 @@ import bootstrap/parc-reuse
 
 import bootstrap/debug
 
-import std/num/float64
+import bootstrap/data/ratio
 
 
 pub fun check-fbip( c : core )
@@ -18,10 +18,10 @@ fun chk-def-groups(gamma: list<(string, fip-tag)>, type-infos: list<data-info>, 
   with run-chk(gamma, type-infos)
   dgs.foreach(chk-def-group)
 
-fun run-chk(gamma, type-infos: list<data-info>, action: () -> <chk|e> a) : e list<string>
-  with warning-handler()
+fun run-chk(gamma, type-infos: list<data-info>, action: () -> <chk, dbg, div|e> a) : <dbg, div|e> list<string>
   with input-handler(Input())
   with env-handler(Env(gamma = gamma, new-types = type-infos.map(fn(di) (di.name, di))))
+  with warning-handler()
   with unique-id()
   with extract-output(Output())
   action()
@@ -36,6 +36,8 @@ fun chk-def-group(dg : def-group )
 
 fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
   with def(d)
+  info("checking function: " ++ d.name)
+  with debug-warning()
   match d.sort
     DefFun(borrows, ft) | !ft.is-no-fip -> // is fip or fbip
       with fip-tag(ft)
@@ -84,7 +86,7 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
     App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
     App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
     App(f, args) -> chk-app(f, args)
-    Var(tname) -> mark-seen(tname)
+    Var(tname) -> if !is-borrowed(tname) then mark-seen(tname)
     Let([], body) ->
       chk-expr(body)
     Let(Cons(DefNonRec(def), dgs), body) ->
@@ -193,7 +195,6 @@ fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk, dbg> output
     PatLit -> out
     PatWild ->
       if tp.needs-dup-drop-tp then
-        info("binding a wildcard pattern of type " ++ tp.show ++ " causes deallocation")
         require-capability(may-dealloc, fn(_) Just("binding a wildcard pattern causes deallocation"))
       out
 
@@ -212,36 +213,17 @@ fun join-contexts(pats: list<list<pattern>>, outs: list<output>): div output
     outs ->
       val g = fn ()
         val union-nm = outs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
-        // Adjust probabilities for gamma-dia
-        val n = outs.length.float64
+        val n = outs.length
         val union-dia = outs.map(gamma-dia).map(fn(dia) dia.map(fn((sz, as')) (sz, as'.map(fn((p, ids)) (p / n, ids))))).foldl1(fn(m1, m2) m1.union-with(m2, zip-tokens))
         Output(gamma-nm = union-nm, gamma-dia = union-dia, alloc-tree = Match(outs.map(alloc-tree)))
       try(g, fn(_) Output())
 
-fun zip-tokens(as1: list<(float64, list<(tname, int)>)>, as2: list<(float64, list<(tname, int)>)>): div list<(float64, list<(tname, int)>)>
+fun zip-tokens(as1: tokens, as2: tokens): div tokens
   match (as1, as2)
     (Cons((p1, ids1), rest1), Cons((p2, ids2), rest2)) -> Cons((p1 + p2, ids1 ++ ids2), zip-tokens(rest1, rest2))
     (Nil, rest2) -> rest2
     (rest1, Nil) -> rest1
     _ -> []
-
-fun union-with(m1: list<(a, b)>, m2: list<(a, b)>, f: (b, b) -> <exn,div|e> b, ?(==): (a, a) -> bool): <div|e> list<(a, b)>
-  val keys = (m1.map(fst) ++ m2.map(fst)).unique-by-eq
-  val union = fn()
-    keys.map(fn(k)
-      val v1 = match m1.find(fn((k1, _)) k1 == k) { Just((_, v)) -> Just(v); Nothing -> Nothing }
-      val v2 = match m2.find(fn((k2, _)) k2 == k) { Just((_, v)) -> Just(v); Nothing -> Nothing }
-      match (v1, v2)
-        (Just(val1), Just(val2)) -> (k, f(val1, val2))
-        (Just(val1), Nothing) -> (k, val1)
-        (Nothing, Just(val2)) -> (k, val2)
-    )
-  try(union, fn(_) Nil)
-
-fun unique-by-eq(ts: list<a>, ?(==): (a, a) -> bool): div list<a>
-  match ts
-    Nil -> Nil
-    Cons(x, xs) -> Cons(x, xs.filter(fn(y) !(y == x)).unique-by-eq)
 
 
 // --- Effect Check ---
@@ -325,20 +307,23 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
   match f
     TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
     TypeApp(body, _) -> chk-app(body, args)
-    App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/types/@open" -> chk-app(f, args)
+    App(TypeApp(Var(tn), _), [f']) | tn.name.normalize-name == name-effect-open -> chk-app(f', args)
     Con(cname, repr) ->
       chk-mod-cons(args)
       chk-lazy-con(cname, repr)
       chk-allocation(cname, repr)
     Var(tn) | !tn.info-is-local ->
-      val bs = get-param-infos(tn.name)
-      non-tail({chk-args(bs.zip-param-info(args))})
-      chk-fun-callable(tn.name)
-      val input = get-input()
-      if !(input.is-tail-context || !input.def-group-names.any(fn(n) n == tn.name)) then
-        require-capability(may-recurse, fn(_)
-          Just("non-tail call to a (mutually) recursive function: " ++ tn.name)
-        )
+      if tn.name == name-effect-open then // Not how it is in haskell, not sure why
+        args.foreach(fn(a) chk-arg((Borrow, a)))
+      else
+        val bs = get-param-infos(tn.name)
+        non-tail({chk-args(bs.zip-param-info(args))})
+        chk-fun-callable(tn.name)
+        val input = get-input()
+        if !(input.is-tail-context || !input.def-group-names.any(fn(n) n == tn.name)) then
+          require-capability(may-recurse, fn(_)
+            Just("non-tail call to a (mutually) recursive function: " ++ tn.name)
+          )
     _ ->
       with non-tail()
       args.foreach(chk-expr)
@@ -389,19 +374,27 @@ fun is-con-as-just(repr: con-repr): bool
     ConAsJust -> True
     _ -> False
 
+fun size-field() : int
+  8 // Assume 64-bit
+
+fun value-repr-size(vr : value-repr) : int
+  vr.raw-val + (vr.scan * size-field())
+
+fun con-repr-alloc-size(repr : con-repr) : int
+  if repr.dr.is-value then 0
+  else repr.vr.value-repr-size
+
 fun get-constructor-alloc-size(repr: con-repr): <environment> reusable
-  match repr
-    ConEnum -> NotReusable
-    ConSingleton -> NotReusable
-    _ -> ReusableWithSize(8) // Simplified for MVP: assume 8 bytes for pointer-sized fields
+  val size = repr.con-repr-alloc-size
+  if size == 0 then NotReusable
+  else ReusableWithSize(size)
 
 fun get-allocation(tn: tname, sz: reusable): <chk> ()
   match sz
     NotReusable -> ()
     ReusableWithSize(size) ->
       val id = fresh-id()
-      val prob = 1.0 // Simplified for MVP: assume all constructors are always allocated
-      // Note: probability is 1.0 (represented as float64 1.0 for now)
+      val prob = ratio(1)
       write-output(Output(gamma-dia = [(size, [(prob, [(tn, id)])])], alloc-tree = Alloc(id)))
 
 fun chk-allocation(tn: tname, repr: con-repr): <div, chk> ()
@@ -475,7 +468,7 @@ fun get-alloc-credits(not-reused: list<int>, tree: alloc-tree): div (fip-alloc, 
 
 // --- Reuse and Token Logic ---
 
-fun provide-token(debug-name: name, sz: reusable, out: output): <warning, environment> output
+fun provide-token(debug-name: name, sz: reusable, out: output): <warning, environment, div, dbg> output
   match sz
     NotReusable -> out
     ReusableWithSize(size) ->
@@ -486,14 +479,13 @@ fun provide-token(debug-name: name, sz: reusable, out: output): <warning, enviro
           )
           out
         Just(allocs) ->
-          // check probabilities
           match allocs
-            Cons((p, _), _) | p != 1.0 ->
+            Cons((p, _), _) | p != ratio(1) ->
+              // debug(p.show())
               require-capability(may-dealloc, fn(_)
                 Just("not all branches can reuse the space provided by " ++ debug-name ++ "/" ++ size.show)
               )
             _ -> ()
-          // update gamma-dia by removing one token
           val next-allocs = match allocs { Cons(_, rest) -> rest; [] -> [] }
           val next-dia = if next-allocs.is-empty then out.gamma-dia.filter(fn((s, _)) s != size)
                          else out.gamma-dia.map(fn((s, as')) if s == size then (s, next-allocs) else (s, as'))
@@ -510,7 +502,8 @@ fun chk-arg(arg: (param-info, expr)): <div, chk, dbg> ()
       match e
         TypeLam(_, body) -> chk-arg((Borrow, body))
         TypeApp(body, _) -> chk-arg((Borrow, body))
-        App(TypeApp(Var(tn), _), [f]) | tn.name == "std/core/effect-open" -> chk-arg((Borrow, f))
+        App(TypeApp(Var(tn), _), [f']) | tn.name.normalize-name == name-effect-open
+          -> chk-arg((Borrow, f'))
         Var(tn) -> mark-borrowed(tn)
         Lit(_) -> ()
         _ ->
@@ -527,10 +520,17 @@ fun zip-param-info(pinfos: list<param-info>, args: list<a>): div list<(param-inf
     _ -> []
 
 fun chk-fun-callable(name: string): <environment, out, warning> ()
+  fun is-callable-from(fip': fip-tag, fip: fip-tag): bool
+    match (fip', fip)
+      (Fip, _) -> True
+      (Fbip, Fbip) -> True
+      (_, NoFip) -> True
+      _ -> False
   val env = get-env()
-  match env.gamma.lookup(fn(n) n == name) // TODO
+  val normalized = name.normalize-name
+  match env.gamma.lookup(fn(n) n == normalized)
     Nothing ->
-      if   name == "std/core/cctx-set-ctx-path" || name == "std/core/field-addr-of"
+      if   normalized == "std/core/cctx-set-ctx-path" || normalized == "std/core/field-addr-of"
       then write-call-allocation(name, Fip(AllocAtMost(0)))
       else emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
     Just(fip') ->
@@ -538,13 +538,6 @@ fun chk-fun-callable(name: string): <environment, out, warning> ()
         write-call-allocation(name, fip')
       else
         emit-warning(fn(_) "calling a non-fip function: " ++ name)
-
-fun is-callable-from(fip': fip-tag, fip: fip-tag): bool
-  match (fip', fip)
-    (Fip, _) -> True
-    (Fbip, Fbip) -> True
-    (_, NoFip) -> True
-    _ -> False
 
 fun may-recurse(f: fip-tag): bool
   match f
@@ -632,7 +625,7 @@ fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
       Nothing -> ()
 
 
-fun get-data-info(tp : type-expr) : <environment> maybe<data-info> // TODO In the Haskell compiler, this information is stored in a Newtypes map for efficiency
+fun get-data-info(tp : type-expr) : <environment> maybe<data-info>
   fun find-info(t : type-expr)
     match t
       TCon(name) -> newtype-lookup-any(name)
@@ -645,7 +638,7 @@ fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
   match tp.get-data-info
     Nothing -> True // Assume heap-allocated if unknown
     Just(di) ->
-      val is-value = match di.ddef { DataDefValue -> True; _ -> False }
+      val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
       (di.name != "std/core/int") && !is-value
 
 // --- Helpers ---

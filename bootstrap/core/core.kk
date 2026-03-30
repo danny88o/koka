@@ -104,6 +104,26 @@ pub type data-repr
   DataNormal(has-singletons: bool)
   DataOpen
 
+pub fun data-repr/int(dr: data-repr): int
+  match dr
+    DataEnum -> 0
+    DataIso -> 1
+    DataSingleStruct -> 2
+    DataStructAsMaybe -> 3
+    DataStruct -> 4
+    DataSingle -> 5
+    DataAsMaybe -> 6
+    DataAsList -> 7
+    DataSingleNormal -> 8
+    DataNormal -> 9
+    DataOpen -> 10
+
+pub fun data-repr/(<=)(dr1: data-repr, dr2: data-repr): bool
+  dr1.int <= dr2.int
+
+pub fun data-repr/is-value(dr: data-repr): bool
+  dr <= DataStruct
+
 pub fun data-repr/show(dr: data-repr): string
   match dr
     DataEnum -> "DataEnum"
