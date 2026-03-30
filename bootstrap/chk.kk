@@ -1,6 +1,8 @@
 module bootstrap/chk
 
 import bootstrap/data/ratio
+import bootstrap/data/insertionsort
+
 import bootstrap/core/core
 
 import bootstrap/debug
@@ -26,25 +28,22 @@ pub fun alloc-tree/show(t: alloc-tree): div string
 
 pub alias tokens = list<(ratio, list<(tname, int)>)>
 
-// pub fun gamma-dia/(++) (d1: gamma-dia, d2: gamma-dia): _ gamma-dia
-//   d1.union-with(d2)
-//     fn(l1, l2) l1 ++ l2
-
 pub struct output
   gamma-nm : list<(tname, int)> = []
   gamma-dia : list<(int, tokens)> = []
   alloc-tree : alloc-tree = Leaf
 
+fun gamma-dia/(>)(d1: (int, tokens), d2: (int, tokens)) : bool
+  d1.fst > d2.fst
 
 // Sequential composition of outputs
 pub fun output/(++) (o1 : output, o2 : output) : div output
   match (o1, o2)
     (Output(gamma-nm1, gamma-dia1, alloc-tree1), Output(gamma-nm2, gamma-dia2, alloc-tree2)) ->
       val gamma-nm = gamma-nm1.union-with(gamma-nm2, (+))
-      val gamma-dia = gamma-dia1.union-with(gamma-dia2, list/(++)) // TODO Missing Sort
+      val gamma-dia = gamma-dia1.union-with(gamma-dia2, list/(++)).sort()
       val alloc-tree = Seq(alloc-tree1, alloc-tree2)
       Output(gamma-nm, gamma-dia, alloc-tree)
-
 
 pub fun union-with(m1: list<(a, b)>, m2: list<(a, b)>, f: (b, b) -> <exn,div|e> b, ?(==): (a, a) -> bool): <div|e> list<(a, b)>
   val keys = (m1.map(fst) ++ m2.map(fst)).unique-by-eq
