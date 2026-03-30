@@ -103,7 +103,13 @@ pub fip fun contains(^t : tree<a>, ^k : int) : bool
          else True
     Leaf -> False
 
-
+pub fbip fun retrieve(t : tree<a>, ^k : int) : maybe<a>
+  match t
+    Node(_, l, kx, v, r)
+      -> if k < kx   then retrieve(l, k)
+         elif k > kx then retrieve(r, k)
+         else Just(v)
+    Leaf -> Nothing
 
 // Make a boolean tree
 fun make-tree(n : int) : tree<bool>

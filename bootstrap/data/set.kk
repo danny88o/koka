@@ -26,9 +26,9 @@ pub fun rbtree/new( ?(==): (a,a) -> bool, ?hash: a -> int, ?show: a -> string ):
   with h <- named handler
     fun add(v)      tree := insert(tree, v.hash, v)
     fun contains(k) tree.contains(k.hash)
-    fun list()      tree.fold(Nil) fn(k,v,r) Cons(v, r)
+    fun list()      tree.fold(Nil) fn(_,v,r) Cons(v, r)
     fun show()      tree.fold("")  fn(k,v,r) (k.show ++ ":" ++ v.show ++ "\n" ++ r)
-    fun size()      tree.fold(0)   fn(k,v,r) r + 1
+    fun size()      tree.fold(0)   fn(_,_,r) r + 1
   h
 
 // --- Hash Set Implementation ---
