@@ -1916,11 +1916,25 @@
                   ("tcon" "bootstrap/validation/example/fp-quick-sort/unit2"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Unit2"
+                    ("bootstrap/validation/example/fp-quick-sort/Unit2"
+                      ("fun"
+                        (("a"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad"))
+                          ("b"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-quick-sort/unit2")))
                     (("pat-var"
-                        "@x"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/pad"))
                         ("pat-con"
-                          "bootstrap/validation/example/fp-quick-sort/Pad"
+                          ("bootstrap/validation/example/fp-quick-sort/Pad"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad"))
                           ()
                           ("singleton"
                             "bootstrap/validation/example/fp-quick-sort/pad"
@@ -1930,7 +1944,9 @@
                           ()
                           ()))
                       ("pat-con"
-                        "bootstrap/validation/example/fp-quick-sort/Pad"
+                        ("bootstrap/validation/example/fp-quick-sort/Pad"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/pad"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/fp-quick-sort/pad"
@@ -1979,9 +1995,21 @@
                   ("tcon" "bootstrap/validation/example/fp-quick-sort/unit2"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Unit2"
+                    ("bootstrap/validation/example/fp-quick-sort/Unit2"
+                      ("fun"
+                        (("a"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad"))
+                          ("b"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-quick-sort/unit2")))
                     (("pat-con"
-                        "bootstrap/validation/example/fp-quick-sort/Pad"
+                        ("bootstrap/validation/example/fp-quick-sort/Pad"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/pad"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/fp-quick-sort/pad"
@@ -1991,9 +2019,13 @@
                         ()
                         ())
                       ("pat-var"
-                        "@x"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/pad"))
                         ("pat-con"
-                          "bootstrap/validation/example/fp-quick-sort/Pad"
+                          ("bootstrap/validation/example/fp-quick-sort/Pad"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad"))
                           ()
                           ("singleton"
                             "bootstrap/validation/example/fp-quick-sort/pad"
@@ -2064,8 +2096,20 @@
                               "bootstrap/validation/example/fp-quick-sort/pad")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-a@119" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-a@119"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-quick-sort/pad"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2088,7 +2132,12 @@
                                   "bootstrap/validation/example/fp-quick-sort/pad"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2172,8 +2221,20 @@
                               "bootstrap/validation/example/fp-quick-sort/pad")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-b@127" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-b@127"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-quick-sort/pad"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2196,7 +2257,12 @@
                                   "bootstrap/validation/example/fp-quick-sort/pad"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2312,7 +2378,11 @@
                       ("tvar" "149")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Nothing2"
+                      ("bootstrap/validation/example/fp-quick-sort/Nothing2"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/maybe2")
+                          ("tvar" "149")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -2383,10 +2453,22 @@
                       ("tvar" "167")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Just2"
+                      ("bootstrap/validation/example/fp-quick-sort/Just2"
+                        ("fun"
+                          (("a" ("tvar" "167"))
+                            ("b"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/pad")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/maybe2")
+                            ("tvar" "167"))))
                       ("pat-wild"
                         ("pat-con"
-                          "bootstrap/validation/example/fp-quick-sort/Pad"
+                          ("bootstrap/validation/example/fp-quick-sort/Pad"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/pad"))
                           ()
                           ("singleton"
                             "bootstrap/validation/example/fp-quick-sort/pad"
@@ -2423,7 +2505,13 @@
                           "2")))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Nothing2"
+                      ("bootstrap/validation/example/fp-quick-sort/Nothing2"
+                        ("forall"
+                          ("13")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/maybe2")
+                            ("tvar" "13"))))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -2477,8 +2565,20 @@
                       ("tvar" "192")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/SCons"
-                      (("pat-var" "@x" "pat-wild") "pat-wild")
+                      ("bootstrap/validation/example/fp-quick-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "192"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/sublist")
+                                ("tvar" "192"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tvar" "192"))))
+                      (("pat-var" ("@x" ("tvar" "192")) "pat-wild") "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/sublist"
                         ("normal" "False")
@@ -2502,8 +2602,15 @@
                       ("var" ("@x" ("tvar" "192"))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/STuple"
-                      (("pat-var" "@x" "pat-wild") "pat-wild")
+                      ("bootstrap/validation/example/fp-quick-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "192")) ("b" ("tvar" "192")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tvar" "192"))))
+                      (("pat-var" ("@x" ("tvar" "192")) "pat-wild") "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/sublist"
                         ("normal" "False")
@@ -2551,7 +2658,19 @@
                       ("tvar" "209")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/SCons"
+                      ("bootstrap/validation/example/fp-quick-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "209"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/sublist")
+                                ("tvar" "209"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tvar" "209"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/sublist"
@@ -2627,7 +2746,14 @@
                       ("tvar" "227")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/STuple"
+                      ("bootstrap/validation/example/fp-quick-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "227")) ("b" ("tvar" "227")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tvar" "227"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/sublist"
@@ -2701,7 +2827,23 @@
                       ("tvar" "245")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Sublist"
+                      ("bootstrap/validation/example/fp-quick-sort/Sublist"
+                        ("fun"
+                          (("c"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/sublist")
+                                ("tvar" "245")))
+                            ("bdl"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/partition")
+                                ("tvar" "245"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/partition")
+                            ("tvar" "245"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/partition"
@@ -2782,7 +2924,19 @@
                       ("tvar" "263")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Singleton"
+                      ("bootstrap/validation/example/fp-quick-sort/Singleton"
+                        ("fun"
+                          (("c" ("tvar" "263"))
+                            ("bdl"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/partition")
+                                ("tvar" "263"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/partition")
+                            ("tvar" "263"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/partition"
@@ -2860,7 +3014,11 @@
                       ("tvar" "281")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/End"
+                      ("bootstrap/validation/example/fp-quick-sort/End"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/partition")
+                          ("tvar" "281")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-quick-sort/partition"
@@ -2931,7 +3089,19 @@
                       ("tvar" "299")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/MkLo"
+                      ("bootstrap/validation/example/fp-quick-sort/MkLo"
+                        ("fun"
+                          (("x" ("tvar" "299"))
+                            ("k"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/accum")
+                                ("tvar" "299"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tvar" "299"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/accum"
@@ -3007,7 +3177,19 @@
                       ("tvar" "317")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/MkHi"
+                      ("bootstrap/validation/example/fp-quick-sort/MkHi"
+                        ("fun"
+                          (("x" ("tvar" "317"))
+                            ("k"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-quick-sort/accum")
+                                ("tvar" "317"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tvar" "317"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-quick-sort/accum"
@@ -3083,7 +3265,11 @@
                       ("tvar" "335")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-quick-sort/Done"
+                      ("bootstrap/validation/example/fp-quick-sort/Done"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/accum")
+                          ("tvar" "335")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-quick-sort/accum"
@@ -3204,8 +3390,41 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/MkLo"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "k" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/MkLo"
+                      ("fun"
+                        (("x"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("k"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/accum")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/accum")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/accum"
                       ("normal" "True")
@@ -3531,8 +3750,41 @@
                             "bootstrap/validation/example/fp-quick-sort/unit2")))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/MkHi"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "k" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/MkHi"
+                      ("fun"
+                        (("x"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("k"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/accum")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/accum")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/accum"
                       ("normal" "True")
@@ -3857,7 +4109,13 @@
                             "bootstrap/validation/example/fp-quick-sort/unit2")))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Done"
+                    ("bootstrap/validation/example/fp-quick-sort/Done"
+                      ("tapp"
+                        ("tcon"
+                          "bootstrap/validation/example/fp-quick-sort/accum")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-quick-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-quick-sort/accum"
@@ -4015,8 +4273,41 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/MkLo"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "k" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/MkLo"
+                      ("fun"
+                        (("x"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("k"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/accum")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/accum")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/accum"
                       ("normal" "True")
@@ -4345,8 +4636,41 @@
                               ("tcon" "std/core/types/int32")))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/MkHi"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "k" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/MkHi"
+                      ("fun"
+                        (("x"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("k"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/accum")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/accum")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/accum")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/accum"
                       ("normal" "True")
@@ -4382,7 +4706,13 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/Nothing2"
+                              ("bootstrap/validation/example/fp-quick-sort/Nothing2"
+                                ("tapp"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-quick-sort/maybe2")
+                                  ("tsyn"
+                                    "bootstrap/validation/example/fp-quick-sort/elem"
+                                    ("tcon" "std/core/types/int32"))))
                               ()
                               ("singleton"
                                 "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -4723,10 +5053,32 @@
                                         ("tcon" "std/core/types/int32")))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/Just2"
-                              (("pat-var" "y" "pat-wild")
+                              ("bootstrap/validation/example/fp-quick-sort/Just2"
+                                ("fun"
+                                  (("a"
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("b"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/pad")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/maybe2")
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))))
+                              (("pat-var"
+                                  ("y"
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))
+                                  "pat-wild")
                                 ("pat-con"
-                                  "bootstrap/validation/example/fp-quick-sort/Pad"
+                                  ("bootstrap/validation/example/fp-quick-sort/Pad"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/pad"))
                                   ()
                                   ("singleton"
                                     "bootstrap/validation/example/fp-quick-sort/pad"
@@ -5098,7 +5450,13 @@
                                       "1"))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Done"
+                    ("bootstrap/validation/example/fp-quick-sort/Done"
+                      ("tapp"
+                        ("tcon"
+                          "bootstrap/validation/example/fp-quick-sort/accum")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-quick-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-quick-sort/accum"
@@ -5126,10 +5484,32 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/Just2"
-                              (("pat-var" "x" "pat-wild")
+                              ("bootstrap/validation/example/fp-quick-sort/Just2"
+                                ("fun"
+                                  (("a"
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("b"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/pad")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/maybe2")
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))))
+                              (("pat-var"
+                                  ("x"
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))
+                                  "pat-wild")
                                 ("pat-con"
-                                  "bootstrap/validation/example/fp-quick-sort/Pad"
+                                  ("bootstrap/validation/example/fp-quick-sort/Pad"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/pad"))
                                   ()
                                   ("singleton"
                                     "bootstrap/validation/example/fp-quick-sort/pad"
@@ -5216,7 +5596,13 @@
                                             "std/core/types/int32"))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/Nothing2"
+                              ("bootstrap/validation/example/fp-quick-sort/Nothing2"
+                                ("tapp"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-quick-sort/maybe2")
+                                  ("tsyn"
+                                    "bootstrap/validation/example/fp-quick-sort/elem"
+                                    ("tcon" "std/core/types/int32"))))
                               ()
                               ("singleton"
                                 "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -5352,8 +5738,38 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "xx" "pat-wild"))
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("xx"
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("as-cons"
                       "std/core/types/list"
                       "as-list"
@@ -5443,7 +5859,8 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -5782,7 +6199,8 @@
                                       "bootstrap/validation/example/fp-quick-sort/unit2")))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -6121,7 +6539,12 @@
                                       "bootstrap/validation/example/fp-quick-sort/unit2"))))))))))))
               ("branch"
                 (("pat-con"
-                    "std/core/types/Nil"
+                    ("std/core/types/Nil"
+                      ("tapp"
+                        ("tcon" "std/core/types/list")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-quick-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "std/core/types/list"
@@ -6437,9 +6860,52 @@
                                   ("tcon" "std/core/types/int32")))))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/Tuple2"
-                              (("pat-var" "lo" "pat-wild")
-                                ("pat-var" "hi" "pat-wild"))
+                              ("std/core/types/Tuple2"
+                                ("fun"
+                                  (("fst"
+                                      ("tapp"
+                                        ("tcon" "std/core/types/list")
+                                        ("tsyn"
+                                          "bootstrap/validation/example/fp-quick-sort/elem"
+                                          ("tcon" "std/core/types/int32"))))
+                                    ("snd"
+                                      ("tapp"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-quick-sort/partition")
+                                        ("tsyn"
+                                          "bootstrap/validation/example/fp-quick-sort/elem"
+                                          ("tcon" "std/core/types/int32")))))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/tuple2")
+                                    ("tapp"
+                                      ("tcon" "std/core/types/list")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("tapp"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/partition")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))))
+                              (("pat-var"
+                                  ("lo"
+                                    ("tapp"
+                                      ("tcon" "std/core/types/list")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("hi"
+                                    ("tapp"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/partition")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  "pat-wild"))
                               ("single"
                                 "std/core/types/tuple2"
                                 "single-struct"
@@ -6606,8 +7072,41 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/SCons"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "xx" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/SCons"
+                      ("fun"
+                        (("a"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("cs"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/sublist")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/sublist")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("xx"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/sublist"
                       ("normal" "False")
@@ -6697,7 +7196,8 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -7059,7 +7559,8 @@
                                       "bootstrap/validation/example/fp-quick-sort/unit2")))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -7421,8 +7922,35 @@
                                       "bootstrap/validation/example/fp-quick-sort/unit2"))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/STuple"
-                    (("pat-var" "x" "pat-wild") ("pat-var" "y" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/STuple"
+                      ("fun"
+                        (("a"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("b"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/sublist")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("x"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("y"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/sublist"
                       ("normal" "False")
@@ -7811,8 +8339,41 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Singleton"
-                    (("pat-var" "p" "pat-wild") ("pat-var" "b" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/Singleton"
+                      ("fun"
+                        (("c"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("bdl"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/partition")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/partition")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("p"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("b"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/partition")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/partition"
                       ("normal" "True")
@@ -7975,8 +8536,47 @@
                                 ("tcon" "std/core/types/int32"))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/Sublist"
-                    (("pat-var" "xs" "pat-wild") ("pat-var" "bdl'" "pat-wild"))
+                    ("bootstrap/validation/example/fp-quick-sort/Sublist"
+                      ("fun"
+                        (("c"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/sublist")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32"))))
+                          ("bdl"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-quick-sort/partition")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-quick-sort/partition")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("xs"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/sublist")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild")
+                      ("pat-var"
+                        ("bdl'"
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-quick-sort/partition")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-quick-sort/partition"
                       ("normal" "True")
@@ -8015,9 +8615,41 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/SCons"
-                              (("pat-var" "p" "pat-wild")
-                                ("pat-var" "xx" "pat-wild"))
+                              ("bootstrap/validation/example/fp-quick-sort/SCons"
+                                ("fun"
+                                  (("a"
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("cs"
+                                      ("tapp"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-quick-sort/sublist")
+                                        ("tsyn"
+                                          "bootstrap/validation/example/fp-quick-sort/elem"
+                                          ("tcon" "std/core/types/int32")))))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/sublist")
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))))
+                              (("pat-var"
+                                  ("p"
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("xx"
+                                    ("tapp"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/sublist")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-quick-sort/sublist"
                                 ("normal" "False")
@@ -8433,9 +9065,58 @@
                                           "1")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/Tuple2"
-                                        (("pat-var" "lo" "pat-wild")
-                                          ("pat-var" "hi" "pat-wild"))
+                                        ("std/core/types/Tuple2"
+                                          ("fun"
+                                            (("fst"
+                                                ("tapp"
+                                                  ("tcon" "std/core/types/list")
+                                                  ("tsyn"
+                                                    "bootstrap/validation/example/fp-quick-sort/elem"
+                                                    ("tcon"
+                                                      "std/core/types/int32"))))
+                                              ("snd"
+                                                ("tapp"
+                                                  ("tcon"
+                                                    "bootstrap/validation/example/fp-quick-sort/partition")
+                                                  ("tsyn"
+                                                    "bootstrap/validation/example/fp-quick-sort/elem"
+                                                    ("tcon"
+                                                      "std/core/types/int32")))))
+                                            ("tcon" "std/core/types/total")
+                                            ("tapp"
+                                              ("tcon" "std/core/types/tuple2")
+                                              ("tapp"
+                                                ("tcon" "std/core/types/list")
+                                                ("tsyn"
+                                                  "bootstrap/validation/example/fp-quick-sort/elem"
+                                                  ("tcon"
+                                                    "std/core/types/int32")))
+                                              ("tapp"
+                                                ("tcon"
+                                                  "bootstrap/validation/example/fp-quick-sort/partition")
+                                                ("tsyn"
+                                                  "bootstrap/validation/example/fp-quick-sort/elem"
+                                                  ("tcon"
+                                                    "std/core/types/int32"))))))
+                                        (("pat-var"
+                                            ("lo"
+                                              ("tapp"
+                                                ("tcon" "std/core/types/list")
+                                                ("tsyn"
+                                                  "bootstrap/validation/example/fp-quick-sort/elem"
+                                                  ("tcon"
+                                                    "std/core/types/int32"))))
+                                            "pat-wild")
+                                          ("pat-var"
+                                            ("hi"
+                                              ("tapp"
+                                                ("tcon"
+                                                  "bootstrap/validation/example/fp-quick-sort/partition")
+                                                ("tsyn"
+                                                  "bootstrap/validation/example/fp-quick-sort/elem"
+                                                  ("tcon"
+                                                    "std/core/types/int32"))))
+                                            "pat-wild"))
                                         ("single"
                                           "std/core/types/tuple2"
                                           "single-struct"
@@ -8655,9 +9336,35 @@
                                                     "std/core/types/int32"))))))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-quick-sort/STuple"
-                              (("pat-var" "a" "pat-wild")
-                                ("pat-var" "b" "pat-wild"))
+                              ("bootstrap/validation/example/fp-quick-sort/STuple"
+                                ("fun"
+                                  (("a"
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("b"
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-quick-sort/sublist")
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))))
+                              (("pat-var"
+                                  ("a"
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("b"
+                                    ("tsyn"
+                                      "bootstrap/validation/example/fp-quick-sort/elem"
+                                      ("tcon" "std/core/types/int32")))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-quick-sort/sublist"
                                 ("normal" "False")
@@ -8761,7 +9468,8 @@
                                           ("tcon" "std/core/types/int32"))))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -8972,7 +9680,8 @@
                                                         "std/core/types/int32")))))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -9183,7 +9892,13 @@
                                                         "std/core/types/int32")))))))))))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-quick-sort/End"
+                    ("bootstrap/validation/example/fp-quick-sort/End"
+                      ("tapp"
+                        ("tcon"
+                          "bootstrap/validation/example/fp-quick-sort/partition")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-quick-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-quick-sort/partition"
@@ -9263,8 +9978,38 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "p" "pat-wild") ("pat-var" "xx" "pat-wild"))
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-quick-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("p"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-quick-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("xx"
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-quick-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("as-cons"
                       "std/core/types/list"
                       "as-list"
@@ -9603,9 +10348,52 @@
                                 "1")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/Tuple2"
-                              (("pat-var" "lo" "pat-wild")
-                                ("pat-var" "hi" "pat-wild"))
+                              ("std/core/types/Tuple2"
+                                ("fun"
+                                  (("fst"
+                                      ("tapp"
+                                        ("tcon" "std/core/types/list")
+                                        ("tsyn"
+                                          "bootstrap/validation/example/fp-quick-sort/elem"
+                                          ("tcon" "std/core/types/int32"))))
+                                    ("snd"
+                                      ("tapp"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-quick-sort/partition")
+                                        ("tsyn"
+                                          "bootstrap/validation/example/fp-quick-sort/elem"
+                                          ("tcon" "std/core/types/int32")))))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/tuple2")
+                                    ("tapp"
+                                      ("tcon" "std/core/types/list")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32")))
+                                    ("tapp"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/partition")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))))
+                              (("pat-var"
+                                  ("lo"
+                                    ("tapp"
+                                      ("tcon" "std/core/types/list")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("hi"
+                                    ("tapp"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-quick-sort/partition")
+                                      ("tsyn"
+                                        "bootstrap/validation/example/fp-quick-sort/elem"
+                                        ("tcon" "std/core/types/int32"))))
+                                  "pat-wild"))
                               ("single"
                                 "std/core/types/tuple2"
                                 "single-struct"
@@ -9804,7 +10592,12 @@
                                           "std/core/types/int32"))))))))))))))
               ("branch"
                 (("pat-con"
-                    "std/core/types/Nil"
+                    ("std/core/types/Nil"
+                      ("tapp"
+                        ("tcon" "std/core/types/list")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-quick-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "std/core/types/list"
@@ -10440,7 +11233,7 @@
                     "0")))
               (("branch"
                   (("pat-con"
-                      "std/core/types/True"
+                      ("std/core/types/True" ("tcon" "std/core/types/bool"))
                       ()
                       ("enum"
                         "std/core/types/bool"
@@ -10654,7 +11447,7 @@
                           ("var" ("next" ("tcon" "std/core/types/int32"))))))))
                 ("branch"
                   (("pat-con"
-                      "std/core/types/False"
+                      ("std/core/types/False" ("tcon" "std/core/types/bool"))
                       ()
                       ("enum"
                         "std/core/types/bool"

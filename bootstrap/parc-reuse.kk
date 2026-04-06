@@ -32,3 +32,12 @@ pub fun get-fixed-data-alloc-size(newtypes: list<(name, data-info)>, nm: type-ex
             _ -> Nothing
     _ -> Nothing
 
+pub fun value-repr-is-raw(vr: value-repr): bool
+  vr.raw-val > 0 && vr.scan == 0
+
+pub fun needs-dup-drop-data(di: data-info): bool
+  match di.ddef
+    DataDefValue(vr) | value-repr-is-raw(vr) -> False
+    _ -> match di.constrs
+      [Con-info(_, _, [], _, ValueRepr(0, 0, _))] -> False
+      _ -> True

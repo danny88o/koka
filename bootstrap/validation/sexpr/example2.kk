@@ -1494,8 +1494,24 @@
                   ("xs" ("tapp" ("tcon" "std/core/types/list") ("tvar" "51")))))
               (("branch"
                   (("pat-con"
-                      "std/core/types/Cons"
-                      (("pat-var" "x" "pat-wild") ("pat-var" "xx" "pat-wild"))
+                      ("std/core/types/Cons"
+                        ("fun"
+                          (("head" ("tvar" "51"))
+                            ("tail"
+                              ("tapp"
+                                ("tcon" "std/core/types/list")
+                                ("tvar" "51"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tvar" "51"))))
+                      (("pat-var" ("x" ("tvar" "51")) "pat-wild")
+                        ("pat-var"
+                          ("xx"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tvar" "51")))
+                          "pat-wild"))
                       ("as-cons"
                         "std/core/types/list"
                         "as-list"
@@ -1622,7 +1638,8 @@
                                 ("tvar" "51")))))))))
                 ("branch"
                   (("pat-con"
-                      "std/core/types/Nil"
+                      ("std/core/types/Nil"
+                        ("tapp" ("tcon" "std/core/types/list") ("tvar" "51")))
                       ()
                       ("singleton"
                         "std/core/types/list"

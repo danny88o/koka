@@ -1635,7 +1635,23 @@
                       ("tvar" "68")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Bin"
+                      ("bootstrap/validation/example/fp-binary-tree/Bin"
+                        ("fun"
+                          (("left"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "68")))
+                            ("right"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "68"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tree")
+                            ("tvar" "68"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tree"
@@ -1714,7 +1730,14 @@
                       ("tvar" "86")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Tip"
+                      ("bootstrap/validation/example/fp-binary-tree/Tip"
+                        ("fun"
+                          (("value" ("tvar" "86")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tree")
+                            ("tvar" "86"))))
                       ("pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tree"
@@ -1789,7 +1812,12 @@
                       ("tvar" "108")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Top"
+                      ("bootstrap/validation/example/fp-binary-tree/Top"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-binary-tree/tzipper")
+                          ("tvar" "107")
+                          ("tvar" "108")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
@@ -1863,7 +1891,25 @@
                       ("tvar" "132")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/BinL"
+                      ("bootstrap/validation/example/fp-binary-tree/BinL"
+                        ("fun"
+                          (("up"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tzipper")
+                                ("tvar" "131")
+                                ("tvar" "132")))
+                            ("right"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "131"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tzipper")
+                            ("tvar" "131")
+                            ("tvar" "132"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
@@ -1946,7 +1992,25 @@
                       ("tvar" "156")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/BinR"
+                      ("bootstrap/validation/example/fp-binary-tree/BinR"
+                        ("fun"
+                          (("left"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "156")))
+                            ("up"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tzipper")
+                                ("tvar" "155")
+                                ("tvar" "156"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tzipper")
+                            ("tvar" "155")
+                            ("tvar" "156"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
@@ -2055,7 +2119,12 @@
                       ("tvar" "343")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Top"
+                      ("bootstrap/validation/example/fp-binary-tree/Top"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-binary-tree/tzipper")
+                          ("tvar" "344")
+                          ("tvar" "343")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
@@ -2080,8 +2149,40 @@
                             ("tvar" "343")))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/BinR"
-                      (("pat-var" "l" "pat-wild") ("pat-var" "up" "pat-wild"))
+                      ("bootstrap/validation/example/fp-binary-tree/BinR"
+                        ("fun"
+                          (("left"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "343")))
+                            ("up"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tzipper")
+                                ("tvar" "344")
+                                ("tvar" "343"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tzipper")
+                            ("tvar" "344")
+                            ("tvar" "343"))))
+                      (("pat-var"
+                          ("l"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tree")
+                              ("tvar" "343")))
+                          "pat-wild")
+                        ("pat-var"
+                          ("up"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tzipper")
+                              ("tvar" "344")
+                              ("tvar" "343")))
+                          "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
                         ("normal" "True")
@@ -2322,8 +2423,40 @@
                               ("tvar" "343"))))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/BinL"
-                      (("pat-var" "up" "pat-wild") ("pat-var" "r" "pat-wild"))
+                      ("bootstrap/validation/example/fp-binary-tree/BinL"
+                        ("fun"
+                          (("up"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tzipper")
+                                ("tvar" "344")
+                                ("tvar" "343")))
+                            ("right"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "344"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tzipper")
+                            ("tvar" "344")
+                            ("tvar" "343"))))
+                      (("pat-var"
+                          ("up"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tzipper")
+                              ("tvar" "344")
+                              ("tvar" "343")))
+                          "pat-wild")
+                        ("pat-var"
+                          ("r"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tree")
+                              ("tvar" "344")))
+                          "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tzipper"
                         ("normal" "True")
@@ -2620,8 +2753,37 @@
                       ("tvar" "355")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Bin"
-                      (("pat-var" "l" "pat-wild") ("pat-var" "r" "pat-wild"))
+                      ("bootstrap/validation/example/fp-binary-tree/Bin"
+                        ("fun"
+                          (("left"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "355")))
+                            ("right"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-binary-tree/tree")
+                                ("tvar" "355"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tree")
+                            ("tvar" "355"))))
+                      (("pat-var"
+                          ("l"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tree")
+                              ("tvar" "355")))
+                          "pat-wild")
+                        ("pat-var"
+                          ("r"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-binary-tree/tree")
+                              ("tvar" "355")))
+                          "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tree"
                         ("normal" "False")
@@ -2862,8 +3024,15 @@
                                 ("tvar" "355")))))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-binary-tree/Tip"
-                      (("pat-var" "x" "pat-wild"))
+                      ("bootstrap/validation/example/fp-binary-tree/Tip"
+                        ("fun"
+                          (("value" ("tvar" "355")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-binary-tree/tree")
+                            ("tvar" "355"))))
+                      (("pat-var" ("x" ("tvar" "355")) "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-binary-tree/tree"
                         ("normal" "False")

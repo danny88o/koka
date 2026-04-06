@@ -1791,11 +1791,25 @@
                   ("tcon" "bootstrap/validation/example/fp-merge-sort/unit2"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-merge-sort/Unit2"
+                    ("bootstrap/validation/example/fp-merge-sort/Unit2"
+                      ("fun"
+                        (("a"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad"))
+                          ("b"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-merge-sort/unit2")))
                     (("pat-var"
-                        "@x"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-merge-sort/pad"))
                         ("pat-con"
-                          "bootstrap/validation/example/fp-merge-sort/Pad"
+                          ("bootstrap/validation/example/fp-merge-sort/Pad"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad"))
                           ()
                           ("singleton"
                             "bootstrap/validation/example/fp-merge-sort/pad"
@@ -1805,7 +1819,9 @@
                           ()
                           ()))
                       ("pat-con"
-                        "bootstrap/validation/example/fp-merge-sort/Pad"
+                        ("bootstrap/validation/example/fp-merge-sort/Pad"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-merge-sort/pad"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/fp-merge-sort/pad"
@@ -1854,9 +1870,21 @@
                   ("tcon" "bootstrap/validation/example/fp-merge-sort/unit2"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-merge-sort/Unit2"
+                    ("bootstrap/validation/example/fp-merge-sort/Unit2"
+                      ("fun"
+                        (("a"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad"))
+                          ("b"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-merge-sort/unit2")))
                     (("pat-con"
-                        "bootstrap/validation/example/fp-merge-sort/Pad"
+                        ("bootstrap/validation/example/fp-merge-sort/Pad"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-merge-sort/pad"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/fp-merge-sort/pad"
@@ -1866,9 +1894,13 @@
                         ()
                         ())
                       ("pat-var"
-                        "@x"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-merge-sort/pad"))
                         ("pat-con"
-                          "bootstrap/validation/example/fp-merge-sort/Pad"
+                          ("bootstrap/validation/example/fp-merge-sort/Pad"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/pad"))
                           ()
                           ("singleton"
                             "bootstrap/validation/example/fp-merge-sort/pad"
@@ -1939,8 +1971,20 @@
                               "bootstrap/validation/example/fp-merge-sort/pad")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-a@82" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-a@82"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-merge-sort/pad"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -1963,7 +2007,12 @@
                                   "bootstrap/validation/example/fp-merge-sort/pad"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2047,8 +2096,20 @@
                               "bootstrap/validation/example/fp-merge-sort/pad")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-b@90" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-b@90"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-merge-sort/pad"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2071,7 +2132,12 @@
                                   "bootstrap/validation/example/fp-merge-sort/pad"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2187,8 +2253,20 @@
                       ("tvar" "119")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
-                      (("pat-var" "@x" "pat-wild") "pat-wild")
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "119"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "119"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "119"))))
+                      (("pat-var" ("@x" ("tvar" "119")) "pat-wild") "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -2212,8 +2290,15 @@
                       ("var" ("@x" ("tvar" "119"))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/STuple"
-                      (("pat-var" "@x" "pat-wild") "pat-wild")
+                      ("bootstrap/validation/example/fp-merge-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "119")) ("b" ("tvar" "119")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "119"))))
+                      (("pat-var" ("@x" ("tvar" "119")) "pat-wild") "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -2261,7 +2346,19 @@
                       ("tvar" "136")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "136"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "136"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "136"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
@@ -2337,7 +2434,14 @@
                       ("tvar" "154")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/STuple"
+                      ("bootstrap/validation/example/fp-merge-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "154")) ("b" ("tvar" "154")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "154"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
@@ -2411,7 +2515,23 @@
                       ("tvar" "172")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/Singleton"
+                      ("bootstrap/validation/example/fp-merge-sort/Singleton"
+                        ("fun"
+                          (("c"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "172")))
+                            ("z"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/partition")
+                                ("tvar" "172"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/partition")
+                            ("tvar" "172"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/partition"
@@ -2492,7 +2612,19 @@
                       ("tvar" "190")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/Sublist"
+                      ("bootstrap/validation/example/fp-merge-sort/Sublist"
+                        ("fun"
+                          (("c" ("tvar" "190"))
+                            ("z"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/partition")
+                                ("tvar" "190"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/partition")
+                            ("tvar" "190"))))
                       ("pat-wild" "pat-wild")
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/partition"
@@ -2570,7 +2702,11 @@
                       ("tvar" "208")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/End"
+                      ("bootstrap/validation/example/fp-merge-sort/End"
+                        ("tapp"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-merge-sort/partition")
+                          ("tvar" "208")))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-merge-sort/partition"
@@ -2653,8 +2789,27 @@
                       ("tvar" "266")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
-                      (("pat-var" "a" "pat-wild") ("pat-var" "cs" "pat-wild"))
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "266"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "266"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "266"))))
+                      (("pat-var" ("a" ("tvar" "266")) "pat-wild")
+                        ("pat-var"
+                          ("cs"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-merge-sort/sublist")
+                              ("tvar" "266")))
+                          "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -2818,8 +2973,16 @@
                               "bootstrap/validation/example/fp-merge-sort/unit2")))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/STuple"
-                      (("pat-var" "a" "pat-wild") ("pat-var" "b" "pat-wild"))
+                      ("bootstrap/validation/example/fp-merge-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "266")) ("b" ("tvar" "266")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "266"))))
+                      (("pat-var" ("a" ("tvar" "266")) "pat-wild")
+                        ("pat-var" ("b" ("tvar" "266")) "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -2898,12 +3061,42 @@
                       ("tvar" "347")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
-                      (("pat-var" "a" "pat-wild")
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "347"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "347"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "347"))))
+                      (("pat-var" ("a" ("tvar" "347")) "pat-wild")
                         ("pat-con"
-                          "bootstrap/validation/example/fp-merge-sort/SCons"
-                          (("pat-var" "b" "pat-wild")
-                            ("pat-var" "c" "pat-wild"))
+                          ("bootstrap/validation/example/fp-merge-sort/SCons"
+                            ("fun"
+                              (("a" ("tvar" "347"))
+                                ("cs"
+                                  ("tapp"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-merge-sort/sublist")
+                                    ("tvar" "347"))))
+                              ("tcon" "std/core/types/total")
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "347"))))
+                          (("pat-var" ("b" ("tvar" "347")) "pat-wild")
+                            ("pat-var"
+                              ("c"
+                                ("tapp"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-merge-sort/sublist")
+                                  ("tvar" "347")))
+                              "pat-wild"))
                           ("normal"
                             "bootstrap/validation/example/fp-merge-sort/sublist"
                             ("normal" "False")
@@ -3093,12 +3286,31 @@
                               "1")))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
-                      (("pat-var" "a" "pat-wild")
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "347"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "347"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "347"))))
+                      (("pat-var" ("a" ("tvar" "347")) "pat-wild")
                         ("pat-con"
-                          "bootstrap/validation/example/fp-merge-sort/STuple"
-                          (("pat-var" "b" "pat-wild")
-                            ("pat-var" "c" "pat-wild"))
+                          ("bootstrap/validation/example/fp-merge-sort/STuple"
+                            ("fun"
+                              (("a" ("tvar" "347")) ("b" ("tvar" "347")))
+                              ("tcon" "std/core/types/total")
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "347"))))
+                          (("pat-var" ("b" ("tvar" "347")) "pat-wild")
+                            ("pat-var" ("c" ("tvar" "347")) "pat-wild"))
                           ("normal"
                             "bootstrap/validation/example/fp-merge-sort/sublist"
                             ("normal" "False")
@@ -3154,8 +3366,16 @@
                           ("var" ("a" ("tvar" "347"))))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/STuple"
-                      (("pat-var" "a" "pat-wild") ("pat-var" "b" "pat-wild"))
+                      ("bootstrap/validation/example/fp-merge-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "347")) ("b" ("tvar" "347")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "347"))))
+                      (("pat-var" ("a" ("tvar" "347")) "pat-wild")
+                        ("pat-var" ("b" ("tvar" "347")) "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -3217,8 +3437,27 @@
                       ("tvar" "405")))))
               (("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/SCons"
-                      (("pat-var" "a" "pat-wild") ("pat-var" "cs" "pat-wild"))
+                      ("bootstrap/validation/example/fp-merge-sort/SCons"
+                        ("fun"
+                          (("a" ("tvar" "405"))
+                            ("cs"
+                              ("tapp"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-merge-sort/sublist")
+                                ("tvar" "405"))))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "405"))))
+                      (("pat-var" ("a" ("tvar" "405")) "pat-wild")
+                        ("pat-var"
+                          ("cs"
+                            ("tapp"
+                              ("tcon"
+                                "bootstrap/validation/example/fp-merge-sort/sublist")
+                              ("tvar" "405")))
+                          "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -3347,8 +3586,16 @@
                                 "bootstrap/validation/example/fp-merge-sort/unit2"))))))))
                 ("branch"
                   (("pat-con"
-                      "bootstrap/validation/example/fp-merge-sort/STuple"
-                      (("pat-var" "a" "pat-wild") ("pat-var" "b" "pat-wild"))
+                      ("bootstrap/validation/example/fp-merge-sort/STuple"
+                        ("fun"
+                          (("a" ("tvar" "405")) ("b" ("tvar" "405")))
+                          ("tcon" "std/core/types/total")
+                          ("tapp"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-merge-sort/sublist")
+                            ("tvar" "405"))))
+                      (("pat-var" ("a" ("tvar" "405")) "pat-wild")
+                        ("pat-var" ("b" ("tvar" "405")) "pat-wild"))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -3463,8 +3710,38 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "b" "pat-wild") ("pat-var" "bs1" "pat-wild"))
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("b"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("bs1"
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("as-cons"
                       "std/core/types/list"
                       "as-list"
@@ -3752,7 +4029,14 @@
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/unit2")))))))
               ("branch"
-                (("pat-var" "bs" "pat-wild"))
+                (("pat-var"
+                    ("bs"
+                      ("tapp"
+                        ("tcon" "std/core/types/list")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-merge-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
+                    "pat-wild"))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4041,12 +4325,63 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "a" "pat-wild")
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("a"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
                       ("pat-con"
-                        "std/core/types/Cons"
-                        (("pat-var" "b" "pat-wild")
-                          ("pat-var" "xs1" "pat-wild"))
+                        ("std/core/types/Cons"
+                          ("fun"
+                            (("head"
+                                ("tsyn"
+                                  "bootstrap/validation/example/fp-merge-sort/elem"
+                                  ("tcon" "std/core/types/int32")))
+                              ("tail"
+                                ("tapp"
+                                  ("tcon" "std/core/types/list")
+                                  ("tsyn"
+                                    "bootstrap/validation/example/fp-merge-sort/elem"
+                                    ("tcon" "std/core/types/int32")))))
+                            ("tcon" "std/core/types/total")
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        (("pat-var"
+                            ("b"
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))
+                            "pat-wild")
+                          ("pat-var"
+                            ("xs1"
+                              ("tapp"
+                                ("tcon" "std/core/types/list")
+                                ("tsyn"
+                                  "bootstrap/validation/example/fp-merge-sort/elem"
+                                  ("tcon" "std/core/types/int32"))))
+                            "pat-wild"))
                         ("as-cons"
                           "std/core/types/list"
                           "as-list"
@@ -4152,7 +4487,8 @@
                                 ("tcon" "std/core/types/int32"))))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -4422,7 +4758,8 @@
                                       "1")))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -4692,10 +5029,37 @@
                                       "1"))))))))))))
               ("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "a" "pat-wild")
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("a"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
                       ("pat-con"
-                        "std/core/types/Nil"
+                        ("std/core/types/Nil"
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
                         ()
                         ("singleton"
                           "std/core/types/list"
@@ -4759,7 +5123,12 @@
                           ("tcon" "std/core/types/int32")))))))
               ("branch"
                 (("pat-con"
-                    "std/core/types/Nil"
+                    ("std/core/types/Nil"
+                      ("tapp"
+                        ("tcon" "std/core/types/list")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-merge-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
                     ()
                     ("singleton"
                       "std/core/types/list"
@@ -4849,8 +5218,38 @@
                       ("tcon" "std/core/types/int32"))))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/Cons"
-                    (("pat-var" "b" "pat-wild") ("pat-var" "bs1" "pat-wild"))
+                    ("std/core/types/Cons"
+                      ("fun"
+                        (("head"
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32")))
+                          ("tail"
+                            ("tapp"
+                              ("tcon" "std/core/types/list")
+                              ("tsyn"
+                                "bootstrap/validation/example/fp-merge-sort/elem"
+                                ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/total")
+                        ("tapp"
+                          ("tcon" "std/core/types/list")
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))))
+                    (("pat-var"
+                        ("b"
+                          ("tsyn"
+                            "bootstrap/validation/example/fp-merge-sort/elem"
+                            ("tcon" "std/core/types/int32")))
+                        "pat-wild")
+                      ("pat-var"
+                        ("bs1"
+                          ("tapp"
+                            ("tcon" "std/core/types/list")
+                            ("tsyn"
+                              "bootstrap/validation/example/fp-merge-sort/elem"
+                              ("tcon" "std/core/types/int32"))))
+                        "pat-wild"))
                     ("as-cons"
                       "std/core/types/list"
                       "as-list"
@@ -5138,7 +5537,14 @@
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/unit2")))))))
               ("branch"
-                (("pat-var" "bs" "pat-wild"))
+                (("pat-var"
+                    ("bs"
+                      ("tapp"
+                        ("tcon" "std/core/types/list")
+                        ("tsyn"
+                          "bootstrap/validation/example/fp-merge-sort/elem"
+                          ("tcon" "std/core/types/int32"))))
+                    "pat-wild"))
                 (("guard"
                     ("con"
                       "std/core/types/True"

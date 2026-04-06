@@ -192,9 +192,9 @@ prettyGuardToSExpr (Guard test expr) =
 prettyPatternToSExpr :: Pattern -> SExpr
 prettyPatternToSExpr pat = case pat of
   PatCon tname args repr targs exists _ _ _ ->
-    SList [SAtom "pat-con", SAtom (show (pretty (getName tname))), SList (map prettyPatternToSExpr args), prettyConReprToSExpr repr, SList (map prettyTypeToSExpr targs), SList (map (SAtom . show . typevarId) exists)]
+    SList [SAtom "pat-con", prettyTNameToSExpr tname, SList (map prettyPatternToSExpr args), prettyConReprToSExpr repr, SList (map prettyTypeToSExpr targs), SList (map (SAtom . show . typevarId) exists)]
   PatVar tname p ->
-    SList [SAtom "pat-var", SAtom (show (pretty (getName tname))), prettyPatternToSExpr p]
+    SList [SAtom "pat-var", prettyTNameToSExpr tname, prettyPatternToSExpr p]
   PatLit lit ->
     SList [SAtom "pat-lit", prettyLitToSExpr lit]
   PatWild ->

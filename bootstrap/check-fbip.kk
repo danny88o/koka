@@ -12,7 +12,6 @@ import bootstrap/data/ratio
 import std/core/sslice
 
 pub fun check-fbip( c : core )
-    with dbg-handler
     chk-def-groups(c.gamma, c.type-infos, c.defs)
 
 
@@ -187,13 +186,13 @@ fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk, dbg> output
     PatCon(tn, pats, crepr, ftypes, _) ->
       val size = get-constructor-alloc-size(crepr)
       provide-token(tn.name, size, pats.zip(ftypes).foldl(out, fn(acc, p') bind-pattern(p', acc)))
-    PatVar(tn, pat) ->
-      match pat
-        PatCon(_, _, crepr, _, _) ->
-          val size = get-constructor-alloc-size(crepr)
-          bind-name(tn, size, out)
-        PatWild -> bind-name(tn, NotReusable, out)
-        _ -> bind-pattern((pat, tp), out)
+    PatVar(tn, PatCon(_, _, crepr, _, _)) ->
+      val size = get-constructor-alloc-size(crepr)
+      bind-name(tn, size, out)
+    PatVar(tn, PatWild) ->
+      bind-name(tn, NotReusable, out)
+    PatVar(_, pat) ->
+      bind-pattern((pat, tp), out)
     PatLit -> out
     PatWild ->
       if tp.needs-dup-drop-tp then
@@ -624,8 +623,8 @@ fun is-cctx-name(name : string) : bool
     Nothing -> False
 
 fun needs-dup-drop(tname : tname)
-  if tname.name.is-cctx-name then False
-  else tname.tp.needs-dup-drop-tp
+  debug("Checking if \"" ++ tname.name ++ "\" needs dup-drop")
+  if tname.name.is-cctx-name then False else needs-dup-drop-tp(tname.tp)
 
 fun mark-seen(tname: tname): _ ()
   if tname.info-is-local then
@@ -683,23 +682,12 @@ fun get-data-info(tp : type-expr) : <environment> maybe<data-info>
     Just((_, di)) -> Just(di)
 
 fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
-  match tp.expand-syn
-    TCon(nm) ->
-      val n = nm.normalize-name
-      if ["std/core/types/int", "std/core/int", "std/num/int32/int32", "std/core/char", "std/core/float64", "std/core/bool"].any(fn(s) s == n) then False
-      else
-        match get-data-info(tp)
-          Nothing -> True
-          Just(di) ->
-            val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
-            (di.name != name-int) && !is-value
-    TVar -> False // Assume variables are not heap-allocated by default if they are just placeholders
-    _ ->
-      match get-data-info(tp)
-        Nothing -> True // Assume heap-allocated if unknown
-        Just(di) ->
-          val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
-          (di.name != name-int) && !is-value
+  match get-data-info(tp)
+    Nothing -> True // Assume heap-allocated if unknown
+    Just(di) ->
+      val nddd = needs-dup-drop-data(di)
+      debug("Name: " ++ di.name ++ ", nddd: " ++ nddd.show)
+      (di.name != name-int) && nddd
 
 // --- Helpers ---
 fun add-type-reuse-info(nm: tname, sz: reusable): <div, dbg, environment> reusable
@@ -720,6 +708,7 @@ fun data-type-is-flat(nm: type-expr): <environment, dbg> bool
     Just(di) -> di.constrs.all(fn(cr) cr.params.all(fn((_, t)) !t.needs-dup-drop-tp))
 
 fun chk-drop(is-reused:bool, nm: tname): _ ()
+  debug("chk-drop: " ++ nm.name ++ ", is-reused: " ++ is-reused.show)
   val is-heap-value = needs-dup-drop(nm)
   val is-flat = data-type-is-flat(nm.tp)
   debug("chk-drop: " ++ nm.name ++ ", is-reused: " ++ is-reused.show ++ ", is-flat: " ++ is-flat.show ++ ", is-heap-value: " ++ is-heap-value.show)
@@ -736,10 +725,11 @@ fun bind-name(nm: tname, msize: reusable, out: output): _ output
         NotReusable -> (out, False)
         ReusableWithSize(_) ->
           (provide-token(nm.name, is-reusable, out), True)
+      debug("Binding name: " ++ nm.name ++ ", reused: " ++ is-reused.show ++ ", type info: " ++ nm.tp.show)
       chk-drop(is-reused, nm)
       out2
     Just(n) ->
-      if n > 1 && nm.needs-dup-drop then
+      if n > 1 && needs-dup-drop(nm) then
         require-capability(may-alloc, fn(_) Just("the variable " ++ nm.name ++ " is used multiple times (causing sharing and preventing reuse)"))
       out(gamma-nm = out.gamma-nm.filter(fn((tn, _)) tn != nm))
 

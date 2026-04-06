@@ -7,6 +7,7 @@ import std/core/string
 
 import bootstrap/parser/parser
 import bootstrap/check-fbip
+import bootstrap/debug
 
 
 pub fun main()
@@ -15,6 +16,7 @@ pub fun main()
     _ -> throw("Enter one file not found in args")
   val content = file.realpath.read-text-file()
   val core = parse(content)
+  with dbg-handler()
   val warnings = check-fbip(core)
   // TODO compare warnings
   if warnings == Nil then

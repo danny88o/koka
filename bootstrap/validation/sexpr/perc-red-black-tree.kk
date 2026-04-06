@@ -1593,7 +1593,9 @@
                     "bootstrap/validation/example/perc-red-black-tree/color"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Red"
+                    ("bootstrap/validation/example/perc-red-black-tree/Red"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1619,7 +1621,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Black"
+                    ("bootstrap/validation/example/perc-red-black-tree/Black"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1665,7 +1669,9 @@
                     "bootstrap/validation/example/perc-red-black-tree/color"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Black"
+                    ("bootstrap/validation/example/perc-red-black-tree/Black"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1691,7 +1697,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Red"
+                    ("bootstrap/validation/example/perc-red-black-tree/Red"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1735,7 +1743,9 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                    ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -1761,7 +1771,22 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -1814,7 +1839,22 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -1849,7 +1889,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                    ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -1893,9 +1935,26 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     (("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Red"
+                        ("bootstrap/validation/example/perc-red-black-tree/Red"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1984,12 +2043,44 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
                       ("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Node"
+                        ("bootstrap/validation/example/perc-red-black-tree/Node"
+                          ("fun"
+                            (("color"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/color"))
+                              ("left"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree"))
+                              ("key" ("tcon" "std/core/types/int"))
+                              ("value" ("tcon" "std/core/types/bool"))
+                              ("right"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            ("tcon" "std/core/types/total")
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
                         (("pat-con"
-                            "bootstrap/validation/example/perc-red-black-tree/Red"
+                            ("bootstrap/validation/example/perc-red-black-tree/Red"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/color"))
                             ()
                             ("enum"
                               "bootstrap/validation/example/perc-red-black-tree/color"
@@ -1998,10 +2089,22 @@
                               "1")
                             ()
                             ())
-                          ("pat-var" "lx" "pat-wild")
-                          ("pat-var" "kx" "pat-wild")
-                          ("pat-var" "vx" "pat-wild")
-                          ("pat-var" "rx" "pat-wild"))
+                          ("pat-var"
+                            ("lx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("kx" ("tcon" "std/core/types/int"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("vx" ("tcon" "std/core/types/bool"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("rx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild"))
                         ("as-cons"
                           "bootstrap/validation/example/perc-red-black-tree/tree"
                           "as-list"
@@ -2018,9 +2121,17 @@
                           ("tcon"
                             "bootstrap/validation/example/perc-red-black-tree/tree"))
                         ())
-                      ("pat-var" "ky" "pat-wild")
-                      ("pat-var" "vy" "pat-wild")
-                      ("pat-var" "ry" "pat-wild"))
+                      ("pat-var"
+                        ("ky" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vy" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("ry"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2120,15 +2231,55 @@
                               "bootstrap/validation/example/perc-red-black-tree/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
-                      ("pat-var" "ly" "pat-wild")
-                      ("pat-var" "ky" "pat-wild")
-                      ("pat-var" "vy" "pat-wild")
+                      ("pat-var"
+                        ("ly"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("ky" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vy" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
                       ("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Node"
+                        ("bootstrap/validation/example/perc-red-black-tree/Node"
+                          ("fun"
+                            (("color"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/color"))
+                              ("left"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree"))
+                              ("key" ("tcon" "std/core/types/int"))
+                              ("value" ("tcon" "std/core/types/bool"))
+                              ("right"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            ("tcon" "std/core/types/total")
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
                         (("pat-con"
-                            "bootstrap/validation/example/perc-red-black-tree/Red"
+                            ("bootstrap/validation/example/perc-red-black-tree/Red"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/color"))
                             ()
                             ("enum"
                               "bootstrap/validation/example/perc-red-black-tree/color"
@@ -2137,10 +2288,22 @@
                               "1")
                             ()
                             ())
-                          ("pat-var" "lx" "pat-wild")
-                          ("pat-var" "kx" "pat-wild")
-                          ("pat-var" "vx" "pat-wild")
-                          ("pat-var" "rx" "pat-wild"))
+                          ("pat-var"
+                            ("lx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("kx" ("tcon" "std/core/types/int"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("vx" ("tcon" "std/core/types/bool"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("rx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild"))
                         ("as-cons"
                           "bootstrap/validation/example/perc-red-black-tree/tree"
                           "as-list"
@@ -2256,12 +2419,39 @@
                               "bootstrap/validation/example/perc-red-black-tree/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
-                      ("pat-var" "lx" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
-                      ("pat-var" "rx" "pat-wild"))
+                      ("pat-var"
+                        ("lx"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("rx"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2338,7 +2528,9 @@
                             "bootstrap/validation/example/perc-red-black-tree/tree")))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                    ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -2390,12 +2582,44 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
                       ("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Node"
+                        ("bootstrap/validation/example/perc-red-black-tree/Node"
+                          ("fun"
+                            (("color"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/color"))
+                              ("left"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree"))
+                              ("key" ("tcon" "std/core/types/int"))
+                              ("value" ("tcon" "std/core/types/bool"))
+                              ("right"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            ("tcon" "std/core/types/total")
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
                         (("pat-con"
-                            "bootstrap/validation/example/perc-red-black-tree/Red"
+                            ("bootstrap/validation/example/perc-red-black-tree/Red"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/color"))
                             ()
                             ("enum"
                               "bootstrap/validation/example/perc-red-black-tree/color"
@@ -2404,10 +2628,22 @@
                               "1")
                             ()
                             ())
-                          ("pat-var" "lx" "pat-wild")
-                          ("pat-var" "kx" "pat-wild")
-                          ("pat-var" "vx" "pat-wild")
-                          ("pat-var" "rx" "pat-wild"))
+                          ("pat-var"
+                            ("lx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("kx" ("tcon" "std/core/types/int"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("vx" ("tcon" "std/core/types/bool"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("rx"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild"))
                         ("as-cons"
                           "bootstrap/validation/example/perc-red-black-tree/tree"
                           "as-list"
@@ -2424,9 +2660,17 @@
                           ("tcon"
                             "bootstrap/validation/example/perc-red-black-tree/tree"))
                         ())
-                      ("pat-var" "ky" "pat-wild")
-                      ("pat-var" "vy" "pat-wild")
-                      ("pat-var" "ry" "pat-wild"))
+                      ("pat-var"
+                        ("ky" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vy" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("ry"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2526,15 +2770,55 @@
                               "bootstrap/validation/example/perc-red-black-tree/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
-                      ("pat-var" "lx" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
+                      ("pat-var"
+                        ("lx"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
                       ("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Node"
+                        ("bootstrap/validation/example/perc-red-black-tree/Node"
+                          ("fun"
+                            (("color"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/color"))
+                              ("left"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree"))
+                              ("key" ("tcon" "std/core/types/int"))
+                              ("value" ("tcon" "std/core/types/bool"))
+                              ("right"
+                                ("tcon"
+                                  "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            ("tcon" "std/core/types/total")
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
                         (("pat-con"
-                            "bootstrap/validation/example/perc-red-black-tree/Red"
+                            ("bootstrap/validation/example/perc-red-black-tree/Red"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/color"))
                             ()
                             ("enum"
                               "bootstrap/validation/example/perc-red-black-tree/color"
@@ -2543,10 +2827,22 @@
                               "1")
                             ()
                             ())
-                          ("pat-var" "ly" "pat-wild")
-                          ("pat-var" "ky" "pat-wild")
-                          ("pat-var" "vy" "pat-wild")
-                          ("pat-var" "ry" "pat-wild"))
+                          ("pat-var"
+                            ("ly"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("ky" ("tcon" "std/core/types/int"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("vy" ("tcon" "std/core/types/bool"))
+                            "pat-wild")
+                          ("pat-var"
+                            ("ry"
+                              ("tcon"
+                                "bootstrap/validation/example/perc-red-black-tree/tree"))
+                            "pat-wild"))
                         ("as-cons"
                           "bootstrap/validation/example/perc-red-black-tree/tree"
                           "as-list"
@@ -2662,12 +2958,39 @@
                               "bootstrap/validation/example/perc-red-black-tree/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
-                      ("pat-var" "lx" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
-                      ("pat-var" "rx" "pat-wild"))
+                      ("pat-var"
+                        ("lx"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("rx"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2744,7 +3067,9 @@
                               "bootstrap/validation/example/perc-red-black-tree/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                    ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -2792,7 +3117,9 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                    ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -2844,9 +3171,26 @@
                           "1"))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     (("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Red"
+                        ("bootstrap/validation/example/perc-red-black-tree/Red"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/perc-red-black-tree/color"
@@ -2855,10 +3199,22 @@
                           "1")
                         ()
                         ())
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2928,7 +3284,8 @@
                           ("var" ("kx" ("tcon" "std/core/types/int")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -3045,7 +3402,8 @@
                                       "bootstrap/validation/example/perc-red-black-tree/tree")))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -3120,7 +3478,8 @@
                                       ("kx" ("tcon" "std/core/types/int")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3169,7 +3528,8 @@
                                                 "bootstrap/validation/example/perc-red-black-tree/tree")))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3311,9 +3671,26 @@
                                                   "std/core/types/bool"))))))))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     (("pat-con"
-                        "bootstrap/validation/example/perc-red-black-tree/Black"
+                        ("bootstrap/validation/example/perc-red-black-tree/Black"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/perc-red-black-tree/color"
@@ -3322,10 +3699,22 @@
                           "2")
                         ()
                         ())
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -3395,7 +3784,8 @@
                           ("var" ("kx" ("tcon" "std/core/types/int")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -3467,7 +3857,8 @@
                                           "bootstrap/validation/example/perc-red-black-tree/tree")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3690,7 +4081,8 @@
                                                 "bootstrap/validation/example/perc-red-black-tree/tree")))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3832,7 +4224,8 @@
                                                 "bootstrap/validation/example/perc-red-black-tree/tree"))))))))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -3907,7 +4300,8 @@
                                       ("kx" ("tcon" "std/core/types/int")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3956,7 +4350,8 @@
                                                 "bootstrap/validation/example/perc-red-black-tree/tree")))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -4037,7 +4432,9 @@
                                                     "bootstrap/validation/example/perc-red-black-tree/tree")))))
                                           (("branch"
                                               (("pat-con"
-                                                  "std/core/types/True"
+                                                  ("std/core/types/True"
+                                                    ("tcon"
+                                                      "std/core/types/bool"))
                                                   ()
                                                   ("enum"
                                                     "std/core/types/bool"
@@ -4275,7 +4672,9 @@
                                                             "std/core/types/bool"))))))))
                                             ("branch"
                                               (("pat-con"
-                                                  "std/core/types/False"
+                                                  ("std/core/types/False"
+                                                    ("tcon"
+                                                      "std/core/types/bool"))
                                                   ()
                                                   ("enum"
                                                     "std/core/types/bool"
@@ -4449,12 +4848,37 @@
                     "bootstrap/validation/example/perc-red-black-tree/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/perc-red-black-tree/Node"
+                    ("bootstrap/validation/example/perc-red-black-tree/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/color"))
+                          ("left"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/perc-red-black-tree/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree")))
                     ("pat-wild"
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild")
+                      ("pat-var" ("k" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("v" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -4508,9 +4932,13 @@
                             "bootstrap/validation/example/perc-red-black-tree/tree")))))))
               ("branch"
                 (("pat-var"
-                    "t"
+                    ("t"
+                      ("tcon"
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
                     ("pat-con"
-                      "bootstrap/validation/example/perc-red-black-tree/Leaf"
+                      ("bootstrap/validation/example/perc-red-black-tree/Leaf"
+                        ("tcon"
+                          "bootstrap/validation/example/perc-red-black-tree/tree"))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/perc-red-black-tree/tree"
@@ -4599,7 +5027,7 @@
                       "bootstrap/validation/example/perc-red-black-tree/tree")))))
             (("branch"
                 (("pat-con"
-                    "std/core/types/True"
+                    ("std/core/types/True" ("tcon" "std/core/types/bool"))
                     ()
                     ("enum"
                       "std/core/types/bool"
@@ -4733,7 +5161,7 @@
                         ("var" ("v" ("tcon" "std/core/types/bool"))))))))
               ("branch"
                 (("pat-con"
-                    "std/core/types/False"
+                    ("std/core/types/False" ("tcon" "std/core/types/bool"))
                     ()
                     ("enum"
                       "std/core/types/bool"

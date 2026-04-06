@@ -1762,7 +1762,9 @@
                     "bootstrap/validation/example/fp-red-black-fp/color"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Red"
+                    ("bootstrap/validation/example/fp-red-black-fp/Red"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/fp-red-black-fp/color"
@@ -1788,7 +1790,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Black"
+                    ("bootstrap/validation/example/fp-red-black-fp/Black"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/fp-red-black-fp/color"
@@ -1832,7 +1836,9 @@
                     "bootstrap/validation/example/fp-red-black-fp/color"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Black"
+                    ("bootstrap/validation/example/fp-red-black-fp/Black"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/fp-red-black-fp/color"
@@ -1858,7 +1864,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Red"
+                    ("bootstrap/validation/example/fp-red-black-fp/Red"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/color"))
                     ()
                     ("enum"
                       "bootstrap/validation/example/fp-red-black-fp/color"
@@ -1902,7 +1910,22 @@
                     "bootstrap/validation/example/fp-red-black-fp/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Node"
+                    ("bootstrap/validation/example/fp-red-black-fp/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
@@ -1937,7 +1960,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Leaf"
+                    ("bootstrap/validation/example/fp-red-black-fp/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
@@ -1981,7 +2006,9 @@
                     "bootstrap/validation/example/fp-red-black-fp/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Leaf"
+                    ("bootstrap/validation/example/fp-red-black-fp/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
@@ -2007,7 +2034,22 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Node"
+                    ("bootstrap/validation/example/fp-red-black-fp/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
@@ -2058,9 +2100,26 @@
                     "bootstrap/validation/example/fp-red-black-fp/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Node"
+                    ("bootstrap/validation/example/fp-red-black-fp/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree")))
                     (("pat-con"
-                        "bootstrap/validation/example/fp-red-black-fp/Red"
+                        ("bootstrap/validation/example/fp-red-black-fp/Red"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/fp-red-black-fp/color"
@@ -2141,7 +2200,9 @@
                     "bootstrap/validation/example/fp-red-black-fp/accum"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Done"
+                    ("bootstrap/validation/example/fp-red-black-fp/Done"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -2202,7 +2263,22 @@
                     "bootstrap/validation/example/fp-red-black-fp/accum"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeL"
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeL"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -2271,7 +2347,22 @@
                     "bootstrap/validation/example/fp-red-black-fp/accum"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeR"
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeR"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -2338,12 +2429,39 @@
                     "bootstrap/validation/example/fp-red-black-fp/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Node"
+                    ("bootstrap/validation/example/fp-red-black-fp/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree")))
                     ("pat-wild"
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("v" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
                       "as-list"
@@ -2397,9 +2515,13 @@
                             "bootstrap/validation/example/fp-red-black-fp/tree")))))))
               ("branch"
                 (("pat-var"
-                    "t"
+                    ("t"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
                     ("pat-con"
-                      "bootstrap/validation/example/fp-red-black-fp/Leaf"
+                      ("bootstrap/validation/example/fp-red-black-fp/Leaf"
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree"))
                       ()
                       ("singleton"
                         "bootstrap/validation/example/fp-red-black-fp/tree"
@@ -2440,12 +2562,43 @@
                     "bootstrap/validation/example/fp-red-black-fp/accum"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeR"
-                    (("pat-var" "c" "pat-wild")
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "z1" "pat-wild"))
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeR"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
+                    (("pat-var"
+                        ("c"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("v" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("z1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/accum"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
                       ("normal" "True")
@@ -2512,12 +2665,43 @@
                               "bootstrap/validation/example/fp-red-black-fp/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeL"
-                    (("pat-var" "c" "pat-wild")
-                      ("pat-var" "z1" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeL"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
+                    (("pat-var"
+                        ("c"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("z1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/accum"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("v" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
                       ("normal" "True")
@@ -2584,7 +2768,9 @@
                               "bootstrap/validation/example/fp-red-black-fp/tree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Done"
+                    ("bootstrap/validation/example/fp-red-black-fp/Done"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -2635,9 +2821,26 @@
                     "bootstrap/validation/example/fp-red-black-fp/accum"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeR"
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeR"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
                     (("pat-con"
-                        "bootstrap/validation/example/fp-red-black-fp/Red"
+                        ("bootstrap/validation/example/fp-red-black-fp/Red"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/fp-red-black-fp/color"
@@ -2646,10 +2849,22 @@
                           "1")
                         ()
                         ())
-                      ("pat-var" "l1" "pat-wild")
-                      ("pat-var" "k1" "pat-wild")
-                      ("pat-var" "v1" "pat-wild")
-                      ("pat-var" "z1" "pat-wild"))
+                      ("pat-var"
+                        ("l1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k1" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("v1" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("z1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/accum"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
                       ("normal" "True")
@@ -2680,12 +2895,39 @@
                               "bootstrap/validation/example/fp-red-black-fp/accum"))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/NodeR"
+                              ("bootstrap/validation/example/fp-red-black-fp/NodeR"
+                                ("fun"
+                                  (("color"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/color"))
+                                    ("lchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                    ("key" ("tcon" "std/core/types/int32"))
+                                    ("value" ("tcon" "std/core/types/bool"))
+                                    ("rchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/accum")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-red-black-fp/accum")))
                               ("pat-wild"
-                                ("pat-var" "l2" "pat-wild")
-                                ("pat-var" "k2" "pat-wild")
-                                ("pat-var" "v2" "pat-wild")
-                                ("pat-var" "z2" "pat-wild"))
+                                ("pat-var"
+                                  ("l2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("k2" ("tcon" "std/core/types/int32"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("v2" ("tcon" "std/core/types/bool"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("z2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
                                 ("normal" "True")
@@ -2784,7 +3026,8 @@
                                           "bootstrap/validation/example/fp-red-black-fp/tree")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3071,7 +3314,8 @@
                                                     "bootstrap/validation/example/fp-red-black-fp/tree")))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3246,12 +3490,39 @@
                                                   "bootstrap/validation/example/fp-red-black-fp/tree")))))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/NodeL"
+                              ("bootstrap/validation/example/fp-red-black-fp/NodeL"
+                                ("fun"
+                                  (("color"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/color"))
+                                    ("lchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                    ("key" ("tcon" "std/core/types/int32"))
+                                    ("value" ("tcon" "std/core/types/bool"))
+                                    ("rchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/tree")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-red-black-fp/accum")))
                               ("pat-wild"
-                                ("pat-var" "z2" "pat-wild")
-                                ("pat-var" "k2" "pat-wild")
-                                ("pat-var" "v2" "pat-wild")
-                                ("pat-var" "r2" "pat-wild"))
+                                ("pat-var"
+                                  ("z2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("k2" ("tcon" "std/core/types/int32"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("v2" ("tcon" "std/core/types/bool"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("r2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
                                 ("normal" "True")
@@ -3350,7 +3621,8 @@
                                           "bootstrap/validation/example/fp-red-black-fp/tree")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3637,7 +3909,8 @@
                                                     "bootstrap/validation/example/fp-red-black-fp/tree")))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -3661,12 +3934,48 @@
                                                   "bootstrap/validation/example/fp-red-black-fp/tree"))))
                                           (("branch"
                                               (("pat-con"
-                                                  "bootstrap/validation/example/fp-red-black-fp/Node"
+                                                  ("bootstrap/validation/example/fp-red-black-fp/Node"
+                                                    ("fun"
+                                                      (("color"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/color"))
+                                                        ("lchild"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                        ("key"
+                                                          ("tcon"
+                                                            "std/core/types/int32"))
+                                                        ("value"
+                                                          ("tcon"
+                                                            "std/core/types/bool"))
+                                                        ("rchild"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/tree")))
+                                                      ("tcon"
+                                                        "std/core/types/total")
+                                                      ("tcon"
+                                                        "bootstrap/validation/example/fp-red-black-fp/tree")))
                                                   ("pat-wild"
-                                                    ("pat-var" "l" "pat-wild")
-                                                    ("pat-var" "k" "pat-wild")
-                                                    ("pat-var" "v" "pat-wild")
-                                                    ("pat-var" "r" "pat-wild"))
+                                                    ("pat-var"
+                                                      ("l"
+                                                        ("tcon"
+                                                          "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("k"
+                                                        ("tcon"
+                                                          "std/core/types/int32"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("v"
+                                                        ("tcon"
+                                                          "std/core/types/bool"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("r"
+                                                        ("tcon"
+                                                          "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                      "pat-wild"))
                                                   ("as-cons"
                                                     "bootstrap/validation/example/fp-red-black-fp/tree"
                                                     "as-list"
@@ -4055,7 +4364,9 @@
                                                     "\"balance\""))))))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/Done"
+                              ("bootstrap/validation/example/fp-red-black-fp/Done"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-red-black-fp/accum"))
                               ()
                               ("singleton"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -4101,9 +4412,26 @@
                                       "bootstrap/validation/example/fp-red-black-fp/tree"))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/NodeL"
+                    ("bootstrap/validation/example/fp-red-black-fp/NodeL"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/accum"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/accum")))
                     (("pat-con"
-                        "bootstrap/validation/example/fp-red-black-fp/Red"
+                        ("bootstrap/validation/example/fp-red-black-fp/Red"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
                         ()
                         ("enum"
                           "bootstrap/validation/example/fp-red-black-fp/color"
@@ -4112,10 +4440,22 @@
                           "1")
                         ()
                         ())
-                      ("pat-var" "z1" "pat-wild")
-                      ("pat-var" "k1" "pat-wild")
-                      ("pat-var" "v1" "pat-wild")
-                      ("pat-var" "r1" "pat-wild"))
+                      ("pat-var"
+                        ("z1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/accum"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("k1" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("v1" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r1"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-red-black-fp/accum"
                       ("normal" "True")
@@ -4146,12 +4486,39 @@
                               "bootstrap/validation/example/fp-red-black-fp/accum"))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/NodeL"
+                              ("bootstrap/validation/example/fp-red-black-fp/NodeL"
+                                ("fun"
+                                  (("color"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/color"))
+                                    ("lchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                    ("key" ("tcon" "std/core/types/int32"))
+                                    ("value" ("tcon" "std/core/types/bool"))
+                                    ("rchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/tree")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-red-black-fp/accum")))
                               ("pat-wild"
-                                ("pat-var" "z2" "pat-wild")
-                                ("pat-var" "k2" "pat-wild")
-                                ("pat-var" "v2" "pat-wild")
-                                ("pat-var" "r2" "pat-wild"))
+                                ("pat-var"
+                                  ("z2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("k2" ("tcon" "std/core/types/int32"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("v2" ("tcon" "std/core/types/bool"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("r2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
                                 ("normal" "True")
@@ -4250,7 +4617,8 @@
                                           "bootstrap/validation/example/fp-red-black-fp/tree")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -4537,7 +4905,8 @@
                                                     "bootstrap/validation/example/fp-red-black-fp/tree")))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -4712,12 +5081,39 @@
                                                     "bootstrap/validation/example/fp-red-black-fp/tree"))))))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/NodeR"
+                              ("bootstrap/validation/example/fp-red-black-fp/NodeR"
+                                ("fun"
+                                  (("color"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/color"))
+                                    ("lchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                    ("key" ("tcon" "std/core/types/int32"))
+                                    ("value" ("tcon" "std/core/types/bool"))
+                                    ("rchild"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-red-black-fp/accum")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-red-black-fp/accum")))
                               ("pat-wild"
-                                ("pat-var" "l2" "pat-wild")
-                                ("pat-var" "k2" "pat-wild")
-                                ("pat-var" "v2" "pat-wild")
-                                ("pat-var" "z2" "pat-wild"))
+                                ("pat-var"
+                                  ("l2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("k2" ("tcon" "std/core/types/int32"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("v2" ("tcon" "std/core/types/bool"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("z2"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-red-black-fp/accum"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
                                 ("normal" "True")
@@ -4816,7 +5212,8 @@
                                           "bootstrap/validation/example/fp-red-black-fp/tree")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -5103,7 +5500,8 @@
                                                     "bootstrap/validation/example/fp-red-black-fp/tree")))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -5127,12 +5525,48 @@
                                                   "bootstrap/validation/example/fp-red-black-fp/tree"))))
                                           (("branch"
                                               (("pat-con"
-                                                  "bootstrap/validation/example/fp-red-black-fp/Node"
+                                                  ("bootstrap/validation/example/fp-red-black-fp/Node"
+                                                    ("fun"
+                                                      (("color"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/color"))
+                                                        ("lchild"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                        ("key"
+                                                          ("tcon"
+                                                            "std/core/types/int32"))
+                                                        ("value"
+                                                          ("tcon"
+                                                            "std/core/types/bool"))
+                                                        ("rchild"
+                                                          ("tcon"
+                                                            "bootstrap/validation/example/fp-red-black-fp/tree")))
+                                                      ("tcon"
+                                                        "std/core/types/total")
+                                                      ("tcon"
+                                                        "bootstrap/validation/example/fp-red-black-fp/tree")))
                                                   ("pat-wild"
-                                                    ("pat-var" "l" "pat-wild")
-                                                    ("pat-var" "k" "pat-wild")
-                                                    ("pat-var" "v" "pat-wild")
-                                                    ("pat-var" "r" "pat-wild"))
+                                                    ("pat-var"
+                                                      ("l"
+                                                        ("tcon"
+                                                          "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("k"
+                                                        ("tcon"
+                                                          "std/core/types/int32"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("v"
+                                                        ("tcon"
+                                                          "std/core/types/bool"))
+                                                      "pat-wild")
+                                                    ("pat-var"
+                                                      ("r"
+                                                        ("tcon"
+                                                          "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                      "pat-wild"))
                                                   ("as-cons"
                                                     "bootstrap/validation/example/fp-red-black-fp/tree"
                                                     "as-list"
@@ -5521,7 +5955,9 @@
                                                     "\"balance\""))))))))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-red-black-fp/Done"
+                              ("bootstrap/validation/example/fp-red-black-fp/Done"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-red-black-fp/accum"))
                               ()
                               ("singleton"
                                 "bootstrap/validation/example/fp-red-black-fp/accum"
@@ -5566,7 +6002,11 @@
                                     ("tcon"
                                       "bootstrap/validation/example/fp-red-black-fp/tree"))))))))))))
               ("branch"
-                (("pat-var" "z" "pat-wild"))
+                (("pat-var"
+                    ("z"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                    "pat-wild"))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -5696,12 +6136,43 @@
                     "bootstrap/validation/example/fp-red-black-fp/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Node"
-                    (("pat-var" "c" "pat-wild")
-                      ("pat-var" "l" "pat-wild")
-                      ("pat-var" "kx" "pat-wild")
-                      ("pat-var" "vx" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-red-black-fp/Node"
+                      ("fun"
+                        (("color"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/color"))
+                          ("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree"))
+                          ("key" ("tcon" "std/core/types/int32"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-red-black-fp/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-red-black-fp/tree")))
+                    (("pat-var"
+                        ("c"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/color"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("kx" ("tcon" "std/core/types/int32"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("vx" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-red-black-fp/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/fp-red-black-fp/tree"
                       "as-list"
@@ -5789,7 +6260,8 @@
                           ("var" ("kx" ("tcon" "std/core/types/int32")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -5962,7 +6434,8 @@
                                         "bootstrap/validation/example/fp-red-black-fp/tree"))))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -6062,7 +6535,8 @@
                                       ("kx" ("tcon" "std/core/types/int32")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -6271,7 +6745,8 @@
                                                   "bootstrap/validation/example/fp-red-black-fp/accum"))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -6445,7 +6920,9 @@
                                                   "bootstrap/validation/example/fp-red-black-fp/tree"))))))))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-red-black-fp/Leaf"
+                    ("bootstrap/validation/example/fp-red-black-fp/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-red-black-fp/tree"

@@ -1529,7 +1529,18 @@
                 ("tree" ("tcon" "bootstrap/validation/example/example4/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Node"
+                    ("bootstrap/validation/example/example4/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/example4/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/example4/tree"
@@ -1560,7 +1571,8 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Leaf"
+                    ("bootstrap/validation/example/example4/Leaf"
+                      ("tcon" "bootstrap/validation/example/example4/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example4/tree"
@@ -1600,7 +1612,8 @@
                 ("tree" ("tcon" "bootstrap/validation/example/example4/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Leaf"
+                    ("bootstrap/validation/example/example4/Leaf"
+                      ("tcon" "bootstrap/validation/example/example4/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example4/tree"
@@ -1626,7 +1639,18 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Node"
+                    ("bootstrap/validation/example/example4/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/example4/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/example4/tree"
@@ -1675,11 +1699,28 @@
                 ("t" ("tcon" "bootstrap/validation/example/example4/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Node"
-                    (("pat-var" "lchild" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
+                    ("bootstrap/validation/example/example4/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/example4/tree")))
+                    (("pat-var"
+                        ("lchild"
+                          ("tcon" "bootstrap/validation/example/example4/tree"))
+                        "pat-wild")
+                      ("pat-var" ("k" ("tcon" "std/core/types/int")) "pat-wild")
                       "pat-wild"
-                      ("pat-var" "rchild" "pat-wild"))
+                      ("pat-var"
+                        ("rchild"
+                          ("tcon" "bootstrap/validation/example/example4/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/example4/tree"
                       "as-list"
@@ -1745,7 +1786,8 @@
                           ("var" ("key" ("tcon" "std/core/types/int")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -1784,7 +1826,8 @@
                                       "bootstrap/validation/example/example4/tree")))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -1859,7 +1902,8 @@
                                       ("key" ("tcon" "std/core/types/int")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -1901,7 +1945,8 @@
                                                 "bootstrap/validation/example/example4/tree")))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -1944,7 +1989,8 @@
                                                 "bootstrap/validation/example/example4/tree")))))))))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Leaf"
+                    ("bootstrap/validation/example/example4/Leaf"
+                      ("tcon" "bootstrap/validation/example/example4/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example4/tree"
@@ -1984,11 +2030,30 @@
                 ("t" ("tcon" "bootstrap/validation/example/example4/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Node"
-                    (("pat-var" "lchild" "pat-wild")
-                      ("pat-var" "k" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "rchild" "pat-wild"))
+                    ("bootstrap/validation/example/example4/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example4/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/example4/tree")))
+                    (("pat-var"
+                        ("lchild"
+                          ("tcon" "bootstrap/validation/example/example4/tree"))
+                        "pat-wild")
+                      ("pat-var" ("k" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("v" ("tcon" "std/core/types/bool"))
+                        "pat-wild")
+                      ("pat-var"
+                        ("rchild"
+                          ("tcon" "bootstrap/validation/example/example4/tree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/example4/tree"
                       "as-list"
@@ -2584,7 +2649,8 @@
                                     "\")\"")))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example4/Leaf"
+                    ("bootstrap/validation/example/example4/Leaf"
+                      ("tcon" "bootstrap/validation/example/example4/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example4/tree"

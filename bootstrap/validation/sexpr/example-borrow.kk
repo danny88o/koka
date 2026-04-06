@@ -1535,7 +1535,19 @@
                   ("tcon" "bootstrap/validation/example/example-borrow/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example-borrow/Node"
+                    ("bootstrap/validation/example/example-borrow/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/example-borrow/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/example-borrow/tree"
@@ -1567,7 +1579,9 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example-borrow/Leaf"
+                    ("bootstrap/validation/example/example-borrow/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/example-borrow/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example-borrow/tree"
@@ -1608,7 +1622,9 @@
                   ("tcon" "bootstrap/validation/example/example-borrow/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example-borrow/Leaf"
+                    ("bootstrap/validation/example/example-borrow/Leaf"
+                      ("tcon"
+                        "bootstrap/validation/example/example-borrow/tree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/example-borrow/tree"
@@ -1634,7 +1650,19 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example-borrow/Node"
+                    ("bootstrap/validation/example/example-borrow/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/example-borrow/tree")))
                     ("pat-wild" "pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/example-borrow/tree"
@@ -1681,9 +1709,23 @@
                   ("tcon" "bootstrap/validation/example/example-borrow/tree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/example-borrow/Node"
+                    ("bootstrap/validation/example/example-borrow/Node"
+                      ("fun"
+                        (("lchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree"))
+                          ("key" ("tcon" "std/core/types/int"))
+                          ("value" ("tcon" "std/core/types/bool"))
+                          ("rchild"
+                            ("tcon"
+                              "bootstrap/validation/example/example-borrow/tree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/example-borrow/tree")))
                     (("pat-con"
-                        "bootstrap/validation/example/example-borrow/Leaf"
+                        ("bootstrap/validation/example/example-borrow/Leaf"
+                          ("tcon"
+                            "bootstrap/validation/example/example-borrow/tree"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/example-borrow/tree"
@@ -1695,7 +1737,9 @@
                       "pat-wild"
                       "pat-wild"
                       ("pat-con"
-                        "bootstrap/validation/example/example-borrow/Leaf"
+                        ("bootstrap/validation/example/example-borrow/Leaf"
+                          ("tcon"
+                            "bootstrap/validation/example/example-borrow/tree"))
                         ()
                         ("singleton"
                           "bootstrap/validation/example/example-borrow/tree"

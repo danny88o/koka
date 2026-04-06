@@ -1620,7 +1620,17 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
                     ("pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -1650,7 +1660,8 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -1691,7 +1702,8 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -1717,7 +1729,17 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
                     ("pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -1762,7 +1784,8 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/szipper"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Root"
+                    ("bootstrap/validation/example/fp-stree/Root"
+                      ("tcon" "bootstrap/validation/example/fp-stree/szipper"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/szipper"
@@ -1820,7 +1843,18 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/szipper"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/NodeL"
+                    ("bootstrap/validation/example/fp-stree/NodeL"
+                      ("fun"
+                        (("up"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/szipper"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-stree/szipper")))
                     ("pat-wild" "pat-wild" "pat-wild")
                     ("normal"
                       "bootstrap/validation/example/fp-stree/szipper"
@@ -1881,7 +1915,18 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/szipper"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/NodeR"
+                    ("bootstrap/validation/example/fp-stree/NodeR"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("up"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/szipper")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-stree/szipper")))
                     ("pat-wild" "pat-wild" "pat-wild")
                     ("normal"
                       "bootstrap/validation/example/fp-stree/szipper"
@@ -1941,8 +1986,24 @@
                 ("top" ("tcon" "bootstrap/validation/example/fp-stree/top"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Top"
-                    (("pat-var" "@x" "pat-wild") "pat-wild" "pat-wild")
+                    ("bootstrap/validation/example/fp-stree/Top"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/top")))
+                    (("pat-var"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      "pat-wild"
+                      "pat-wild")
                     ("single"
                       "bootstrap/validation/example/fp-stree/top"
                       ("single" "False")
@@ -1981,8 +2042,24 @@
                 ("top" ("tcon" "bootstrap/validation/example/fp-stree/top"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Top"
-                    ("pat-wild" "pat-wild" ("pat-var" "@x" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/Top"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/top")))
+                    ("pat-wild"
+                      "pat-wild"
+                      ("pat-var"
+                        ("@x"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("single"
                       "bootstrap/validation/example/fp-stree/top"
                       ("single" "False")
@@ -2021,8 +2098,22 @@
                 ("top" ("tcon" "bootstrap/validation/example/fp-stree/top"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Top"
-                    ("pat-wild" ("pat-var" "@x" "pat-wild") "pat-wild")
+                    ("bootstrap/validation/example/fp-stree/Top"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/top")))
+                    ("pat-wild"
+                      ("pat-var"
+                        ("@x" ("tcon" "std/core/types/int"))
+                        "pat-wild")
+                      "pat-wild")
                     ("single"
                       "bootstrap/validation/example/fp-stree/top"
                       ("single" "False")
@@ -2091,8 +2182,20 @@
                               "bootstrap/validation/example/fp-stree/stree")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-left@119" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-left@119"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/stree"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2115,7 +2218,12 @@
                                   "bootstrap/validation/example/fp-stree/stree"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2198,8 +2306,19 @@
                             ("tcon" "std/core/types/int")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-value@127" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-value@127"
+                                  ("tcon" "std/core/types/int"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2220,7 +2339,12 @@
                                 ("tcon" "std/core/types/int"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2299,8 +2423,20 @@
                               "bootstrap/validation/example/fp-stree/stree")))))
                     (("branch"
                         (("pat-con"
-                            "std/core/types/@Optional"
-                            (("pat-var" "@uniq-right@135" "pat-wild"))
+                            ("std/core/types/@Optional"
+                              ("forall"
+                                ("10003")
+                                ("fun"
+                                  (("value" ("tvar" "10003")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tapp"
+                                    ("tcon" "std/core/types/@optional")
+                                    ("tvar" "10003")))))
+                            (("pat-var"
+                                ("@uniq-right@135"
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/stree"))
+                                "pat-wild"))
                             ("struct"
                               "std/core/types/@optional"
                               "struct-as-maybe"
@@ -2323,7 +2459,12 @@
                                   "bootstrap/validation/example/fp-stree/stree"))))))
                       ("branch"
                         (("pat-con"
-                            "std/core/types/@None"
+                            ("std/core/types/@None"
+                              ("forall"
+                                ("10002")
+                                ("tapp"
+                                  ("tcon" "std/core/types/@optional")
+                                  ("tvar" "10002"))))
                             ()
                             ("singleton"
                               "std/core/types/@optional"
@@ -2431,10 +2572,28 @@
                 ("t" ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
-                    (("pat-var" "l" "pat-wild")
-                      ("pat-var" "x" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
+                    (("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      ("pat-var" ("x" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
                       "as-list"
@@ -2491,7 +2650,8 @@
                               "bootstrap/validation/example/fp-stree/stree"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -2550,10 +2710,28 @@
                 ("top" ("tcon" "bootstrap/validation/example/fp-stree/top"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Top"
-                    (("pat-var" "l" "pat-wild")
-                      ("pat-var" "x" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/Top"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/top")))
+                    (("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      ("pat-var" ("x" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("single"
                       "bootstrap/validation/example/fp-stree/top"
                       ("single" "False")
@@ -2579,7 +2757,9 @@
                               "bootstrap/validation/example/fp-stree/szipper"))))
                       (("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/Root"
+                              ("bootstrap/validation/example/fp-stree/Root"
+                                ("tcon"
+                                  "bootstrap/validation/example/fp-stree/szipper"))
                               ()
                               ("singleton"
                                 "bootstrap/validation/example/fp-stree/szipper"
@@ -2617,9 +2797,22 @@
                                       "bootstrap/validation/example/fp-stree/stree")))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeL"
+                              ("bootstrap/validation/example/fp-stree/NodeL"
+                                ("fun"
+                                  (("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("right"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
                               (("pat-con"
-                                  "bootstrap/validation/example/fp-stree/Root"
+                                  ("bootstrap/validation/example/fp-stree/Root"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/szipper"))
                                   ()
                                   ("singleton"
                                     "bootstrap/validation/example/fp-stree/szipper"
@@ -2628,8 +2821,14 @@
                                     "1")
                                   ()
                                   ())
-                                ("pat-var" "y" "pat-wild")
-                                ("pat-var" "ry" "pat-wild"))
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("ry"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
                                 ("normal" "True")
@@ -2686,12 +2885,44 @@
                                         "bootstrap/validation/example/fp-stree/stree"))))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeL"
+                              ("bootstrap/validation/example/fp-stree/NodeL"
+                                ("fun"
+                                  (("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("right"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
                               (("pat-con"
-                                  "bootstrap/validation/example/fp-stree/NodeR"
-                                  (("pat-var" "lz" "pat-wild")
-                                    ("pat-var" "z" "pat-wild")
-                                    ("pat-var" "up" "pat-wild"))
+                                  ("bootstrap/validation/example/fp-stree/NodeR"
+                                    ("fun"
+                                      (("left"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/stree"))
+                                        ("value" ("tcon" "std/core/types/int"))
+                                        ("up"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/szipper")))
+                                      ("tcon" "std/core/types/total")
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  (("pat-var"
+                                      ("lz"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/stree"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("z" ("tcon" "std/core/types/int"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("up"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/szipper"))
+                                      "pat-wild"))
                                   ("normal"
                                     "bootstrap/validation/example/fp-stree/szipper"
                                     ("normal" "True")
@@ -2704,8 +2935,14 @@
                                     ("tcon"
                                       "bootstrap/validation/example/fp-stree/szipper"))
                                   ())
-                                ("pat-var" "y" "pat-wild")
-                                ("pat-var" "ry" "pat-wild"))
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("ry"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
                                 ("normal" "True")
@@ -2845,12 +3082,44 @@
                                       "bootstrap/validation/example/fp-stree/szipper")))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeL"
+                              ("bootstrap/validation/example/fp-stree/NodeL"
+                                ("fun"
+                                  (("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("right"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
                               (("pat-con"
-                                  "bootstrap/validation/example/fp-stree/NodeL"
-                                  (("pat-var" "up" "pat-wild")
-                                    ("pat-var" "z" "pat-wild")
-                                    ("pat-var" "rz" "pat-wild"))
+                                  ("bootstrap/validation/example/fp-stree/NodeL"
+                                    ("fun"
+                                      (("up"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/szipper"))
+                                        ("value" ("tcon" "std/core/types/int"))
+                                        ("right"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/stree")))
+                                      ("tcon" "std/core/types/total")
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  (("pat-var"
+                                      ("up"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/szipper"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("z" ("tcon" "std/core/types/int"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("rz"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/stree"))
+                                      "pat-wild"))
                                   ("normal"
                                     "bootstrap/validation/example/fp-stree/szipper"
                                     ("normal" "True")
@@ -2863,8 +3132,14 @@
                                     ("tcon"
                                       "bootstrap/validation/example/fp-stree/stree"))
                                   ())
-                                ("pat-var" "y" "pat-wild")
-                                ("pat-var" "ry" "pat-wild"))
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("ry"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild"))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
                                 ("normal" "True")
@@ -3005,11 +3280,30 @@
                                       "bootstrap/validation/example/fp-stree/szipper")))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeR"
-                              (("pat-var" "ly" "pat-wild")
-                                ("pat-var" "y" "pat-wild")
+                              ("bootstrap/validation/example/fp-stree/NodeR"
+                                ("fun"
+                                  (("left"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
+                              (("pat-var"
+                                  ("ly"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
                                 ("pat-con"
-                                  "bootstrap/validation/example/fp-stree/Root"
+                                  ("bootstrap/validation/example/fp-stree/Root"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/szipper"))
                                   ()
                                   ("singleton"
                                     "bootstrap/validation/example/fp-stree/szipper"
@@ -3074,14 +3368,52 @@
                                       "bootstrap/validation/example/fp-stree/stree")))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeR"
-                              (("pat-var" "ly" "pat-wild")
-                                ("pat-var" "y" "pat-wild")
+                              ("bootstrap/validation/example/fp-stree/NodeR"
+                                ("fun"
+                                  (("left"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
+                              (("pat-var"
+                                  ("ly"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
                                 ("pat-con"
-                                  "bootstrap/validation/example/fp-stree/NodeL"
-                                  (("pat-var" "up" "pat-wild")
-                                    ("pat-var" "z" "pat-wild")
-                                    ("pat-var" "rz" "pat-wild"))
+                                  ("bootstrap/validation/example/fp-stree/NodeL"
+                                    ("fun"
+                                      (("up"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/szipper"))
+                                        ("value" ("tcon" "std/core/types/int"))
+                                        ("right"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/stree")))
+                                      ("tcon" "std/core/types/total")
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  (("pat-var"
+                                      ("up"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/szipper"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("z" ("tcon" "std/core/types/int"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("rz"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/stree"))
+                                      "pat-wild"))
                                   ("normal"
                                     "bootstrap/validation/example/fp-stree/szipper"
                                     ("normal" "True")
@@ -3233,14 +3565,52 @@
                                       "bootstrap/validation/example/fp-stree/szipper")))))))
                         ("branch"
                           (("pat-con"
-                              "bootstrap/validation/example/fp-stree/NodeR"
-                              (("pat-var" "ly" "pat-wild")
-                                ("pat-var" "y" "pat-wild")
+                              ("bootstrap/validation/example/fp-stree/NodeR"
+                                ("fun"
+                                  (("left"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/stree"))
+                                    ("value" ("tcon" "std/core/types/int"))
+                                    ("up"
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  ("tcon" "std/core/types/total")
+                                  ("tcon"
+                                    "bootstrap/validation/example/fp-stree/szipper")))
+                              (("pat-var"
+                                  ("ly"
+                                    ("tcon"
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  "pat-wild")
+                                ("pat-var"
+                                  ("y" ("tcon" "std/core/types/int"))
+                                  "pat-wild")
                                 ("pat-con"
-                                  "bootstrap/validation/example/fp-stree/NodeR"
-                                  (("pat-var" "lz" "pat-wild")
-                                    ("pat-var" "z" "pat-wild")
-                                    ("pat-var" "up" "pat-wild"))
+                                  ("bootstrap/validation/example/fp-stree/NodeR"
+                                    ("fun"
+                                      (("left"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/stree"))
+                                        ("value" ("tcon" "std/core/types/int"))
+                                        ("up"
+                                          ("tcon"
+                                            "bootstrap/validation/example/fp-stree/szipper")))
+                                      ("tcon" "std/core/types/total")
+                                      ("tcon"
+                                        "bootstrap/validation/example/fp-stree/szipper")))
+                                  (("pat-var"
+                                      ("lz"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/stree"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("z" ("tcon" "std/core/types/int"))
+                                      "pat-wild")
+                                    ("pat-var"
+                                      ("up"
+                                        ("tcon"
+                                          "bootstrap/validation/example/fp-stree/szipper"))
+                                      "pat-wild"))
                                   ("normal"
                                     "bootstrap/validation/example/fp-stree/szipper"
                                     ("normal" "True")
@@ -3408,7 +3778,8 @@
                   ("tcon" "bootstrap/validation/example/fp-stree/szipper"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Root"
+                    ("bootstrap/validation/example/fp-stree/Root"
+                      ("tcon" "bootstrap/validation/example/fp-stree/szipper"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/szipper"
@@ -3434,10 +3805,29 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/NodeL"
-                    (("pat-var" "up" "pat-wild")
-                      ("pat-var" "x" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/NodeL"
+                      ("fun"
+                        (("up"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/szipper"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-stree/szipper")))
+                    (("pat-var"
+                        ("up"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/szipper"))
+                        "pat-wild")
+                      ("pat-var" ("x" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-stree/szipper"
                       ("normal" "True")
@@ -3547,10 +3937,29 @@
                             "bootstrap/validation/example/fp-stree/szipper")))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/NodeR"
-                    (("pat-var" "l" "pat-wild")
-                      ("pat-var" "x" "pat-wild")
-                      ("pat-var" "up" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/NodeR"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("up"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/szipper")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon"
+                          "bootstrap/validation/example/fp-stree/szipper")))
+                    (("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      ("pat-var" ("x" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("up"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/szipper"))
+                        "pat-wild"))
                     ("normal"
                       "bootstrap/validation/example/fp-stree/szipper"
                       ("normal" "True")
@@ -3681,7 +4090,8 @@
                 ("t" ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -3772,10 +4182,28 @@
                               "bootstrap/validation/example/fp-stree/szipper"))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
-                    (("pat-var" "l" "pat-wild")
-                      ("pat-var" "y" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
+                    (("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      ("pat-var" ("y" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
                       "as-list"
@@ -3840,7 +4268,8 @@
                           ("var" ("y" ("tcon" "std/core/types/int")))))
                       (("branch"
                           (("pat-con"
-                              "std/core/types/True"
+                              ("std/core/types/True"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -3972,7 +4401,8 @@
                                         "bootstrap/validation/example/fp-stree/stree"))))))))
                         ("branch"
                           (("pat-con"
-                              "std/core/types/False"
+                              ("std/core/types/False"
+                                ("tcon" "std/core/types/bool"))
                               ()
                               ("enum"
                                 "std/core/types/bool"
@@ -4047,7 +4477,8 @@
                                       ("y" ("tcon" "std/core/types/int")))))
                                 (("branch"
                                     (("pat-con"
-                                        "std/core/types/True"
+                                        ("std/core/types/True"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -4198,7 +4629,8 @@
                                                   "bootstrap/validation/example/fp-stree/szipper"))))))))
                                   ("branch"
                                     (("pat-con"
-                                        "std/core/types/False"
+                                        ("std/core/types/False"
+                                          ("tcon" "std/core/types/bool"))
                                         ()
                                         ("enum"
                                           "std/core/types/bool"
@@ -4456,10 +4888,28 @@
                 ("t" ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
-                    (("pat-var" "l" "pat-wild")
-                      ("pat-var" "v" "pat-wild")
-                      ("pat-var" "r" "pat-wild"))
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
+                    (("pat-var"
+                        ("l"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild")
+                      ("pat-var" ("v" ("tcon" "std/core/types/int")) "pat-wild")
+                      ("pat-var"
+                        ("r"
+                          ("tcon"
+                            "bootstrap/validation/example/fp-stree/stree"))
+                        "pat-wild"))
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
                       "as-list"
@@ -4752,7 +5202,8 @@
                                 ("tcon" "std/core/types/int"))))))))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -4792,7 +5243,17 @@
                 ("t" ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
             (("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Node"
+                    ("bootstrap/validation/example/fp-stree/Node"
+                      ("fun"
+                        (("left"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree"))
+                          ("value" ("tcon" "std/core/types/int"))
+                          ("right"
+                            ("tcon"
+                              "bootstrap/validation/example/fp-stree/stree")))
+                        ("tcon" "std/core/types/total")
+                        ("tcon" "bootstrap/validation/example/fp-stree/stree")))
                     ("pat-wild" "pat-wild" "pat-wild")
                     ("as-cons"
                       "bootstrap/validation/example/fp-stree/stree"
@@ -4822,7 +5283,8 @@
                         "2")))))
               ("branch"
                 (("pat-con"
-                    "bootstrap/validation/example/fp-stree/Leaf"
+                    ("bootstrap/validation/example/fp-stree/Leaf"
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
                     ()
                     ("singleton"
                       "bootstrap/validation/example/fp-stree/stree"
