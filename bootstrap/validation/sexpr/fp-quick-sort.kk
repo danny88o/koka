@@ -1927,6 +1927,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("pat-con"
                         "bootstrap/validation/example/fp-quick-sort/Pad"
@@ -1936,6 +1937,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("single"
                       "bootstrap/validation/example/fp-quick-sort/unit2"
@@ -1944,8 +1946,8 @@
                       "none"
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-quick-sort/pad")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-quick-sort/pad"))))
+                      ("tcon" "bootstrap/validation/example/fp-quick-sort/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1986,6 +1988,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var"
                         "@x"
@@ -1997,6 +2000,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())))
                     ("single"
                       "bootstrap/validation/example/fp-quick-sort/unit2"
@@ -2005,8 +2009,8 @@
                       "none"
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-quick-sort/pad")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-quick-sort/pad"))))
+                      ("tcon" "bootstrap/validation/example/fp-quick-sort/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2068,7 +2072,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-quick-sort/pad"))))
+                                "bootstrap/validation/example/fp-quick-sort/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2090,6 +2095,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2174,7 +2180,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-quick-sort/pad"))))
+                                "bootstrap/validation/example/fp-quick-sort/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2196,6 +2203,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2311,6 +2319,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -2384,6 +2393,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("as-cons"
                         "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -2394,7 +2404,8 @@
                         "2")
                       (("tvar" "167")
                         ("tcon"
-                          "bootstrap/validation/example/fp-quick-sort/pad"))))
+                          "bootstrap/validation/example/fp-quick-sort/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2419,6 +2430,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -2477,7 +2489,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/sublist")
-                          ("tvar" "192")))))
+                          ("tvar" "192")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2497,7 +2510,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "192") ("tvar" "192"))))
+                      (("tvar" "192") ("tvar" "192"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2549,7 +2563,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/sublist")
-                          ("tvar" "209")))))
+                          ("tvar" "209")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2620,7 +2635,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "227") ("tvar" "227"))))
+                      (("tvar" "227") ("tvar" "227"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2700,7 +2716,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/partition")
-                          ("tvar" "245")))))
+                          ("tvar" "245")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2777,7 +2794,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/partition")
-                          ("tvar" "263")))))
+                          ("tvar" "263")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2849,6 +2867,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "3")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -2924,7 +2943,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/accum")
-                          ("tvar" "299")))))
+                          ("tvar" "299")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2999,7 +3019,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-quick-sort/accum")
-                          ("tvar" "317")))))
+                          ("tvar" "317")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3069,6 +3090,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "3")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -3198,7 +3220,8 @@
                           "bootstrap/validation/example/fp-quick-sort/accum")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3524,7 +3547,8 @@
                           "bootstrap/validation/example/fp-quick-sort/accum")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3840,6 +3864,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "3")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -4006,7 +4031,8 @@
                           "bootstrap/validation/example/fp-quick-sort/accum")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4335,7 +4361,8 @@
                           "bootstrap/validation/example/fp-quick-sort/accum")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4362,6 +4389,7 @@
                                 "as-list"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4705,6 +4733,7 @@
                                     ("single" "True")
                                     ("value-repr" "0" "0" "0")
                                     "1")
+                                  ()
                                   ()))
                               ("as-cons"
                                 "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -4717,7 +4746,8 @@
                                   "bootstrap/validation/example/fp-quick-sort/elem"
                                   ("tcon" "std/core/types/int32"))
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-quick-sort/pad"))))
+                                  "bootstrap/validation/example/fp-quick-sort/pad"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -5075,6 +5105,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "3")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -5105,6 +5136,7 @@
                                     ("single" "True")
                                     ("value-repr" "0" "0" "0")
                                     "1")
+                                  ()
                                   ()))
                               ("as-cons"
                                 "bootstrap/validation/example/fp-quick-sort/maybe2"
@@ -5117,7 +5149,8 @@
                                   "bootstrap/validation/example/fp-quick-sort/elem"
                                   ("tcon" "std/core/types/int32"))
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-quick-sort/pad"))))
+                                  "bootstrap/validation/example/fp-quick-sort/pad"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -5190,6 +5223,7 @@
                                 "as-list"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -5334,7 +5368,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -5415,6 +5450,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -5753,6 +5789,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -6091,6 +6128,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -6418,7 +6456,8 @@
                                     "bootstrap/validation/example/fp-quick-sort/partition")
                                   ("tsyn"
                                     "bootstrap/validation/example/fp-quick-sort/elem"
-                                    ("tcon" "std/core/types/int32"))))))
+                                    ("tcon" "std/core/types/int32"))))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -6583,7 +6622,8 @@
                           "bootstrap/validation/example/fp-quick-sort/sublist")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -6664,6 +6704,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -7025,6 +7066,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -7392,7 +7434,8 @@
                         ("tcon" "std/core/types/int32"))
                       ("tsyn"
                         "bootstrap/validation/example/fp-quick-sort/elem"
-                        ("tcon" "std/core/types/int32")))))
+                        ("tcon" "std/core/types/int32")))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -7784,7 +7827,8 @@
                           "bootstrap/validation/example/fp-quick-sort/partition")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -7950,7 +7994,8 @@
                           "bootstrap/validation/example/fp-quick-sort/partition")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -7987,7 +8032,8 @@
                                     "bootstrap/validation/example/fp-quick-sort/sublist")
                                   ("tsyn"
                                     "bootstrap/validation/example/fp-quick-sort/elem"
-                                    ("tcon" "std/core/types/int32"))))))
+                                    ("tcon" "std/core/types/int32"))))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -8406,8 +8452,8 @@
                                               "bootstrap/validation/example/fp-quick-sort/partition")
                                             ("tsyn"
                                               "bootstrap/validation/example/fp-quick-sort/elem"
-                                              ("tcon"
-                                                "std/core/types/int32"))))))
+                                              ("tcon" "std/core/types/int32"))))
+                                        ()))
                                     (("guard"
                                         ("con"
                                           "std/core/types/True"
@@ -8623,7 +8669,8 @@
                                   ("tcon" "std/core/types/int32"))
                                 ("tsyn"
                                   "bootstrap/validation/example/fp-quick-sort/elem"
-                                  ("tcon" "std/core/types/int32")))))
+                                  ("tcon" "std/core/types/int32")))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -8721,6 +8768,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -8931,6 +8979,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -9141,6 +9190,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "3")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -9229,7 +9279,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-quick-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -9571,7 +9622,8 @@
                                     "bootstrap/validation/example/fp-quick-sort/partition")
                                   ("tsyn"
                                     "bootstrap/validation/example/fp-quick-sort/elem"
-                                    ("tcon" "std/core/types/int32"))))))
+                                    ("tcon" "std/core/types/int32"))))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -9759,6 +9811,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -10394,6 +10447,7 @@
                         "enum"
                         ("value-repr" "0" "0" "0")
                         "2")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -10607,6 +10661,7 @@
                         "enum"
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"

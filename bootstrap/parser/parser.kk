@@ -226,9 +226,9 @@ pub fun sexpr-to-pattern(s: sexpr): <div,exn> pattern
     Atom(a) -> throw("Expected list for pattern, found atom: " ++ a)
     List(l) ->
       match l
-        Cons(Atom("pat-con"), [name, List(pats), repr, List(targs)]) ->
+        Cons(Atom("pat-con"), [name, List(pats), repr, List(ftypes-sexpr), List(exists-sexpr)]) ->
           val tn = match name { List(_) -> name.sexpr-to-tname; Atom(n) -> TName(n, TVar(-1)) }
-          PatCon(tn, pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, targs.map(sexpr-to-type-expr))
+          PatCon(tn, pats.map(sexpr-to-pattern), repr.sexpr-to-con-repr, ftypes-sexpr.map(sexpr-to-type-expr), exists-sexpr.map(fn(e) e.expect-atom.parse-int.default(0)))
         Cons(Atom("pat-var"), [name, p]) ->
           val tn = match name { List(_) -> name.sexpr-to-tname; Atom(n) -> TName(n, TVar(-1)) }
           PatVar(tn, p.sexpr-to-pattern)

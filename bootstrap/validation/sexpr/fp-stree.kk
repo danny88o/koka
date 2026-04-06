@@ -1631,7 +1631,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1656,6 +1657,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1696,6 +1698,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1725,7 +1728,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1765,6 +1769,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1825,7 +1830,8 @@
                       "2")
                     (("tcon" "bootstrap/validation/example/fp-stree/szipper")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1885,8 +1891,8 @@
                       "3")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-stree/szipper"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/szipper"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1945,7 +1951,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1984,7 +1991,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2023,7 +2031,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2090,7 +2099,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-stree/stree"))))
+                                "bootstrap/validation/example/fp-stree/stree"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2112,6 +2122,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2194,7 +2205,8 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "2" "8")
                               "1")
-                            (("tcon" "std/core/types/int"))))
+                            (("tcon" "std/core/types/int"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2215,6 +2227,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2294,7 +2307,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-stree/stree"))))
+                                "bootstrap/validation/example/fp-stree/stree"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2316,6 +2330,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2429,7 +2444,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2482,6 +2498,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2545,7 +2562,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2568,6 +2586,7 @@
                                 ("normal" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -2607,6 +2626,7 @@
                                     ("normal" "True")
                                     ("value-repr" "0" "0" "0")
                                     "1")
+                                  ()
                                   ())
                                 ("pat-var" "y" "pat-wild")
                                 ("pat-var" "ry" "pat-wild"))
@@ -2620,7 +2640,8 @@
                                   "bootstrap/validation/example/fp-stree/szipper")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/stree"))))
+                                  "bootstrap/validation/example/fp-stree/stree"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -2681,7 +2702,8 @@
                                       "bootstrap/validation/example/fp-stree/stree")
                                     ("tcon" "std/core/types/int")
                                     ("tcon"
-                                      "bootstrap/validation/example/fp-stree/szipper")))
+                                      "bootstrap/validation/example/fp-stree/szipper"))
+                                  ())
                                 ("pat-var" "y" "pat-wild")
                                 ("pat-var" "ry" "pat-wild"))
                               ("normal"
@@ -2694,7 +2716,8 @@
                                   "bootstrap/validation/example/fp-stree/szipper")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/stree"))))
+                                  "bootstrap/validation/example/fp-stree/stree"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -2838,7 +2861,8 @@
                                       "bootstrap/validation/example/fp-stree/szipper")
                                     ("tcon" "std/core/types/int")
                                     ("tcon"
-                                      "bootstrap/validation/example/fp-stree/stree")))
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  ())
                                 ("pat-var" "y" "pat-wild")
                                 ("pat-var" "ry" "pat-wild"))
                               ("normal"
@@ -2851,7 +2875,8 @@
                                   "bootstrap/validation/example/fp-stree/szipper")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/stree"))))
+                                  "bootstrap/validation/example/fp-stree/stree"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -2991,6 +3016,7 @@
                                     ("normal" "True")
                                     ("value-repr" "0" "0" "0")
                                     "1")
+                                  ()
                                   ()))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
@@ -3002,7 +3028,8 @@
                                   "bootstrap/validation/example/fp-stree/stree")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/szipper"))))
+                                  "bootstrap/validation/example/fp-stree/szipper"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -3065,7 +3092,8 @@
                                       "bootstrap/validation/example/fp-stree/szipper")
                                     ("tcon" "std/core/types/int")
                                     ("tcon"
-                                      "bootstrap/validation/example/fp-stree/stree"))))
+                                      "bootstrap/validation/example/fp-stree/stree"))
+                                  ()))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
                                 ("normal" "True")
@@ -3076,7 +3104,8 @@
                                   "bootstrap/validation/example/fp-stree/stree")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/szipper"))))
+                                  "bootstrap/validation/example/fp-stree/szipper"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -3222,7 +3251,8 @@
                                       "bootstrap/validation/example/fp-stree/stree")
                                     ("tcon" "std/core/types/int")
                                     ("tcon"
-                                      "bootstrap/validation/example/fp-stree/szipper"))))
+                                      "bootstrap/validation/example/fp-stree/szipper"))
+                                  ()))
                               ("normal"
                                 "bootstrap/validation/example/fp-stree/szipper"
                                 ("normal" "True")
@@ -3233,7 +3263,8 @@
                                   "bootstrap/validation/example/fp-stree/stree")
                                 ("tcon" "std/core/types/int")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-stree/szipper"))))
+                                  "bootstrap/validation/example/fp-stree/szipper"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -3384,6 +3415,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -3414,7 +3446,8 @@
                       "2")
                     (("tcon" "bootstrap/validation/example/fp-stree/szipper")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3526,8 +3559,8 @@
                       "3")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-stree/szipper"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/szipper"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3655,6 +3688,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -3751,7 +3785,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3812,6 +3847,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3943,6 +3979,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4017,6 +4054,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -4167,6 +4205,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -4430,7 +4469,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4719,6 +4759,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -4762,7 +4803,8 @@
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-stree/stree")
                       ("tcon" "std/core/types/int")
-                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))))
+                      ("tcon" "bootstrap/validation/example/fp-stree/stree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4787,6 +4829,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"

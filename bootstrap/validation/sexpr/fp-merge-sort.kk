@@ -1802,6 +1802,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("pat-con"
                         "bootstrap/validation/example/fp-merge-sort/Pad"
@@ -1811,6 +1812,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("single"
                       "bootstrap/validation/example/fp-merge-sort/unit2"
@@ -1819,8 +1821,8 @@
                       "none"
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-merge-sort/pad")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-merge-sort/pad"))))
+                      ("tcon" "bootstrap/validation/example/fp-merge-sort/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1861,6 +1863,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var"
                         "@x"
@@ -1872,6 +1875,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())))
                     ("single"
                       "bootstrap/validation/example/fp-merge-sort/unit2"
@@ -1880,8 +1884,8 @@
                       "none"
                       "1")
                     (("tcon" "bootstrap/validation/example/fp-merge-sort/pad")
-                      ("tcon"
-                        "bootstrap/validation/example/fp-merge-sort/pad"))))
+                      ("tcon" "bootstrap/validation/example/fp-merge-sort/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1943,7 +1947,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-merge-sort/pad"))))
+                                "bootstrap/validation/example/fp-merge-sort/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -1965,6 +1970,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2049,7 +2055,8 @@
                               ("value-repr" "0" "2" "8")
                               "1")
                             (("tcon"
-                                "bootstrap/validation/example/fp-merge-sort/pad"))))
+                                "bootstrap/validation/example/fp-merge-sort/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2071,6 +2078,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2191,7 +2199,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "119")))))
+                          ("tvar" "119")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2211,7 +2220,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "119") ("tvar" "119"))))
+                      (("tvar" "119") ("tvar" "119"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2263,7 +2273,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "136")))))
+                          ("tvar" "136")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2334,7 +2345,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "154") ("tvar" "154"))))
+                      (("tvar" "154") ("tvar" "154"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2414,7 +2426,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/partition")
-                          ("tvar" "172")))))
+                          ("tvar" "172")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2491,7 +2504,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/partition")
-                          ("tvar" "190")))))
+                          ("tvar" "190")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2563,6 +2577,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "3")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -2650,7 +2665,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "266")))))
+                          ("tvar" "266")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2810,7 +2826,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "266") ("tvar" "266"))))
+                      (("tvar" "266") ("tvar" "266"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2897,7 +2914,8 @@
                             ("tapp"
                               ("tcon"
                                 "bootstrap/validation/example/fp-merge-sort/sublist")
-                              ("tvar" "347")))))
+                              ("tvar" "347")))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -2908,7 +2926,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "347")))))
+                          ("tvar" "347")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3086,7 +3105,8 @@
                             ("value-repr" "0" "2" "8")
                             "none"
                             "2")
-                          (("tvar" "347") ("tvar" "347"))))
+                          (("tvar" "347") ("tvar" "347"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-merge-sort/sublist"
                         ("normal" "False")
@@ -3097,7 +3117,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "347")))))
+                          ("tvar" "347")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3141,7 +3162,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "347") ("tvar" "347"))))
+                      (("tvar" "347") ("tvar" "347"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3207,7 +3229,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-merge-sort/sublist")
-                          ("tvar" "405")))))
+                          ("tvar" "405")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3332,7 +3355,8 @@
                         ("value-repr" "0" "2" "8")
                         "none"
                         "2")
-                      (("tvar" "405") ("tvar" "405"))))
+                      (("tvar" "405") ("tvar" "405"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3455,7 +3479,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-merge-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("app"
                       ("app"
@@ -4036,7 +4061,8 @@
                             ("tcon" "std/core/types/list")
                             ("tsyn"
                               "bootstrap/validation/example/fp-merge-sort/elem"
-                              ("tcon" "std/core/types/int32"))))))
+                              ("tcon" "std/core/types/int32"))))
+                        ()))
                     ("as-cons"
                       "std/core/types/list"
                       "as-list"
@@ -4051,7 +4077,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-merge-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4132,6 +4159,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4401,6 +4429,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4673,6 +4702,7 @@
                           "as-list"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("as-cons"
                       "std/core/types/list"
@@ -4688,7 +4718,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-merge-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4735,6 +4766,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -4833,7 +4865,8 @@
                         ("tcon" "std/core/types/list")
                         ("tsyn"
                           "bootstrap/validation/example/fp-merge-sort/elem"
-                          ("tcon" "std/core/types/int32"))))))
+                          ("tcon" "std/core/types/int32"))))
+                    ()))
                 (("guard"
                     ("app"
                       ("app"

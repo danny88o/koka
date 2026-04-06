@@ -1650,7 +1650,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tree")
-                          ("tvar" "68")))))
+                          ("tvar" "68")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -1721,7 +1722,8 @@
                         ("value-repr" "0" "1" "8")
                         "none"
                         "2")
-                      (("tvar" "86"))))
+                      (("tvar" "86"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -1794,6 +1796,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -1876,7 +1879,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tree")
-                          ("tvar" "131")))))
+                          ("tvar" "131")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -1958,7 +1962,8 @@
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tzipper")
                           ("tvar" "155")
-                          ("tvar" "156")))))
+                          ("tvar" "156")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2057,6 +2062,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -2090,7 +2096,8 @@
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tzipper")
                           ("tvar" "344")
-                          ("tvar" "343")))))
+                          ("tvar" "343")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2331,7 +2338,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tree")
-                          ("tvar" "344")))))
+                          ("tvar" "344")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2627,7 +2635,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-binary-tree/tree")
-                          ("tvar" "355")))))
+                          ("tvar" "355")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2861,7 +2870,8 @@
                         ("value-repr" "0" "1" "8")
                         "none"
                         "2")
-                      (("tvar" "355"))))
+                      (("tvar" "355"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"

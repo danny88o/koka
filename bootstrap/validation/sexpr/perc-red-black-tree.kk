@@ -1600,6 +1600,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1625,6 +1626,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1670,6 +1672,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1695,6 +1698,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1738,6 +1742,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1772,7 +1777,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1824,7 +1830,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1849,6 +1856,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1894,6 +1902,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       "pat-wild"
                       "pat-wild"
@@ -1913,7 +1922,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1986,6 +1996,7 @@
                               "enum"
                               ("value-repr" "0" "0" "0")
                               "1")
+                            ()
                             ())
                           ("pat-var" "lx" "pat-wild")
                           ("pat-var" "kx" "pat-wild")
@@ -2005,7 +2016,8 @@
                           ("tcon" "std/core/types/int")
                           ("tcon" "std/core/types/bool")
                           ("tcon"
-                            "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        ())
                       ("pat-var" "ky" "pat-wild")
                       ("pat-var" "vy" "pat-wild")
                       ("pat-var" "ry" "pat-wild"))
@@ -2023,7 +2035,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2122,6 +2135,7 @@
                               "enum"
                               ("value-repr" "0" "0" "0")
                               "1")
+                            ()
                             ())
                           ("pat-var" "lx" "pat-wild")
                           ("pat-var" "kx" "pat-wild")
@@ -2141,7 +2155,8 @@
                           ("tcon" "std/core/types/int")
                           ("tcon" "std/core/types/bool")
                           ("tcon"
-                            "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        ()))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2156,7 +2171,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2260,7 +2276,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2328,6 +2345,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2384,6 +2402,7 @@
                               "enum"
                               ("value-repr" "0" "0" "0")
                               "1")
+                            ()
                             ())
                           ("pat-var" "lx" "pat-wild")
                           ("pat-var" "kx" "pat-wild")
@@ -2403,7 +2422,8 @@
                           ("tcon" "std/core/types/int")
                           ("tcon" "std/core/types/bool")
                           ("tcon"
-                            "bootstrap/validation/example/perc-red-black-tree/tree")))
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        ())
                       ("pat-var" "ky" "pat-wild")
                       ("pat-var" "vy" "pat-wild")
                       ("pat-var" "ry" "pat-wild"))
@@ -2421,7 +2441,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2520,6 +2541,7 @@
                               "enum"
                               ("value-repr" "0" "0" "0")
                               "1")
+                            ()
                             ())
                           ("pat-var" "ly" "pat-wild")
                           ("pat-var" "ky" "pat-wild")
@@ -2539,7 +2561,8 @@
                           ("tcon" "std/core/types/int")
                           ("tcon" "std/core/types/bool")
                           ("tcon"
-                            "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                            "bootstrap/validation/example/perc-red-black-tree/tree"))
+                        ()))
                     ("as-cons"
                       "bootstrap/validation/example/perc-red-black-tree/tree"
                       "as-list"
@@ -2554,7 +2577,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2658,7 +2682,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2726,6 +2751,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2773,6 +2799,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2826,6 +2853,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var" "l" "pat-wild")
                       ("pat-var" "kx" "pat-wild")
@@ -2845,7 +2873,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2906,6 +2935,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3022,6 +3052,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3096,6 +3127,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3144,6 +3176,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3287,6 +3320,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "2")
+                        ()
                         ())
                       ("pat-var" "l" "pat-wild")
                       ("pat-var" "kx" "pat-wild")
@@ -3306,7 +3340,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3367,6 +3402,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3438,6 +3474,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3660,6 +3697,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3801,6 +3839,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3875,6 +3914,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3923,6 +3963,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -4003,6 +4044,7 @@
                                                     "enum"
                                                     ("value-repr" "0" "0" "0")
                                                     "2")
+                                                  ()
                                                   ()))
                                               (("guard"
                                                   ("con"
@@ -4240,6 +4282,7 @@
                                                     "enum"
                                                     ("value-repr" "0" "0" "0")
                                                     "1")
+                                                  ()
                                                   ()))
                                               (("guard"
                                                   ("con"
@@ -4426,7 +4469,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/perc-red-black-tree/tree"))))
+                        "bootstrap/validation/example/perc-red-black-tree/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4473,6 +4517,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ())))
                 (("guard"
                     ("con"
@@ -4561,6 +4606,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -4694,6 +4740,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"

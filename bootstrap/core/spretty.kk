@@ -69,8 +69,8 @@ pub fun con-repr/sexpr( cr : con-repr ) : div sexpr
 
 pub fun pattern/sexpr( p : pattern ) : div sexpr
   match p
-    PatCon(tn, args, repr, targs) ->
-      List([Atom("pat-con"), Atom(tn.name), List(args.map(sexpr)), repr.sexpr, List(targs.map(sexpr))])
+    PatCon(tn, args, repr, ftypes, ex) ->
+      List([Atom("pat-con"), Atom(tn.name), List(args.map(sexpr)), repr.sexpr, List(ftypes.map(sexpr)), List(ex.map(fn(e) Atom(e.show)))])
     PatVar(tn, pat) -> List([Atom("pat-var"), Atom(tn.name), pat.sexpr])
     PatLit(l) -> List([Atom("pat-lit"), l.sexpr])
     PatWild -> Atom("pat-wild")

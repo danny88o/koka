@@ -1979,6 +1979,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("pat-con"
                         "std/core/types/Pad"
@@ -1988,6 +1989,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-con"
                         "std/core/types/Pad"
@@ -1997,6 +1999,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("single"
                       "bootstrap/validation/example/fp-finger-trees/reuse3"
@@ -2006,7 +2009,8 @@
                       "1")
                     (("tcon" "std/core/types/pad")
                       ("tcon" "std/core/types/pad")
-                      ("tcon" "std/core/types/pad"))))
+                      ("tcon" "std/core/types/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2045,6 +2049,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var"
                         "@x"
@@ -2056,6 +2061,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("pat-con"
                         "std/core/types/Pad"
@@ -2065,6 +2071,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("single"
                       "bootstrap/validation/example/fp-finger-trees/reuse3"
@@ -2074,7 +2081,8 @@
                       "1")
                     (("tcon" "std/core/types/pad")
                       ("tcon" "std/core/types/pad")
-                      ("tcon" "std/core/types/pad"))))
+                      ("tcon" "std/core/types/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2113,6 +2121,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-con"
                         "std/core/types/Pad"
@@ -2122,6 +2131,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var"
                         "@x"
@@ -2133,6 +2143,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())))
                     ("single"
                       "bootstrap/validation/example/fp-finger-trees/reuse3"
@@ -2142,7 +2153,8 @@
                       "1")
                     (("tcon" "std/core/types/pad")
                       ("tcon" "std/core/types/pad")
-                      ("tcon" "std/core/types/pad"))))
+                      ("tcon" "std/core/types/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2209,7 +2221,8 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "2" "8")
                               "1")
-                            (("tcon" "std/core/types/pad"))))
+                            (("tcon" "std/core/types/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2229,6 +2242,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2306,7 +2320,8 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "2" "8")
                               "1")
-                            (("tcon" "std/core/types/pad"))))
+                            (("tcon" "std/core/types/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2326,6 +2341,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2403,7 +2419,8 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "2" "8")
                               "1")
-                            (("tcon" "std/core/types/pad"))))
+                            (("tcon" "std/core/types/pad"))
+                            ()))
                         (("guard"
                             ("con"
                               "std/core/types/True"
@@ -2423,6 +2440,7 @@
                               "struct-as-maybe"
                               ("value-repr" "0" "1" "8")
                               "2")
+                            ()
                             ()))
                         (("guard"
                             ("con"
@@ -2533,6 +2551,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -2542,6 +2561,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/afew"
@@ -2551,7 +2571,8 @@
                         "1")
                       (("tvar" "188")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2574,6 +2595,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/afew"
@@ -2583,7 +2605,8 @@
                         "2")
                       (("tvar" "188")
                         ("tvar" "188")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2603,7 +2626,8 @@
                         ("value-repr" "0" "3" "8")
                         "none"
                         "3")
-                      (("tvar" "188") ("tvar" "188") ("tvar" "188"))))
+                      (("tvar" "188") ("tvar" "188") ("tvar" "188"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2653,6 +2677,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -2662,6 +2687,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/afew"
@@ -2671,7 +2697,8 @@
                         "1")
                       (("tvar" "205")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2745,6 +2772,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/afew"
@@ -2754,7 +2782,8 @@
                         "2")
                       (("tvar" "223")
                         ("tvar" "223")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2825,7 +2854,8 @@
                         ("value-repr" "0" "3" "8")
                         "none"
                         "3")
-                      (("tvar" "241") ("tvar" "241") ("tvar" "241"))))
+                      (("tvar" "241") ("tvar" "241") ("tvar" "241"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2899,6 +2929,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -2908,7 +2939,8 @@
                         "1")
                       (("tvar" "266")
                         ("tvar" "266")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2928,7 +2960,8 @@
                         ("value-repr" "0" "3" "8")
                         "none"
                         "2")
-                      (("tvar" "266") ("tvar" "266") ("tvar" "266"))))
+                      (("tvar" "266") ("tvar" "266") ("tvar" "266"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -2979,6 +3012,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -2988,7 +3022,8 @@
                         "1")
                       (("tvar" "290")
                         ("tvar" "290")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3008,7 +3043,8 @@
                         ("value-repr" "0" "3" "8")
                         "none"
                         "2")
-                      (("tvar" "290") ("tvar" "290") ("tvar" "290"))))
+                      (("tvar" "290") ("tvar" "290") ("tvar" "290"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3059,6 +3095,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -3068,7 +3105,8 @@
                         "1")
                       (("tvar" "307")
                         ("tvar" "307")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3139,7 +3177,8 @@
                         ("value-repr" "0" "3" "8")
                         "none"
                         "2")
-                      (("tvar" "325") ("tvar" "325") ("tvar" "325"))))
+                      (("tvar" "325") ("tvar" "325") ("tvar" "325"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3209,6 +3248,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -3282,6 +3322,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -3291,6 +3332,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -3300,7 +3342,8 @@
                         "2")
                       (("tvar" "361")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3382,7 +3425,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "379")))))
+                          ("tvar" "379")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3467,7 +3511,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "397")))))
+                          ("tvar" "397")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3527,6 +3572,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -3557,7 +3603,8 @@
                     (("tcon"
                         "bootstrap/validation/example/fp-finger-trees/buffer")
                       ("tcon" "std/core/types/pad")
-                      ("tcon" "std/core/types/pad"))))
+                      ("tcon" "std/core/types/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3603,6 +3650,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-con"
                         "std/core/types/Pad"
@@ -3612,6 +3660,7 @@
                           ("single" "True")
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ()))
                     ("as-cons"
                       "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -3623,7 +3672,8 @@
                     (("tcon"
                         "bootstrap/validation/example/fp-finger-trees/buffer")
                       ("tcon" "std/core/types/pad")
-                      ("tcon" "std/core/types/pad"))))
+                      ("tcon" "std/core/types/pad"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -3648,6 +3698,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -3707,7 +3758,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "440"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3765,7 +3817,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "459"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -3854,7 +3907,8 @@
                               (("tapp"
                                   ("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/seq")
-                                  ("tvar" "502")))))
+                                  ("tvar" "502")))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -3878,6 +3932,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -3990,7 +4045,8 @@
                                 ("value-repr" "0" "2" "8")
                                 "1")
                               (("tcon"
-                                  "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                  "bootstrap/validation/example/fp-finger-trees/buffer"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4012,6 +4068,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4166,7 +4223,8 @@
                       (("tvar" "542")
                         ("tvar" "543")
                         ("tvar" "544")
-                        ("tvar" "545"))))
+                        ("tvar" "545"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -4229,7 +4287,8 @@
                       (("tvar" "594")
                         ("tvar" "595")
                         ("tvar" "596")
-                        ("tvar" "597"))))
+                        ("tvar" "597"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -4292,7 +4351,8 @@
                       (("tvar" "646")
                         ("tvar" "647")
                         ("tvar" "648")
-                        ("tvar" "649"))))
+                        ("tvar" "649"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -4355,7 +4415,8 @@
                       (("tvar" "698")
                         ("tvar" "699")
                         ("tvar" "700")
-                        ("tvar" "701"))))
+                        ("tvar" "701"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -4433,7 +4494,8 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "2" "8")
                                 "1")
-                              (("tvar" "837"))))
+                              (("tvar" "837"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4452,6 +4514,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4567,7 +4630,8 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "2" "8")
                                 "1")
-                              (("tvar" "838"))))
+                              (("tvar" "838"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4586,6 +4650,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4701,7 +4766,8 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "2" "8")
                                 "1")
-                              (("tvar" "839"))))
+                              (("tvar" "839"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4720,6 +4786,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4835,7 +4902,8 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "2" "8")
                                 "1")
-                              (("tvar" "840"))))
+                              (("tvar" "840"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4854,6 +4922,7 @@
                                 "struct-as-maybe"
                                 ("value-repr" "0" "1" "8")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -5018,6 +5087,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -5027,6 +5097,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -5036,7 +5107,8 @@
                         "2")
                       (("tvar" "899")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5067,7 +5139,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "899")))))
+                          ("tvar" "899")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5092,6 +5165,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -5101,7 +5175,8 @@
                             "1")
                           (("tvar" "899")
                             ("tvar" "899")
-                            ("tcon" "std/core/types/pad")))
+                            ("tcon" "std/core/types/pad"))
+                          ())
                         "pat-wild"
                         "pat-wild")
                       ("normal"
@@ -5124,7 +5199,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "899")))))
+                          ("tvar" "899")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5146,7 +5222,8 @@
                             ("value-repr" "0" "3" "8")
                             "none"
                             "2")
-                          (("tvar" "899") ("tvar" "899") ("tvar" "899")))
+                          (("tvar" "899") ("tvar" "899") ("tvar" "899"))
+                          ())
                         "pat-wild"
                         "pat-wild")
                       ("normal"
@@ -5169,7 +5246,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "899")))))
+                          ("tvar" "899")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5329,7 +5407,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "932"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5500,6 +5579,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -5567,6 +5647,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -5576,6 +5657,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -5585,7 +5667,8 @@
                         "2")
                       (("tvar" "1162")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5687,7 +5770,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "1162")))))
+                          ("tvar" "1162")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5777,6 +5861,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -5786,7 +5871,8 @@
                             "1")
                           (("tvar" "1162")
                             ("tvar" "1162")
-                            ("tcon" "std/core/types/pad")))
+                            ("tcon" "std/core/types/pad"))
+                          ())
                         ("pat-var" "q" "pat-wild")
                         ("pat-var" "u" "pat-wild"))
                       ("normal"
@@ -5809,7 +5895,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "1162")))))
+                          ("tvar" "1162")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5916,7 +6003,8 @@
                             ("value-repr" "0" "3" "8")
                             "none"
                             "2")
-                          (("tvar" "1162") ("tvar" "1162") ("tvar" "1162")))
+                          (("tvar" "1162") ("tvar" "1162") ("tvar" "1162"))
+                          ())
                         ("pat-var" "q" "pat-wild")
                         ("pat-var" "u" "pat-wild"))
                       ("normal"
@@ -5939,7 +6027,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "1162")))))
+                          ("tvar" "1162")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -5965,6 +6054,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -5974,6 +6064,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("as-cons"
                                   "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -5985,7 +6076,8 @@
                                 (("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/buffer")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -6280,7 +6372,8 @@
                                                   "bootstrap/validation/example/fp-finger-trees/tuple")
                                                 ("tvar" "1162")))
                                             ("tcon"
-                                              "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                              "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -6570,7 +6663,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "1207"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -6778,7 +6872,8 @@
                                       "bootstrap/validation/example/fp-finger-trees/seq")
                                     ("tvar" "1207"))
                                   ("tcon"
-                                    "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                    "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -6881,6 +6976,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -6909,6 +7005,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -6918,6 +7015,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("normal"
                                   "bootstrap/validation/example/fp-finger-trees/afew"
@@ -6927,7 +7025,8 @@
                                   "1")
                                 (("tvar" "1810")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -6995,6 +7094,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("normal"
                                   "bootstrap/validation/example/fp-finger-trees/afew"
@@ -7004,7 +7104,8 @@
                                   "2")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -7030,6 +7131,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ())
                                             ("pat-con"
                                               "std/core/types/Pad"
@@ -7039,6 +7141,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("as-cons"
                                             "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -7050,7 +7153,8 @@
                                           (("tcon"
                                               "bootstrap/validation/example/fp-finger-trees/buffer")
                                             ("tcon" "std/core/types/pad")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -7321,7 +7425,8 @@
                                   "3")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tvar" "1810"))))
+                                  ("tvar" "1810"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -7347,6 +7452,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ())
                                             ("pat-con"
                                               "std/core/types/Pad"
@@ -7356,6 +7462,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("as-cons"
                                             "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -7367,7 +7474,8 @@
                                           (("tcon"
                                               "bootstrap/validation/example/fp-finger-trees/buffer")
                                             ("tcon" "std/core/types/pad")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -7630,6 +7738,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -7639,6 +7748,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -7651,7 +7761,8 @@
                             "bootstrap/validation/example/fp-finger-trees/tuple")
                           ("tvar" "1810"))
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -7680,6 +7791,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("normal"
                                   "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -7689,7 +7801,8 @@
                                   "1")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -7781,7 +7894,8 @@
                                   "2")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tvar" "1810"))))
+                                  ("tvar" "1810"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -7807,6 +7921,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ())
                                             ("pat-con"
                                               "std/core/types/Pad"
@@ -7816,6 +7931,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("as-cons"
                                             "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -7827,7 +7943,8 @@
                                           (("tcon"
                                               "bootstrap/validation/example/fp-finger-trees/buffer")
                                             ("tcon" "std/core/types/pad")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -8135,7 +8252,8 @@
                           ("tapp"
                             ("tcon"
                               "bootstrap/validation/example/fp-finger-trees/tuple")
-                            ("tvar" "1810"))))))
+                            ("tvar" "1810"))))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -8164,6 +8282,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("normal"
                                   "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -8173,7 +8292,8 @@
                                   "1")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -8474,7 +8594,8 @@
                                                   "bootstrap/validation/example/fp-finger-trees/tuple")
                                                 ("tvar" "1810")))
                                             ("tcon"
-                                              "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                              "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -8563,7 +8684,8 @@
                                   "2")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tvar" "1810"))))
+                                  ("tvar" "1810"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -8589,6 +8711,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ())
                                             ("pat-con"
                                               "std/core/types/Pad"
@@ -8598,6 +8721,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("as-cons"
                                             "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -8609,7 +8733,8 @@
                                           (("tcon"
                                               "bootstrap/validation/example/fp-finger-trees/buffer")
                                             ("tcon" "std/core/types/pad")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -8907,6 +9032,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -8922,7 +9048,8 @@
                               ("tcon"
                                 "bootstrap/validation/example/fp-finger-trees/tuple")
                               ("tvar" "1810"))
-                            ("tcon" "std/core/types/pad")))
+                            ("tcon" "std/core/types/pad"))
+                          ())
                         ("pat-var" "q1" "pat-wild")
                         ("pat-var" "u1" "pat-wild"))
                       ("normal"
@@ -8954,7 +9081,8 @@
                           ("tapp"
                             ("tcon"
                               "bootstrap/validation/example/fp-finger-trees/tuple")
-                            ("tvar" "1810"))))))
+                            ("tvar" "1810"))))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -8983,6 +9111,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("normal"
                                   "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -8992,7 +9121,8 @@
                                   "1")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -9113,7 +9243,8 @@
                                   "2")
                                 (("tvar" "1810")
                                   ("tvar" "1810")
-                                  ("tvar" "1810"))))
+                                  ("tvar" "1810"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -9139,6 +9270,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ())
                                             ("pat-con"
                                               "std/core/types/Pad"
@@ -9148,6 +9280,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("as-cons"
                                             "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -9159,7 +9292,8 @@
                                           (("tcon"
                                               "bootstrap/validation/example/fp-finger-trees/buffer")
                                             ("tcon" "std/core/types/pad")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -9502,7 +9636,8 @@
                             ("tapp"
                               ("tcon"
                                 "bootstrap/validation/example/fp-finger-trees/tuple")
-                              ("tvar" "1810"))))
+                              ("tvar" "1810")))
+                          ())
                         ("pat-var" "q1" "pat-wild")
                         ("pat-var" "u1" "pat-wild"))
                       ("normal"
@@ -9534,7 +9669,8 @@
                           ("tapp"
                             ("tcon"
                               "bootstrap/validation/example/fp-finger-trees/tuple")
-                            ("tvar" "1810"))))))
+                            ("tvar" "1810"))))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -9560,6 +9696,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -9569,6 +9706,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("as-cons"
                                   "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -9580,7 +9718,8 @@
                                 (("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/buffer")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -9609,6 +9748,7 @@
                                                 ("single" "True")
                                                 ("value-repr" "0" "0" "0")
                                                 "1")
+                                              ()
                                               ()))
                                           ("normal"
                                             "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -9618,7 +9758,8 @@
                                             "1")
                                           (("tvar" "1810")
                                             ("tvar" "1810")
-                                            ("tcon" "std/core/types/pad"))))
+                                            ("tcon" "std/core/types/pad"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -9769,7 +9910,8 @@
                                             "2")
                                           (("tvar" "1810")
                                             ("tvar" "1810")
-                                            ("tvar" "1810"))))
+                                            ("tvar" "1810"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -10123,6 +10265,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -10132,6 +10275,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -10141,7 +10285,8 @@
                         "2")
                       (("tvar" "2036")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -10227,7 +10372,8 @@
                             ("value-repr" "0" "3" "8")
                             "none"
                             "2")
-                          (("tvar" "2036") ("tvar" "2036") ("tvar" "2036")))
+                          (("tvar" "2036") ("tvar" "2036") ("tvar" "2036"))
+                          ())
                         ("pat-var" "q" "pat-wild")
                         ("pat-var" "u" "pat-wild"))
                       ("normal"
@@ -10250,7 +10396,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2036")))))
+                          ("tvar" "2036")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -10276,6 +10423,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -10285,6 +10433,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("as-cons"
                                   "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -10296,7 +10445,8 @@
                                 (("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/buffer")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -10592,6 +10742,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/tuple"
@@ -10601,7 +10752,8 @@
                             "1")
                           (("tvar" "2036")
                             ("tvar" "2036")
-                            ("tcon" "std/core/types/pad")))
+                            ("tcon" "std/core/types/pad"))
+                          ())
                         ("pat-var" "q" "pat-wild")
                         ("pat-var" "u" "pat-wild"))
                       ("normal"
@@ -10624,7 +10776,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2036")))))
+                          ("tvar" "2036")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -10737,7 +10890,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2036")))))
+                          ("tvar" "2036")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -10969,7 +11123,8 @@
                                       "bootstrap/validation/example/fp-finger-trees/seq")
                                     ("tvar" "2036"))
                                   ("tcon"
-                                    "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                    "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -11249,7 +11404,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "2102"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -11453,7 +11609,8 @@
                                         "1")
                                       (("tcon" "std/core/types/pad")
                                         ("tcon" "std/core/types/pad")
-                                        ("tcon" "std/core/types/pad"))))
+                                        ("tcon" "std/core/types/pad"))
+                                      ()))
                                   ("pat-var" "s'" "pat-wild")
                                   ("pat-var" "b'" "pat-wild"))
                                 ("single"
@@ -11470,7 +11627,8 @@
                                       "bootstrap/validation/example/fp-finger-trees/seq")
                                     ("tvar" "2102"))
                                   ("tcon"
-                                    "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                    "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -11584,6 +11742,7 @@
                         ("normal" "True")
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"
@@ -11651,6 +11810,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ())
                         ("pat-con"
                           "std/core/types/Pad"
@@ -11660,6 +11820,7 @@
                             ("single" "True")
                             ("value-repr" "0" "0" "0")
                             "1")
+                          ()
                           ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
@@ -11669,7 +11830,8 @@
                         "2")
                       (("tvar" "2505")
                         ("tcon" "std/core/types/pad")
-                        ("tcon" "std/core/types/pad"))))
+                        ("tcon" "std/core/types/pad"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -11764,6 +11926,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ())
                             ("pat-con"
                               "std/core/types/Pad"
@@ -11773,6 +11936,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/afew"
@@ -11782,7 +11946,8 @@
                             "1")
                           (("tvar" "2505")
                             ("tcon" "std/core/types/pad")
-                            ("tcon" "std/core/types/pad"))))
+                            ("tcon" "std/core/types/pad"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -11800,7 +11965,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -11911,6 +12077,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/afew"
@@ -11920,7 +12087,8 @@
                             "2")
                           (("tvar" "2505")
                             ("tvar" "2505")
-                            ("tcon" "std/core/types/pad"))))
+                            ("tcon" "std/core/types/pad"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -11938,7 +12106,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -12042,7 +12211,8 @@
                             ("value-repr" "0" "3" "8")
                             "none"
                             "3")
-                          (("tvar" "2505") ("tvar" "2505") ("tvar" "2505"))))
+                          (("tvar" "2505") ("tvar" "2505") ("tvar" "2505"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -12060,7 +12230,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -12086,6 +12257,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -12095,6 +12267,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("as-cons"
                                   "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -12106,7 +12279,8 @@
                                 (("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/buffer")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -12401,7 +12575,8 @@
                                                   "bootstrap/validation/example/fp-finger-trees/tuple")
                                                 ("tvar" "2505")))
                                             ("tcon"
-                                              "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                              "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -12641,6 +12816,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ())
                             ("pat-con"
                               "std/core/types/Pad"
@@ -12650,6 +12826,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/afew"
@@ -12659,7 +12836,8 @@
                             "1")
                           (("tvar" "2505")
                             ("tcon" "std/core/types/pad")
-                            ("tcon" "std/core/types/pad"))))
+                            ("tcon" "std/core/types/pad"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -12680,7 +12858,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -12796,6 +12975,7 @@
                                 ("single" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           ("normal"
                             "bootstrap/validation/example/fp-finger-trees/afew"
@@ -12805,7 +12985,8 @@
                             "2")
                           (("tvar" "2505")
                             ("tvar" "2505")
-                            ("tcon" "std/core/types/pad"))))
+                            ("tcon" "std/core/types/pad"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -12826,7 +13007,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -12935,7 +13117,8 @@
                             ("value-repr" "0" "3" "8")
                             "none"
                             "3")
-                          (("tvar" "2505") ("tvar" "2505") ("tvar" "2505"))))
+                          (("tvar" "2505") ("tvar" "2505") ("tvar" "2505"))
+                          ()))
                       ("normal"
                         "bootstrap/validation/example/fp-finger-trees/seq"
                         ("normal" "True")
@@ -12956,7 +13139,8 @@
                         ("tapp"
                           ("tcon"
                             "bootstrap/validation/example/fp-finger-trees/afew")
-                          ("tvar" "2505")))))
+                          ("tvar" "2505")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -12982,6 +13166,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ())
                                   ("pat-con"
                                     "std/core/types/Pad"
@@ -12991,6 +13176,7 @@
                                       ("single" "True")
                                       ("value-repr" "0" "0" "0")
                                       "1")
+                                    ()
                                     ()))
                                 ("as-cons"
                                   "bootstrap/validation/example/fp-finger-trees/buffer"
@@ -13002,7 +13188,8 @@
                                 (("tcon"
                                     "bootstrap/validation/example/fp-finger-trees/buffer")
                                   ("tcon" "std/core/types/pad")
-                                  ("tcon" "std/core/types/pad"))))
+                                  ("tcon" "std/core/types/pad"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"
@@ -13297,7 +13484,8 @@
                                                   "bootstrap/validation/example/fp-finger-trees/tuple")
                                                 ("tvar" "2505")))
                                             ("tcon"
-                                              "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                              "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                          ()))
                                       (("guard"
                                           ("con"
                                             "std/core/types/True"
@@ -13587,7 +13775,8 @@
                             "bootstrap/validation/example/fp-finger-trees/seq")
                           ("tvar" "2550"))
                         ("tcon"
-                          "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                          "bootstrap/validation/example/fp-finger-trees/buffer"))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -13795,7 +13984,8 @@
                                       "bootstrap/validation/example/fp-finger-trees/seq")
                                     ("tvar" "2550"))
                                   ("tcon"
-                                    "bootstrap/validation/example/fp-finger-trees/buffer"))))
+                                    "bootstrap/validation/example/fp-finger-trees/buffer"))
+                                ()))
                             (("guard"
                                 ("con"
                                   "std/core/types/True"

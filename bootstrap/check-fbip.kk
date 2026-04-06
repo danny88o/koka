@@ -184,12 +184,12 @@ fun tail-mod-product(branches: list<branch>, action: () -> <div, inp|e> a) : <di
 fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk, dbg> output
   val (p, tp) = pt
   match p
-    PatCon(tn, pats, crepr, targs) ->
+    PatCon(tn, pats, crepr, ftypes, _) ->
       val size = get-constructor-alloc-size(crepr)
-      provide-token(tn.name, size, pats.zip(targs).foldl(out, fn(acc, p') bind-pattern(p', acc)))
+      provide-token(tn.name, size, pats.zip(ftypes).foldl(out, fn(acc, p') bind-pattern(p', acc)))
     PatVar(tn, pat) ->
       match pat
-        PatCon(_, _, crepr, _) ->
+        PatCon(_, _, crepr, _, _) ->
           val size = get-constructor-alloc-size(crepr)
           bind-name(tn, size, out)
         PatWild -> bind-name(tn, NotReusable, out)
@@ -202,7 +202,7 @@ fun bind-pattern(pt: (pattern, type-expr), out: output): <div, chk, dbg> output
 
 fun bv(p: pattern): div list<tname>
   match p
-    PatCon(_, pats, _, _) -> pats.flatmap(bv)
+    PatCon(_, pats, _, _, _) -> pats.flatmap(bv)
     PatVar(tn, p') -> Cons(tn, bv(p'))
     _ -> []
 
@@ -683,11 +683,23 @@ fun get-data-info(tp : type-expr) : <environment> maybe<data-info>
     Just((_, di)) -> Just(di)
 
 fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
-  match get-data-info(tp)
-    Nothing -> True // Assume heap-allocated if unknown
-    Just(di) ->
-      val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
-      (di.name != name-int) && !is-value
+  match tp.expand-syn
+    TCon(nm) ->
+      val n = nm.normalize-name
+      if ["std/core/types/int", "std/core/int", "std/num/int32/int32", "std/core/char", "std/core/float64", "std/core/bool"].any(fn(s) s == n) then False
+      else
+        match get-data-info(tp)
+          Nothing -> True
+          Just(di) ->
+            val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
+            (di.name != name-int) && !is-value
+    TVar -> False // Assume variables are not heap-allocated by default if they are just placeholders
+    _ ->
+      match get-data-info(tp)
+        Nothing -> True // Assume heap-allocated if unknown
+        Just(di) ->
+          val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
+          (di.name != name-int) && !is-value
 
 // --- Helpers ---
 fun add-type-reuse-info(nm: tname, sz: reusable): <div, dbg, environment> reusable

@@ -1548,7 +1548,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/example-borrow/tree"))))
+                        "bootstrap/validation/example/example-borrow/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1573,6 +1574,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1613,6 +1615,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1644,7 +1647,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/example-borrow/tree"))))
+                        "bootstrap/validation/example/example-borrow/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1686,6 +1690,7 @@
                           "as-list"
                           ("value-repr" "0" "0" "0")
                           "2")
+                        ()
                         ())
                       "pat-wild"
                       "pat-wild"
@@ -1697,6 +1702,7 @@
                           "as-list"
                           ("value-repr" "0" "0" "0")
                           "2")
+                        ()
                         ()))
                     ("as-cons"
                       "bootstrap/validation/example/example-borrow/tree"
@@ -1709,7 +1715,8 @@
                       ("tcon" "std/core/types/int")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/example-borrow/tree"))))
+                        "bootstrap/validation/example/example-borrow/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"

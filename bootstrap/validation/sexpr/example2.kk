@@ -1504,7 +1504,8 @@
                         "none"
                         "2")
                       (("tvar" "51")
-                        ("tapp" ("tcon" "std/core/types/list") ("tvar" "51")))))
+                        ("tapp" ("tcon" "std/core/types/list") ("tvar" "51")))
+                      ()))
                   (("guard"
                       ("con"
                         "std/core/types/True"
@@ -1628,6 +1629,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "1")
+                      ()
                       ()))
                   (("guard"
                       ("con"

@@ -1769,6 +1769,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1794,6 +1795,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1837,6 +1839,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1862,6 +1865,7 @@
                       "enum"
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1914,7 +1918,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -1939,6 +1944,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -1982,6 +1988,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2016,7 +2023,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2059,6 +2067,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       "pat-wild"
                       "pat-wild"
@@ -2078,7 +2087,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2138,6 +2148,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2206,7 +2217,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2274,7 +2286,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/accum"))))
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2345,7 +2358,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2392,6 +2406,7 @@
                         "as-list"
                         ("value-repr" "0" "0" "0")
                         "2")
+                      ()
                       ())))
                 (("guard"
                     ("con"
@@ -2444,7 +2459,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/accum"))))
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2515,7 +2531,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2574,6 +2591,7 @@
                       ("normal" "True")
                       ("value-repr" "0" "0" "0")
                       "1")
+                    ()
                     ()))
                 (("guard"
                     ("con"
@@ -2626,6 +2644,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var" "l1" "pat-wild")
                       ("pat-var" "k1" "pat-wild")
@@ -2644,7 +2663,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/accum"))))
+                        "bootstrap/validation/example/fp-red-black-fp/accum"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -2679,7 +2699,8 @@
                                 ("tcon" "std/core/types/int32")
                                 ("tcon" "std/core/types/bool")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-red-black-fp/accum"))))
+                                  "bootstrap/validation/example/fp-red-black-fp/accum"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -2770,6 +2791,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3056,6 +3078,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3242,7 +3265,8 @@
                                 ("tcon" "std/core/types/int32")
                                 ("tcon" "std/core/types/bool")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                                  "bootstrap/validation/example/fp-red-black-fp/tree"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -3333,6 +3357,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3619,6 +3644,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -3657,7 +3683,8 @@
                                                     ("tcon"
                                                       "std/core/types/bool")
                                                     ("tcon"
-                                                      "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                  ()))
                                               (("guard"
                                                   ("con"
                                                     "std/core/types/True"
@@ -4035,6 +4062,7 @@
                                 ("normal" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -4082,6 +4110,7 @@
                           "enum"
                           ("value-repr" "0" "0" "0")
                           "1")
+                        ()
                         ())
                       ("pat-var" "z1" "pat-wild")
                       ("pat-var" "k1" "pat-wild")
@@ -4100,7 +4129,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -4135,7 +4165,8 @@
                                 ("tcon" "std/core/types/int32")
                                 ("tcon" "std/core/types/bool")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                                  "bootstrap/validation/example/fp-red-black-fp/tree"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4226,6 +4257,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -4512,6 +4544,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -4698,7 +4731,8 @@
                                 ("tcon" "std/core/types/int32")
                                 ("tcon" "std/core/types/bool")
                                 ("tcon"
-                                  "bootstrap/validation/example/fp-red-black-fp/accum"))))
+                                  "bootstrap/validation/example/fp-red-black-fp/accum"))
+                              ()))
                           (("guard"
                               ("con"
                                 "std/core/types/True"
@@ -4789,6 +4823,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -5075,6 +5110,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -5113,7 +5149,8 @@
                                                     ("tcon"
                                                       "std/core/types/bool")
                                                     ("tcon"
-                                                      "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                                                      "bootstrap/validation/example/fp-red-black-fp/tree"))
+                                                  ()))
                                               (("guard"
                                                   ("con"
                                                     "std/core/types/True"
@@ -5491,6 +5528,7 @@
                                 ("normal" "True")
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -5678,7 +5716,8 @@
                       ("tcon" "std/core/types/int32")
                       ("tcon" "std/core/types/bool")
                       ("tcon"
-                        "bootstrap/validation/example/fp-red-black-fp/tree"))))
+                        "bootstrap/validation/example/fp-red-black-fp/tree"))
+                    ()))
                 (("guard"
                     ("con"
                       "std/core/types/True"
@@ -5757,6 +5796,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "2")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -5929,6 +5969,7 @@
                                 "enum"
                                 ("value-repr" "0" "0" "0")
                                 "1")
+                              ()
                               ()))
                           (("guard"
                               ("con"
@@ -6028,6 +6069,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "2")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -6236,6 +6278,7 @@
                                           "enum"
                                           ("value-repr" "0" "0" "0")
                                           "1")
+                                        ()
                                         ()))
                                     (("guard"
                                         ("con"
@@ -6409,6 +6452,7 @@
                       "as-list"
                       ("value-repr" "0" "0" "0")
                       "2")
+                    ()
                     ()))
                 (("guard"
                     ("con"

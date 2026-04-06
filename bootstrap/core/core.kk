@@ -163,7 +163,7 @@ pub fun con-repr/show(cr: con-repr): div string
 
 // Expressions
 pub type pattern
-  PatCon(tname: tname, args: list<pattern>, repr: con-repr, targs: list<type-expr>)
+  PatCon(tname: tname, args: list<pattern>, repr: con-repr, ftypes: list<type-expr>, ex: list<int>)
   PatVar(tname: tname, pat: pattern)
   PatLit(lit: lit)
   PatWild
@@ -179,7 +179,7 @@ pub type branch
 
 pub fun pattern/show(p: pattern): div string
   match p
-    PatCon(tname, args, repr, targs) -> "PatCon(" ++ tname.show ++ ", [" ++ args.map(pattern/show).join(", ") ++ "], " ++ repr.show ++ ", [" ++ targs.map(type-expr/show).join(", ") ++ "])"
+    PatCon(tname, args, repr, ftypes, ex) -> "PatCon(" ++ tname.show ++ ", [" ++ args.map(pattern/show).join(", ") ++ "], " ++ repr.show ++ ", [" ++ ftypes.map(type-expr/show).join(", ") ++ "], [" ++ ex.map(show).join(",") ++ "])"
     PatVar(tname, pat) -> "PatVar(" ++ tname.show ++ ", " ++ pat.show ++ ")"
     PatLit(lit) -> "PatLit(" ++ lit.show ++ ")"
     PatWild -> "PatWild"
