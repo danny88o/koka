@@ -67,7 +67,7 @@ pub fun unique-by-eq(ts: list<a>, ?(==): (a, a) -> bool): div list<a>
 
 pub fun normalize-name(name : string) : string
   match name.starts-with("std/core/types/open-")
-    Just(_) -> "std/core/types/@open"
+    Just(_) -> name-effect-open
     Nothing -> name
 
 pub struct env

@@ -16,7 +16,7 @@ pub fun main()
     _ -> throw("Enter one file not found in args")
   val content = file.realpath.read-text-file()
   val core = parse(content)
-  with dbg-handler()
+  with dbg-none()
   val warnings = check-fbip(core)
   // TODO compare warnings
   if warnings == Nil then

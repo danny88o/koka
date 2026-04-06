@@ -12,16 +12,16 @@ import bootstrap/data/ratio
 import std/core/sslice
 
 pub fun check-fbip( c : core )
-    chk-def-groups(c.gamma, c.type-infos, c.defs)
+    chk-def-groups(c.borrows, c.gamma, c.type-infos, c.defs)
 
 
-fun chk-def-groups(gamma: list<(string, fip-tag)>, type-infos: list<data-info>, dgs : list<def-group>) : _ list<string>
-  with run-chk(gamma, type-infos)
+fun chk-def-groups(borrows: list<(name, list<param-info>)>, gamma: list<(string, fip-tag)>, type-infos: list<data-info>, dgs : list<def-group>) : _ list<string>
+  with run-chk(borrows, gamma, type-infos)
   dgs.foreach(chk-def-group)
 
-fun run-chk(gamma, type-infos: list<data-info>, action: () -> <chk, dbg, div|e> a) : <dbg, div|e> list<string>
+fun run-chk(borrows: list<(name, list<param-info>)>, gamma: list<(string, fip-tag)>, type-infos: list<data-info>, action: () -> <chk, dbg, div|e> a) : <dbg, div|e> list<string>
   with input-handler(Input())
-  with env-handler(Env(gamma = gamma, new-types = type-infos.map(fn(di) (di.name, di))))
+  with env-handler(Env(gamma = gamma, new-types = type-infos.map(fn(di) (di.name, di)), borrowed = borrows))
   with warning-handler()
   with unique-id()
   with extract-output(Output())
@@ -47,12 +47,9 @@ fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
         extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
     _ -> () // Not a function
-  ()
 
-// --- Top-level Expression Check ---
-
-
-fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
+// Lambdas at the top-level are part of the signature and not allocations.
+fun chk-top-level-expr(borrows: list<param-info>, e: expr): <pure, chk, dbg> ()
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
@@ -64,8 +61,8 @@ fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
         .zip-param-info(pars)
         .filter(fn((pi, _)) pi.is-own)
         .map(fn((_, p)) p)
-      val names = bpars.map(fn(p) p.name)
-      with borrowed(names)
+      val names = bpars.map(name)
+      with borrowed(names) // This is a poorly named function, with delta is better name or something as it confuses with environemnt borrowed not
       val out = extract-output(action={chk-expr(body)})
       write-output(opars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
 
@@ -87,7 +84,9 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
     App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
     App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
     App(f, args) -> chk-app(f, args)
-    Var(tname) -> mark-seen(tname)
+    Var(tname) ->
+      debug("considering checking variable: " ++ tname.show)
+      mark-seen(tname)
     Let([], body) ->
       chk-expr(body)
     Let(Cons(DefNonRec(def), dgs), body) ->
@@ -366,9 +365,9 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
       chk-lazy-con(cname, repr)
       chk-allocation(cname, repr)
     Var(tn) | !tn.info-is-local ->
-      if tn.name == name-effect-open then // Not how it is in haskell, not sure why
-        args.foreach(fn(a) chk-arg((Borrow, a)))
-      else
+      // if tn.name == name-effect-open then // Not how it is in haskell, not sure why
+      //   args.foreach(fn(a) chk-arg((Borrow, a)))
+      // else
         val bs = get-param-infos(tn.name)
         non-tail()
           chk-args(bs.zip-param-info(args))
@@ -532,7 +531,6 @@ fun provide-token(debug-name: name, sz: reusable, out: output): <warning, enviro
         Just(allocs) ->
           match allocs
             Cons((p, _), _) | p != ratio(1) ->
-              // debug(p.show())
               require-capability(may-dealloc, fn(_)
                 Just("not all branches can reuse the space provided by " ++ debug-name ++ "/" ++ size.show)
               )
@@ -570,7 +568,7 @@ fun zip-param-info(pinfos: list<param-info>, args: list<a>): div list<(param-inf
     ([], Cons(a, rest)) -> Cons((Own, a), zip-param-info([], rest))
     _ -> []
 
-fun chk-fun-callable(name: string): <environment, out, warning> ()
+fun chk-fun-callable(name: string): <environment, out, warning, dbg> ()
   fun is-callable-from(fip': fip-tag, fip: fip-tag): bool
     match (fip', fip)
       (Fip, _) -> True
@@ -579,11 +577,12 @@ fun chk-fun-callable(name: string): <environment, out, warning> ()
       _ -> False
   val env = get-env()
   val normalized = name.normalize-name
-  match env.gamma.lookup(fn(n) n == normalized)
+  val result = env.gamma.lookup(fn(n) n == normalized)
+  match result
+    Nothing | ["std/core/cctx-set-ctx-path", "std/core/types/@field-addr-of"].any(fn(n) n == normalized) ->
+      write-call-allocation(name, Fip(AllocAtMost(0)))
     Nothing ->
-      if   normalized == "std/core/cctx-set-ctx-path" || normalized == "std/core/field-addr-of"
-      then write-call-allocation(name, Fip(AllocAtMost(0)))
-      else emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
+      emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
     Just(fip') ->
       if fip'.is-callable-from(env.fip-tag) then
         write-call-allocation(name, fip')
@@ -623,20 +622,20 @@ fun is-cctx-name(name : string) : bool
     Nothing -> False
 
 fun needs-dup-drop(tname : tname)
-  debug("Checking if \"" ++ tname.name ++ "\" needs dup-drop")
   if tname.name.is-cctx-name then False else needs-dup-drop-tp(tname.tp)
 
 fun mark-seen(tname: tname): _ ()
-  if tname.info-is-local then
-    if tname.needs-dup-drop then
-       write-output(Output(gamma-nm = [(tname, 1)]))
-  else
-    chk-wrap(tname)
+  // if tname.is-borrowed() then ()
+  if tname.info-is-local && tname.needs-dup-drop
+  then
+    debug("marking " ++ tname.name ++ " as seen")
+    write-output(Output(gamma-nm = [(tname, 1)]))
+  else chk-wrap(tname)
 
 fun mark-borrowed(nm: tname): _ ()
-  if !nm.is-borrowed then
+  if !nm.is-borrowed() then
     mark-seen(nm)
-    if nm.needs-dup-drop && nm.info-is-local then
+    if nm.needs-dup-drop && info-is-local(nm) then
       require-capability(may-dealloc, fn(env)
         Just("the last use of " ++ nm.name ++ " is borrowed (causing deallocation)")
       )
@@ -646,7 +645,7 @@ fun chk-wrap(tname: tname): _ ()
   if bs.any(fn(pi) pi.is-borrow) then
     emit-warning(fn(env) "a function with borrowed parameters is passed as an argument and implicitly wrapped (causing allocation)")
 
-fun get-param-infos(name : string) : <environment> list<param-info>
+fun get-param-infos(name : string) : <environment, dbg, div> list<param-info>
   val env = get-env()
   match env.borrowed.lookup(fn(n) n == name)
     Just(pinfos) -> pinfos
@@ -670,7 +669,6 @@ fun may-alloc(f : fip-tag) : bool
 
 fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
   val env = get-env()
-  // debug("require-capability: " ++ env.show)
   if !cap(env.fip-tag) then
     match test(env)
       Just(warn) -> warning(warn)
@@ -686,7 +684,6 @@ fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
     Nothing -> True // Assume heap-allocated if unknown
     Just(di) ->
       val nddd = needs-dup-drop-data(di)
-      debug("Name: " ++ di.name ++ ", nddd: " ++ nddd.show)
       (di.name != name-int) && nddd
 
 // --- Helpers ---
@@ -696,7 +693,6 @@ fun add-type-reuse-info(nm: tname, sz: reusable): <div, dbg, environment> reusab
     NotReusable ->
       val nt = get-env().new-types
       val di = get-data-info(nm.tp)
-      debug(nm.name ++ " type: " ++ nm.tp.show ++ ", info: " ++ di.is-just.show)
       val temp = get-fixed-data-alloc-size(nt, nm.tp)
       match temp
         Nothing -> NotReusable
@@ -708,10 +704,8 @@ fun data-type-is-flat(nm: type-expr): <environment, dbg> bool
     Just(di) -> di.constrs.all(fn(cr) cr.params.all(fn((_, t)) !t.needs-dup-drop-tp))
 
 fun chk-drop(is-reused:bool, nm: tname): _ ()
-  debug("chk-drop: " ++ nm.name ++ ", is-reused: " ++ is-reused.show)
   val is-heap-value = needs-dup-drop(nm)
   val is-flat = data-type-is-flat(nm.tp)
-  debug("chk-drop: " ++ nm.name ++ ", is-reused: " ++ is-reused.show ++ ", is-flat: " ++ is-flat.show ++ ", is-heap-value: " ++ is-heap-value.show)
   if !((is-reused && is-flat) || !is-heap-value) then
     require-capability(may-dealloc, fn(env)
       Just("the variable " ++ nm.name ++ " is unused (causing deallocation)")
@@ -725,7 +719,6 @@ fun bind-name(nm: tname, msize: reusable, out: output): _ output
         NotReusable -> (out, False)
         ReusableWithSize(_) ->
           (provide-token(nm.name, is-reusable, out), True)
-      debug("Binding name: " ++ nm.name ++ ", reused: " ++ is-reused.show ++ ", type info: " ++ nm.tp.show)
       chk-drop(is-reused, nm)
       out2
     Just(n) ->

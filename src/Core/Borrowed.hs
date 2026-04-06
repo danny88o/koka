@@ -7,7 +7,7 @@
 -----------------------------------------------------------------------------
 
 module Core.Borrowed( -- Borrowed parameter information
-                      Borrowed
+                      Borrowed(..)
                     , borrowedNew
                     , borrowedEmpty
                     , borrowedExtend

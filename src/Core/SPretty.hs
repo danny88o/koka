@@ -11,6 +11,7 @@ import qualified Type.Pretty as TP
 import Common.ColorScheme
 import Type.Assumption
 import Kind.Newtypes
+import Core.Borrowed
 import qualified Common.NameMap as NM
 import qualified Data.Set as S
 import qualified Data.List as L
@@ -26,8 +27,14 @@ prettySExprToDoc (SList (x:xs)) = group $ parens $ nest 2 $ vsep (map prettySExp
 instance Show SExpr where
   show sexpr = displayS (renderPretty 1.0 80 (prettySExprToDoc sexpr)) ""
 
-prettyCoreToSExpr :: Gamma -> Newtypes -> TypeDefGroups -> DefGroups -> SExpr
-prettyCoreToSExpr gamma newtypes tdgs dgs = SList [SAtom "core", prettyGamma gamma, prettyNewtypes newtypes, SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
+prettyCoreToSExpr :: Borrowed -> Gamma -> Newtypes -> TypeDefGroups -> DefGroups -> SExpr
+prettyCoreToSExpr borrowed gamma newtypes tdgs dgs = SList [SAtom "core", prettyBorrowed borrowed, prettyGamma gamma, prettyNewtypes newtypes, SList (map prettyTypeDefGroupToSExpr tdgs), SList (map prettyDefGroupToSExpr dgs)]
+
+prettyBorrowed :: Borrowed -> SExpr
+prettyBorrowed (Borrowed borrowed) = SList (map prettyBorrowDefToSExpr (NM.toList borrowed))
+
+prettyBorrowDefToSExpr :: (Name, [ParamInfo]) -> SExpr
+prettyBorrowDefToSExpr (name, pinfos) = SList [SAtom (show (pretty name)), SList (map prettyParamInfoToSExpr pinfos)]
 
 prettyGamma :: Gamma -> SExpr
 prettyGamma gamma =
