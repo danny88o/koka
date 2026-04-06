@@ -36,8 +36,8 @@ fun chk-def-group(dg : def-group )
       chk-top-level-def([def.name], def)
 
 fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
-  with def(d)
   info("checking function: " ++ d.name)
+  with def(d)
   with debug-warning()
   match d.sort
     DefFun(borrows, ft) | !ft.is-no-fip -> // is fip or fbip
@@ -50,6 +50,7 @@ fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
 
 // Lambdas at the top-level are part of the signature and not allocations.
 fun chk-top-level-expr(borrows: list<param-info>, e: expr): <pure, chk, dbg> ()
+  debug("Env: " ++ get-env().show())
   match e
     Lam(pars, eff, body) ->
       chk-effect(eff)
@@ -85,7 +86,7 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
     App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
     App(f, args) -> chk-app(f, args)
     Var(tname) ->
-      debug("considering checking variable: " ++ tname.show)
+      // debug("considering checking variable: " ++ tname.show)
       mark-seen(tname)
     Let([], body) ->
       chk-expr(body)
@@ -130,7 +131,7 @@ fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk, dbg
   with tail-mod-product(branches-filtered)
   scrutinees.zip(which-borrowed).foreach(fn((s, wb)) chk-scrutinee(wb, s))
 
-fun is-borrowed-scrutinee(e: expr): inp param-info
+fun is-borrowed-scrutinee(e: expr): <inp, dbg> param-info
   match e
     Var(tn) -> if is-borrowed(tn) then Borrow else Own
     _ -> Own
@@ -365,9 +366,6 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
       chk-lazy-con(cname, repr)
       chk-allocation(cname, repr)
     Var(tn) | !tn.info-is-local ->
-      // if tn.name == name-effect-open then // Not how it is in haskell, not sure why
-      //   args.foreach(fn(a) chk-arg((Borrow, a)))
-      // else
         val bs = get-param-infos(tn.name)
         non-tail()
           chk-args(bs.zip-param-info(args))
@@ -405,19 +403,18 @@ fun is-lazy-callable-from(fip-prime: fip-tag, fip: fip-tag): bool
 
 fun chk-lazy-con(tn: tname, repr: con-repr): <div, chk> ()
   // FIP analysis doesnt work for lazy cons, so we ignore proper implementation for now
-  write-call-allocation(tn.name, NoFip(False))
-  // val env = get-env()
-  // match get-data-info-by-name(repr.typename)
-  //   Nothing -> emit-warning(fn(_) "internal1: fip analysis could not find fip information for constructor: " ++ tn.name)
-  //   Just(di) ->
-  //     match di.constrs.find(fn(ci) ci.name == tn.name)
-  //       Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
-  //       Just(ci) ->
-  //         val fip-prime = ci.lazy.default(NoFip(False))
-  //         if ci.lazy.is-nothing || fip-prime.is-lazy-callable-from(env.fip-tag) then
-  //           write-call-allocation(tn.name, fip-prime)
-  //         else
-  //           emit-warning(fn(_) "allocating a non-fip lazy constructor: " ++ tn.name)
+  val env = get-env()
+  match env.new-types.lookup(fn(nt) nt == repr.typename)
+    Nothing -> emit-warning(fn(_) "internal1: fip analysis could not find fip information for constructor: " ++ tn.name)
+    Just(di) ->
+      match di.constrs.find(fn(ci) ci.name == tn.name)
+        Nothing -> emit-warning(fn(_) "internal: fip analysis could not find fip information for constructor: " ++ tn.name)
+        Just(ci) ->
+          val fip-prime = ci.lazy.default(NoFip(False))
+          if ci.lazy.is-nothing || fip-prime.is-lazy-callable-from(env.fip-tag) then
+            write-call-allocation(tn.name, fip-prime)
+          else
+            emit-warning(fn(_) "allocating a non-fip lazy constructor: " ++ tn.name)
 
 fun is-con-as-just(repr: con-repr): bool
   match repr
@@ -597,7 +594,7 @@ fun may-recurse(f: fip-tag): bool
 
 // --- Output Verification ---
 
-fun check-output-empty( out : output )
+fun check-output-empty( out : output ): _ ()
   // unbound names
   match out.gamma-nm.head
     Just((nm, _)) -> emit-warning(fn(_) "unbound name (which may have been used despite being borrowed): " ++ nm.name)
@@ -628,7 +625,7 @@ fun mark-seen(tname: tname): _ ()
   // if tname.is-borrowed() then ()
   if tname.info-is-local && tname.needs-dup-drop
   then
-    debug("marking " ++ tname.name ++ " as seen")
+    // debug("marking " ++ tname.name ++ " as seen")
     write-output(Output(gamma-nm = [(tname, 1)]))
   else chk-wrap(tname)
 

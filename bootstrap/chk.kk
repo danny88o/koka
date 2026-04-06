@@ -99,6 +99,8 @@ pub struct input
   def-group-names : list<name> = []
   is-tail-context : bool = True
 
+pub fun input/show(i: input): div string
+  "(" ++ "delta: [" ++ i.delta.show() ++ "], " ++ "def-group-names: [" ++ i.def-group-names.show() ++ "]" ++ ", is-tail-context: " ++ i.is-tail-context.show() ++ ")"
 // --- Seperate effects for isolation ---
 // NOTE: unique state couldjust use read-only state with a counter, but this is more explicit also resolves effect polymorphism issues
 
@@ -207,7 +209,8 @@ pub fun borrowed(names: list<string>, action)
   with input-override(input(delta = names ++ input.delta))
   action()
 
-pub fun is-borrowed(tname: tname): inp bool
+pub fun is-borrowed(tname: tname): <inp, dbg> bool
+  warn("Is Borrowed: " ++ tname.name ++ " in delta: [" ++ get-input().delta.show() ++ "]")
   get-input().delta.any(fn(n) n == tname.name)
 
 pub fun non-tail(action)
