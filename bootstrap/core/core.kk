@@ -282,11 +282,23 @@ pub type data-def
   DataDefOpen(is-ext: bool)
   DataDefAuto(is-struct: bool)
 
+pub fun data-def/show(dd: data-def): div string
+  match dd
+    DataDefValue(vr) -> "DataDefValue(" ++ vr.show ++ ")"
+    DataDefNormal -> "DataDefNormal"
+    DataDefLazy(fip-tag) -> "DataDefLazy(" ++ fip-tag.show ++ ")"
+    DataDefOpen(is-ext) -> "DataDefOpen(" ++ is-ext.show ++ ")"
+    DataDefAuto(is-struct) -> "DataDefAuto(" ++ is-struct.show ++ ")"
+
 pub struct con-info
   name: name
   tp: type-expr
   params: list<(string, type-expr)>
   lazy: maybe<fip-tag>
+  vrepr: value-repr
+
+pub fun con-info/show(ci: con-info): div string
+  "ConInfo(name: " ++ ci.name ++ ", tp: " ++ ci.tp.show ++ ", params: " ++ ci.params.show ++ ", lazy: " ++ ci.lazy.show ++ ", vrepr: " ++ ci.vrepr.show ++ ")"
 
 pub struct data-info
   name: name
@@ -294,6 +306,9 @@ pub struct data-info
   constrs: list<con-info>
   is-rec: bool
   ddef: data-def
+
+pub fun data-info/show(di: data-info)
+  "DataInfo(name: " ++ di.name ++ ", params: [" ++ di.params.show ++ "], constrs: [" ++ di.constrs.show ++ "], is-rec: " ++ di.is-rec.show ++ ", ddef: " ++ di.ddef.show ++ ")"
 
 pub type type-def
   Synonym(name: name, tp: type-expr)

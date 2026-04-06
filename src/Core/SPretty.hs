@@ -136,7 +136,7 @@ prettyDataInfoToSExpr :: DataInfo -> SExpr
 prettyDataInfoToSExpr info = SList [SAtom "data-info", SAtom (show (pretty (dataInfoName info))), SList (map (SAtom . show . typevarId) (dataInfoParams info)), SList (map prettyConInfoToSExpr (dataInfoConstrs info)), SAtom (show (dataInfoIsRec info)), prettyDataDefToSExpr (dataInfoDef info)]
 
 prettyConInfoToSExpr :: ConInfo -> SExpr
-prettyConInfoToSExpr info = SList [SAtom "con-info", SAtom (show (pretty (conInfoName info))), SList (map prettyParamToSExpr (conInfoParams info)), prettyMaybeToSExpr prettyFipToSExpr (conInfoLazy info)]
+prettyConInfoToSExpr info = SList [SAtom "con-info", SAtom (show (pretty (conInfoName info))), SList (map prettyParamToSExpr (conInfoParams info)), prettyMaybeToSExpr prettyFipToSExpr (conInfoLazy info), prettyValueReprToSExpr (conInfoValueRepr info)]
 
 prettyDataDefToSExpr :: DataDef -> SExpr
 prettyDataDefToSExpr def = case def of

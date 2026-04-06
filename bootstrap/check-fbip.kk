@@ -3,11 +3,13 @@ module bootstrap/check-fbip
 import bootstrap/chk
 import bootstrap/core/core
 import bootstrap/parc-reuse
+import bootstrap/utils
 
 import bootstrap/debug
 
 import bootstrap/data/ratio
 
+import std/core/sslice
 
 pub fun check-fbip( c : core )
     with dbg-handler
@@ -86,7 +88,7 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
     App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
     App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
     App(f, args) -> chk-app(f, args)
-    Var(tname) -> if !is-borrowed(tname) then mark-seen(tname)
+    Var(tname) -> mark-seen(tname)
     Let([], body) ->
       chk-expr(body)
     Let(Cons(DefNonRec(def), dgs), body) ->
@@ -154,20 +156,20 @@ fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: bra
 fun chk-guard(g: guard): <div, chk, dbg> ()
   val out = extract-output(action={chk-expr(g.expr)})
   val names = out.gamma-nm.map(fn((tn, _)) tn.name)
-  borrowed(names) // Dont include wrtie-oupt in borrow context
-    with non-tail
-    chk-expr(g.test)
+  with borrowed(names) // Dont include wrtie-oupt in borrow context
+  with non-tail()
+  chk-expr(g.test)
   write-output(out)
 
 fun is-pattern-match-error(b: branch): bool
   match b
     Branch(pats, [Guard(test, App(App(_, [TypeApp(Var(tn), _)]), _))]) ->
-      pats.all(is-patWild) && test.is-expr-true && tn.name == "std/core/pattern-match-error"
+      pats.all(is-patWild) && test.is-expr-true && tn.name == name-pattern-match-error
     _ -> False
 
-fun is-expr-true(e: expr): bool // TODO is uqui in both?
+fun is-expr-true(e: expr): bool
   match e
-    Con(tn, _) -> tn.name == "std/core/True"
+    Con(tn, _) -> tn.name == name-true
     _ -> False
 
 fun tail-mod-product(branches: list<branch>, action: () -> <div, inp|e> a) : <div, inp|e> a
@@ -204,18 +206,82 @@ fun bv(p: pattern): div list<tname>
     PatVar(tn, p') -> Cons(tn, bv(p'))
     _ -> []
 
+// --- Pretty Printing ---
+
+fun local-name(n : string) : string
+  match n.find-last("/")
+    Just(s) -> s.after.string
+    Nothing -> n
+
+fun pattern/pretty(p: pattern): div string
+  match p
+    PatCon(tn, Nil) -> tn.name.local-name
+    PatCon(tn, pats) -> tn.name.local-name ++ "(" ++ pats.map(pretty).join(", ") ++ ")"
+    PatVar(tn, PatWild) -> tn.name.local-name
+    PatVar(tn, pat) -> tn.name.local-name ++ " as " ++ pat.pretty
+    PatLit(lit) -> lit.show
+    PatWild -> "_"
+
+fun pretty-gamma-nm(out: output): div string
+  "(" ++ out.gamma-nm.map(fn((tn, cnt)) tn.name.local-name ++ "/" ++ cnt.show).join(", ") ++ ")"
+
+fun pretty-gamma-dia(out: output): div string
+  "(" ++ out.gamma-dia.flatmap(fn((sz, cs))
+    cs.map(fn((_, ids))
+      match ids.head
+        Just((tn, _)) -> tn.name.local-name ++ "/" ++ sz.show
+        Nothing -> ""
+    )
+  ).filter(fn(s) !s.is-empty).join(", ") ++ ")"
+
+fun fip-alloc/pretty(fa: fip-alloc): string
+  match fa
+    AllocAtMost(0) -> "nothing"
+    AllocAtMost(n) -> "at most " ++ n.show
+    AllocFinitely -> "a finite amount"
+    AllocUnlimited -> "unlimited"
+
+fun pretty-con(name: name, sz: int): string
+  name.local-name ++ "/" ++ sz.show
+
 // --- Context Merging ---
 
-fun join-contexts(pats: list<list<pattern>>, outs: list<output>): div output
-  match outs
+fun join-contexts(pats: list<list<pattern>>, cs: list<output>): _ output
+  fun try-reuse(acc: (bool, output), tname: tname)
+    val (all-reusable, out) = acc
+    match add-type-reuse-info(tname, NotReusable)
+      NotReusable ->
+        val is-heap-val = needs-dup-drop(tname)
+        (all-reusable && !is-heap-val, out)
+      ReusableWithSize(s) ->
+        val out2 = provide-token(tname.name, ReusableWithSize(s), out)
+        (all-reusable, out2)
+
+  match cs
     Nil -> Output()
-    Cons(out, Nil) -> out
-    outs ->
+    cs ->
       val g = fn ()
-        val union-nm = outs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
-        val n = outs.length
-        val union-dia = outs.map(gamma-dia).map(fn(dia) dia.map(fn((sz, as')) (sz, as'.map(fn((p, ids)) (p / n, ids))))).foldl1(fn(m1, m2) m1.union-with(m2, zip-tokens))
-        Output(gamma-nm = union-nm, gamma-dia = union-dia, alloc-tree = Match(outs.map(alloc-tree)))
+        val union-nm: list<(tname, int)> = cs.map(gamma-nm).foldl1(fn(m1, m2) m1.union-with(m2, max))
+        val (no-dealloc, cs') = cs
+          .map(fn(c) union-nm
+              .difference(c.gamma-nm, fn((tn1, _), (tn2, _)) tn1 == tn2)
+              .map(fst)
+              .foldl((True, c), try-reuse)
+          )
+          .unzip()
+
+        if !no-dealloc.all(fn(b) b) then
+          val msg = pats
+            .zip(cs)
+            .map(fn((ps, out)) "(" ++ ps.map(pretty).join(", ") ++ ") -> " ++ out.pretty-gamma-nm)
+            .join("\n")
+          require-capability(may-dealloc, fn(_) Just("not all branches use the same variables:\n" ++ msg))
+        val n = cs'.length
+        val union-dia = cs'
+          .map(gamma-dia)
+          .map(fn(dia) dia.map(fn((sz, as')) (sz, as'.map(fn((p, ids)) (p / n, ids)))))
+          .foldl1(fn(m1, m2) m1.union-with(m2, zip-tokens))
+        Output(gamma-nm = union-nm, gamma-dia = union-dia, alloc-tree = Match(cs'.map(alloc-tree)))
       try(g, fn(_) Output())
 
 fun zip-tokens(as1: tokens, as2: tokens): div tokens
@@ -232,43 +298,31 @@ fun chk-effect(tp: type-expr)
 
 fun is-fbip(tau: type-expr)
   match tau
-    TCon(name)              -> ["total", "div", "exn"].any(fn(n) n == name)
-    TApp(_, [TCon(name)])   -> name == "exn" // TODO: && eqType tc1 tconHandled
-    _                       -> False
+    TCon(name) ->
+      val n = name.normalize-name
+      ["total", "div", "exn", "std/core/types/total", "std/core/types/div", "std/core/exn/exn"].any(fn(s) s == n || n.ends-with("/" ++ s).is-just)
+    TApp(TCon(name), [TCon(p)]) ->
+      (name.normalize-name.ends-with("handled").is-just || name.normalize-name.ends-with("handled1").is-just) && p.normalize-name.ends-with("exn").is-just
+    _ -> False
 
 fun is-fbip-extended(tp: type-expr)
-    val (taus:list<type-expr>, _) = extract-effect-extend(tp)
-    taus.all(fn(t:type-expr) t.is-fbip)
+  val (taus, _) = extract-effect-extend(tp)
+  taus.all(is-fbip)
 
 fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
   match expand-syn(t)
-    TApp(TCon(name), [l, e]) | name == "effect-extend" ->
+    TApp(TCon(name), [l, e]) | name.normalize-name.ends-with("effect-extend").is-just ->
       val (ls, tl) = extract-effect-extend(e)
       val ls0 = extract-label(l)
       (ls0 ++ ls, tl)
     _ -> ([], t)
 
 fun extract-label(l: type-expr): div list<type-expr>
-    match expand-syn(l)
-      TApp(TCon(name), [_, _]) | name == "effect-extend" ->
-        val (ls, _) = extract-effect-extend(l)
-        ls
-      _ -> []
-
-fun is-effect-fixed(tp : type-expr): div bool
-  val (_, tau) = extract-effect-extend(tp)
-  match tau
-    TCon(name) | name == "total" -> True
-    _ -> False
-
-fun chk-pars(pars: list<(string, type-expr)>, borrows)
-  pars.foreach(fn((_, tp)) chk-effect(tp))
-
-fun has-total-effect(tp : type-expr) : div bool
-  match tp.expand-syn
-    TFun(_, eff, _) -> eff.is-effect-fixed
-    TForall(_, t) -> t.has-total-effect
-    _ -> False
+  match expand-syn(l)
+    TApp(TCon(name), [_, _]) | name.normalize-name.ends-with("effect-extend").is-just ->
+      val (ls, _) = extract-effect-extend(l)
+      ls
+    _ -> [l]
 
 fun is-mod-cons(e : expr) : div bool
   match e
@@ -293,7 +347,7 @@ fun is-mod-cons-fun(e : expr): div bool
     Con -> True
     Let(dgs, b) -> dgs.all(is-mod-cons-dg) && b.is-mod-cons-fun
     App(f, args) ->
-      type-of(e).has-total-effect && f.is-mod-cons-fun && args.all(is-mod-cons)
+      is-fbip-extended(type-of(e)) && f.is-mod-cons-fun && args.all(is-mod-cons)
     _ -> False
 
 fun tail-mod(mod-exprs: list<expr>, action)
@@ -302,7 +356,7 @@ fun tail-mod(mod-exprs: list<expr>, action)
   with input-override(curr(is-tail-context = is-tail))
   action()
 
-
+// --- Function Application Check ---
 fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
   match f
     TypeLam(_, body) -> chk-app(body, args) // ignore type machinery
@@ -317,7 +371,8 @@ fun chk-app( f : expr, args : list<expr> ) : <div, chk, dbg> ()
         args.foreach(fn(a) chk-arg((Borrow, a)))
       else
         val bs = get-param-infos(tn.name)
-        non-tail({chk-args(bs.zip-param-info(args))})
+        non-tail()
+          chk-args(bs.zip-param-info(args))
         chk-fun-callable(tn.name)
         val input = get-input()
         if !(input.is-tail-context || !input.def-group-names.any(fn(n) n == tn.name)) then
@@ -340,12 +395,9 @@ fun chk-mod-cons(args: list<expr>): <div, chk, dbg> ()
   match args
     [] -> ()
     Cons(a, rest) ->
-      with tail-mod(rest)
-      chk-expr(a)
+      // Limit the scope of tail-mod to only the current argument
+      tail-mod(rest, {chk-expr(a)})
       chk-mod-cons(rest)
-
-fun get-data-info-by-name(name: name): <environment> maybe<data-info>
-  newtype-lookup-any(name)
 
 fun is-lazy-callable-from(fip-prime: fip-tag, fip: fip-tag): bool
   match (fip-prime, fip)
@@ -397,7 +449,7 @@ fun get-allocation(tn: tname, sz: reusable): <chk> ()
       val prob = ratio(1)
       write-output(Output(gamma-dia = [(size, [(prob, [(tn, id)])])], alloc-tree = Alloc(id)))
 
-fun chk-allocation(tn: tname, repr: con-repr): <div, chk> ()
+fun chk-allocation(tn: tname, repr: con-repr): <div, chk, dbg> ()
   if repr.is-con-as-just then ()
   elif repr.typename.ends-with("_noreuse").is-just then
     require-capability(may-alloc, fn(_)
@@ -619,46 +671,62 @@ fun may-alloc(f : fip-tag) : bool
 
 fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
   val env = get-env()
+  // debug("require-capability: " ++ env.show)
   if !cap(env.fip-tag) then
     match test(env)
       Just(warn) -> warning(warn)
       Nothing -> ()
 
-
 fun get-data-info(tp : type-expr) : <environment> maybe<data-info>
-  fun find-info(t : type-expr)
-    match t
-      TCon(name) -> newtype-lookup-any(name)
-      TApp(f, _) -> find-info(f)
-      TSyn(_, _, t') -> find-info(t')
-      _ -> Nothing
-  find-info(tp)
+  match get-data-info(get-env().new-types, tp) // from parc-reuse
+    Nothing -> Nothing
+    Just((_, di)) -> Just(di)
 
 fun needs-dup-drop-tp(tp : type-expr) : <environment, dbg> bool
-  match tp.get-data-info
+  match get-data-info(tp)
     Nothing -> True // Assume heap-allocated if unknown
     Just(di) ->
       val is-value = match di.ddef { DataDefValue(_) -> True; _ -> False }
-      (di.name != "std/core/int") && !is-value
+      (di.name != name-int) && !is-value
 
 // --- Helpers ---
+fun add-type-reuse-info(nm: tname, sz: reusable): <div, dbg, environment> reusable
+  match sz
+    ReusableWithSize(size) -> ReusableWithSize(size)
+    NotReusable ->
+      val nt = get-env().new-types
+      val di = get-data-info(nm.tp)
+      debug(nm.name ++ " type: " ++ nm.tp.show ++ ", info: " ++ di.is-just.show)
+      val temp = get-fixed-data-alloc-size(nt, nm.tp)
+      match temp
+        Nothing -> NotReusable
+        Just((ss, _)) -> ReusableWithSize(ss)
+
+fun data-type-is-flat(nm: type-expr): <environment, dbg> bool
+  match get-data-info(nm)
+    Nothing -> True
+    Just(di) -> di.constrs.all(fn(cr) cr.params.all(fn((_, t)) !t.needs-dup-drop-tp))
+
+fun chk-drop(is-reused:bool, nm: tname): _ ()
+  val is-heap-value = needs-dup-drop(nm)
+  val is-flat = data-type-is-flat(nm.tp)
+  debug("chk-drop: " ++ nm.name ++ ", is-reused: " ++ is-reused.show ++ ", is-flat: " ++ is-flat.show ++ ", is-heap-value: " ++ is-heap-value.show)
+  if !((is-reused && is-flat) || !is-heap-value) then
+    require-capability(may-dealloc, fn(env)
+      Just("the variable " ++ nm.name ++ " is unused (causing deallocation)")
+    )
 
 fun bind-name(nm: tname, msize: reusable, out: output): _ output
-  match out.gamma-nm.find(fn((tn, _)) tn == nm)
+  match out.gamma-nm.lookup(fn(tn) tn == nm)
     Nothing ->
-      val is-reusable = match msize
-        ReusableWithSize(sz) -> ReusableWithSize(sz)
-        NotReusable -> NotReusable // Simplified: should call addTypeReuseInfo
-
-      val out2 = match is-reusable
-        NotReusable -> out
-        ReusableWithSize -> provide-token(nm.name, is-reusable, out)
-
-      // chkDrop logic simplified:
-      if nm.needs-dup-drop then
-        require-capability(may-dealloc, fn(_) Just("the variable " ++ nm.name ++ " is unused (causing deallocation)"))
+      val is-reusable = add-type-reuse-info(nm, msize)
+      val (out2, is-reused) = match is-reusable
+        NotReusable -> (out, False)
+        ReusableWithSize(_) ->
+          (provide-token(nm.name, is-reusable, out), True)
+      chk-drop(is-reused, nm)
       out2
-    Just((_, n)) ->
+    Just(n) ->
       if n > 1 && nm.needs-dup-drop then
         require-capability(may-alloc, fn(_) Just("the variable " ++ nm.name ++ " is used multiple times (causing sharing and preventing reuse)"))
       out(gamma-nm = out.gamma-nm.filter(fn((tn, _)) tn != nm))

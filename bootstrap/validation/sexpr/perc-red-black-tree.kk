@@ -846,11 +846,13 @@
       (("con-info"
           "bootstrap/validation/example/perc-red-black-tree/Red"
           ()
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "0" "0"))
         ("con-info"
           "bootstrap/validation/example/perc-red-black-tree/Black"
           ()
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info"
@@ -859,7 +861,8 @@
       (("con-info"
           "bootstrap/validation/example/perc-red-black-tree/Leaf"
           ()
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "0" "0"))
         ("con-info"
           "bootstrap/validation/example/perc-red-black-tree/Node"
           (("color"
@@ -870,7 +873,8 @@
             ("value" ("tcon" "std/core/types/bool"))
             ("right"
               ("tcon" "bootstrap/validation/example/perc-red-black-tree/tree")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "2" "3" "8")))
       "True"
       "normal")
     ("data-info" "std/core/types/@field-addr" ("10000") () "False" "normal")
@@ -880,15 +884,24 @@
       (("con-info"
           "std/core/types/@Optional"
           (("value" ("tvar" "10001")))
-          "nothing")
-        ("con-info" "std/core/types/@None" () "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8"))
+        ("con-info"
+          "std/core/types/@None"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info" "std/core/types/@reuse" () () "False" "normal")
     ("data-info"
       "std/core/types/@valueop"
       ("10002" "10003")
-      (("con-info" "std/core/types/@Valueop" () "nothing"))
+      (("con-info"
+          "std/core/types/@Valueop"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info" "std/core/types/alloc" ("10004") () "False" "normal")
@@ -897,14 +910,26 @@
     ("data-info"
       "std/core/types/bool"
       ()
-      (("con-info" "std/core/types/False" () "nothing")
-        ("con-info" "std/core/types/True" () "nothing"))
+      (("con-info"
+          "std/core/types/False"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0"))
+        ("con-info"
+          "std/core/types/True"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info"
       "std/core/types/box"
       ("10005")
-      (("con-info" "std/core/types/Box" (("unbox" ("tvar" "10005"))) "nothing"))
+      (("con-info"
+          "std/core/types/Box"
+          (("unbox" ("tvar" "10005")))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info"
@@ -915,7 +940,8 @@
           (("res" ("tvar" "10006"))
             ("holeptr"
               ("tapp" ("tcon" "std/core/types/@field-addr") ("tvar" "10007"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info"
@@ -939,7 +965,8 @@
                   ("" ("tapp" ("tcon" "std/core/hnd/ev") ("tvar" "10006"))))
                 ("tvar" "10007")
                 ("tvar" "10005"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info"
@@ -958,7 +985,8 @@
                   ("" ("tvar" "10009")))
                 ("tvar" "10012")
                 ("tvar" "10010"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info"
@@ -978,7 +1006,8 @@
                   ("" ("tvar" "10015")))
                 ("tvar" "10018")
                 ("tvar" "10016"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info"
@@ -987,12 +1016,18 @@
       (("con-info"
           "std/core/delayed/XComputation"
           (("action" ("fun" () ("tvar" "10001") ("tvar" "10002"))))
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "1" "8"))
         ("con-info"
           "std/core/delayed/XDone"
           (("value" ("tvar" "10002")))
-          "nothing")
-        ("con-info" "std/core/delayed/XBlocking" () "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/delayed/XBlocking"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       "normal")
     ("data-info" "std/core/console/console" () () "False" "normal")
@@ -1009,7 +1044,8 @@
                   ("tcon" "std/core/delayed/computation")
                   ("tvar" "10003")
                   ("tvar" "10004")))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info" "std/core/types/div" () () "False" "normal")
@@ -1022,11 +1058,16 @@
     ("data-info"
       "std/core/types/either"
       ("10011" "10012")
-      (("con-info" "std/core/types/Left" (("left" ("tvar" "10011"))) "nothing")
+      (("con-info"
+          "std/core/types/Left"
+          (("left" ("tvar" "10011")))
+          "nothing"
+          ("value-repr" "0" "2" "8"))
         ("con-info"
           "std/core/types/Right"
           (("right" ("tvar" "10012")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info"
@@ -1035,8 +1076,13 @@
       (("con-info"
           "std/core/exn/Error"
           (("exception" ("tcon" "std/core/exn/exception")))
-          "nothing")
-        ("con-info" "std/core/exn/Ok" (("result" ("tvar" "10000"))) "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8"))
+        ("con-info"
+          "std/core/exn/Ok"
+          (("result" ("tvar" "10000")))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8")))
     ("data-info"
@@ -1052,7 +1098,8 @@
                 ("tvar" "10006")))
             ("hnd" ("tapp" ("tvar" "10004") ("tvar" "10005") ("tvar" "10006")))
             ("hevv" ("tapp" ("tcon" "std/core/hnd/evv") ("tvar" "10005"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "4" "3" "8")))
       "False"
       "normal")
     ("data-info" "std/core/hnd/evv" ("10000") () "False" "normal")
@@ -1063,29 +1110,49 @@
           "std/core/exn/Exception"
           (("message" ("tcon" "std/core/types/string"))
             ("info" ("tcon" "std/core/exn/exception-info")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info"
       "std/core/exn/exception-info"
       ()
-      (("con-info" "std/core/exn/ExnError" () "nothing")
-        ("con-info" "std/core/exn/ExnAssert" () "nothing")
-        ("con-info" "std/core/exn/ExnTodo" () "nothing")
-        ("con-info" "std/core/exn/ExnRange" () "nothing")
+      (("con-info"
+          "std/core/exn/ExnError"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/exn/ExnAssert"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/exn/ExnTodo"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/exn/ExnRange"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
         ("con-info"
           "std/core/exn/ExnPattern"
           (("location" ("tcon" "std/core/types/string"))
             ("definition" ("tcon" "std/core/types/string")))
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "3" "8"))
         ("con-info"
           "std/core/exn/ExnSystem"
           (("errno" ("tcon" "std/core/types/int")))
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "2" "8"))
         ("con-info"
           "std/core/exn/ExnInternal"
           (("name" ("tcon" "std/core/types/string")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("open" "False"))
     ("data-info"
@@ -1104,7 +1171,8 @@
                   ("tcon" "std/core/exn/exn")
                   ("tvar" "10001")
                   ("tvar" "10002")))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "True"
       "normal")
     ("data-info"
@@ -1127,8 +1195,16 @@
     ("data-info"
       "std/core/types/hdiv"
       ("10015" "10016" "10017")
-      (("con-info" "std/core/types/@Hdiv" () "nothing")
-        ("con-info" "std/core/types/@Hnodiv" () "nothing"))
+      (("con-info"
+          "std/core/types/@Hdiv"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0"))
+        ("con-info"
+          "std/core/types/@Hnodiv"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info"
@@ -1137,7 +1213,8 @@
       (("con-info"
           "std/core/hnd/Htag"
           (("tagname" ("tcon" "std/core/types/string")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info" "std/core/types/int" () () "False" "normal")
@@ -1174,12 +1251,13 @@
     ("data-info"
       "std/core/types/list"
       ("10018")
-      (("con-info" "std/core/types/Nil" () "nothing")
+      (("con-info" "std/core/types/Nil" () "nothing" ("value-repr" "0" "0" "0"))
         ("con-info"
           "std/core/types/Cons"
           (("head" ("tvar" "10018"))
             ("tail" ("tapp" ("tcon" "std/core/types/list") ("tvar" "10018"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "True"
       "normal")
     ("data-info" "std/core/types/local" ("10019") () "False" "normal")
@@ -1198,21 +1276,31 @@
     ("data-info"
       "std/core/types/maybe"
       ("10022")
-      (("con-info" "std/core/types/Nothing" () "nothing")
+      (("con-info"
+          "std/core/types/Nothing"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
         ("con-info"
           "std/core/types/Just"
           (("value" ("tvar" "10022")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info"
       "std/core/types/maybe2"
       ("10023" "10024")
-      (("con-info" "std/core/types/Nothing2" () "nothing")
+      (("con-info"
+          "std/core/types/Nothing2"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
         ("con-info"
           "std/core/types/Just2"
           (("fst" ("tvar" "10023")) ("snd" ("tvar" "10024")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8")))
     ("data-info" "std/core/types/ndet" () () "False" "normal")
@@ -1223,9 +1311,13 @@
     ("data-info"
       "std/core/types/order"
       ()
-      (("con-info" "std/core/types/Lt" () "nothing")
-        ("con-info" "std/core/types/Eq" () "nothing")
-        ("con-info" "std/core/types/Gt" () "nothing"))
+      (("con-info" "std/core/types/Lt" () "nothing" ("value-repr" "0" "0" "0"))
+        ("con-info" "std/core/types/Eq" () "nothing" ("value-repr" "0" "0" "0"))
+        ("con-info"
+          "std/core/types/Gt"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info"
@@ -1234,18 +1326,28 @@
       (("con-info"
           "std/core/types/Lt2"
           (("lt" ("tvar" "10027")) ("gt" ("tvar" "10027")))
-          "nothing")
-        ("con-info" "std/core/types/Eq2" (("eq" ("tvar" "10027"))) "nothing")
+          "nothing"
+          ("value-repr" "0" "3" "8"))
+        ("con-info"
+          "std/core/types/Eq2"
+          (("eq" ("tvar" "10027")))
+          "nothing"
+          ("value-repr" "0" "2" "8"))
         ("con-info"
           "std/core/types/Gt2"
           (("lt" ("tvar" "10027")) ("gt" ("tvar" "10027")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8")))
     ("data-info"
       "std/core/types/pad"
       ()
-      (("con-info" "std/core/types/Pad" () "nothing"))
+      (("con-info"
+          "std/core/types/Pad"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       "normal")
     ("data-info" "std/core/types/read" ("10028") () "False" "normal")
@@ -1264,21 +1366,28 @@
                       ("tvar" "10025"))))
                 ("tvar" "10023")
                 ("tvar" "10025"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "1" "8")))
       "False"
       ("value" ("value-repr" "0" "1" "8")))
     ("data-info"
       "std/core/hnd/resume-result"
       ("10020" "10021")
-      (("con-info" "std/core/hnd/Deep" (("result" ("tvar" "10020"))) "nothing")
+      (("con-info"
+          "std/core/hnd/Deep"
+          (("result" ("tvar" "10020")))
+          "nothing"
+          ("value-repr" "0" "2" "8"))
         ("con-info"
           "std/core/hnd/Shallow"
           (("result" ("tvar" "10020")))
-          "nothing")
+          "nothing"
+          ("value-repr" "0" "2" "8"))
         ("con-info"
           "std/core/hnd/Finalize"
           (("result" ("tvar" "10021")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info" "std/core/scope" ("10000") () "False" "normal")
@@ -1296,7 +1405,8 @@
           (("str" ("tcon" "std/core/types/string"))
             ("start" ("tcon" "std/core/types/int"))
             ("len" ("tcon" "std/core/types/int")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8")))
     ("data-info"
@@ -1306,7 +1416,8 @@
           "std/core/Next"
           (("head" ("tvar" "10001"))
             ("tail" ("tapp" ("tcon" "std/core/stream") ("tvar" "10001"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "True"
       "normal")
     ("data-info" "std/core/types/string" () () "False" "normal")
@@ -1317,7 +1428,8 @@
       (("con-info"
           "std/core/types/Tuple2"
           (("fst" ("tvar" "10033")) ("snd" ("tvar" "10034")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "2" "8")))
       "False"
       ("value" ("value-repr" "0" "2" "8")))
     ("data-info"
@@ -1328,7 +1440,8 @@
           (("fst" ("tvar" "10035"))
             ("snd" ("tvar" "10036"))
             ("thd" ("tvar" "10037")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8")))
     ("data-info"
@@ -1340,7 +1453,8 @@
             ("snd" ("tvar" "10039"))
             ("thd" ("tvar" "10040"))
             ("field4" ("tvar" "10041")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "4" "8")))
       "False"
       "normal")
     ("data-info"
@@ -1353,14 +1467,19 @@
             ("thd" ("tvar" "10044"))
             ("field4" ("tvar" "10045"))
             ("field5" ("tvar" "10046")))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "5" "8")))
       "False"
       "normal")
     ("data-info" "std/core/ui" () () "False" "normal")
     ("data-info"
       "std/core/types/unit"
       ()
-      (("con-info" "std/core/types/Unit" () "nothing"))
+      (("con-info"
+          "std/core/types/Unit"
+          ()
+          "nothing"
+          ("value-repr" "0" "0" "0")))
       "False"
       ("value" ("value-repr" "1" "0" "1")))
     ("data-info" "std/core/types/vector" ("10047") () "False" "normal")
@@ -1370,9 +1489,17 @@
     ("data-info"
       "std/core/hnd/yld"
       ("10026" "10027" "10028")
-      (("con-info" "std/core/hnd/Pure" () "nothing")
-        ("con-info" "std/core/hnd/YieldingFinal" () "nothing")
-        ("con-info" "std/core/hnd/Yielding" () "nothing")
+      (("con-info" "std/core/hnd/Pure" () "nothing" ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/hnd/YieldingFinal"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
+        ("con-info"
+          "std/core/hnd/Yielding"
+          ()
+          "nothing"
+          ("value-repr" "0" "1" "8"))
         ("con-info"
           "std/core/hnd/Yield"
           (("clause"
@@ -1397,7 +1524,8 @@
                       ("tvar" "10029"))))
                 ("tvar" "10026")
                 ("tvar" "10027"))))
-          "nothing"))
+          "nothing"
+          ("value-repr" "0" "3" "8")))
       "False"
       ("value" ("value-repr" "0" "3" "8"))))
   (("type-def-group"
@@ -1408,11 +1536,13 @@
           (("con-info"
               "bootstrap/validation/example/perc-red-black-tree/Red"
               ()
-              "nothing")
+              "nothing"
+              ("value-repr" "0" "0" "0"))
             ("con-info"
               "bootstrap/validation/example/perc-red-black-tree/Black"
               ()
-              "nothing"))
+              "nothing"
+              ("value-repr" "0" "0" "0")))
           "False"
           ("value" ("value-repr" "1" "0" "1")))))
     ("type-def-group"
@@ -1423,7 +1553,8 @@
           (("con-info"
               "bootstrap/validation/example/perc-red-black-tree/Leaf"
               ()
-              "nothing")
+              "nothing"
+              ("value-repr" "0" "0" "0"))
             ("con-info"
               "bootstrap/validation/example/perc-red-black-tree/Node"
               (("color"
@@ -1437,7 +1568,8 @@
                 ("right"
                   ("tcon"
                     "bootstrap/validation/example/perc-red-black-tree/tree")))
-              "nothing"))
+              "nothing"
+              ("value-repr" "2" "3" "8")))
           "True"
           "normal"))))
   (("non-rec"

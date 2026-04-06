@@ -184,8 +184,8 @@ pub fun sexpr-to-data-info(s: sexpr): <div,exn> data-info
 
 pub fun sexpr-to-con-info(s: sexpr): <div,exn> con-info
   match s.expect-list.expect-tag("con-info")
-    [name, List(params), f] ->
-      Con-info(name.expect-atom, TVar(-1), params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-maybe(sexpr-to-fip))
+    [name, List(params), f, vr] ->
+      Con-info(name.expect-atom, TVar(-1), params.map(fn(p) match p { List([n, t]) -> (n.expect-atom, t.sexpr-to-type-expr); _ -> throw("Invalid con-info param") }), f.sexpr-to-maybe(sexpr-to-fip), vr.sexpr-to-value-repr)
     _ -> throw("Invalid con-info sexpr")
 
 pub fun sexpr-to-data-def(s: sexpr): <div,exn> data-def

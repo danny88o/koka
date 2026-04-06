@@ -26,7 +26,9 @@ pub fun alloc-tree/show(t: alloc-tree): div string
     Match(ts) -> "Match(" ++ ts.map(show).join(", ") ++ ")"
     Leaf -> "Leaf"
 
-pub alias tokens = list<(ratio, list<(tname, int)>)>
+
+pub alias token = (ratio, list<(tname, int)>)
+pub alias tokens = list<token>
 
 pub struct output
   gamma-nm : list<(tname, int)> = []
@@ -183,15 +185,6 @@ pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
 
 // --- Env Helpers
 
-// pub fun with-env(
-//     env : env,
-//     def : list<def>    = env.current-def,
-//     fip-tag : fip-tag  = env.fip-tag,
-//     action : () -> <environment,environment|e> a
-//   ): <environment|e> a
-//   with env-handler(env(current-def = def, fip-tag = fip-tag))
-//   action()
-
 pub fun def(def: def, action)
   val env = get-env()
   with env-override(env(current-def = Cons(def, env.current-def)))
@@ -202,8 +195,6 @@ pub fun fip-tag(tag: fip-tag, action)
   with env-override(env(fip-tag = tag))
   action()
 
-pub fun newtype-lookup-any(name: name): environment maybe<data-info>
-  get-env().new-types.lookup(fn(n) n == name)
 
 // --- Input Helpers
 
@@ -224,12 +215,19 @@ pub fun non-tail(action)
   with input-override(curr(is-tail-context = False))
   action()
 
+
 // --- Warning Helpers
 
 pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
   warning(make-doc(get-env()))
 
 pub val name-effect-open: name = "std/core/types/@open"
+
+pub val name-int: name = "std/core/types/int"
+
+pub val name-true: name = "std/core/types/True"
+
+pub val name-pattern-match-error: name = "std/core/exn/error-pattern"
 
 fun main()
   ()
