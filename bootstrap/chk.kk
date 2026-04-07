@@ -65,10 +65,7 @@ pub fun unique-by-eq(ts: list<a>, ?(==): (a, a) -> bool): div list<a>
     Nil -> Nil
     Cons(x, xs) -> Cons(x, xs.filter(fn(y) !(y == x)).unique-by-eq)
 
-pub fun normalize-name(name : string) : string
-  match name.starts-with("std/core/types/open-")
-    Just(_) -> name-effect-open
-    Nothing -> name
+// --- State and Environment ---
 
 pub struct env
   current-def : list<def> = []
@@ -101,14 +98,8 @@ pub struct input
 
 pub fun input/show(i: input): div string
   "(" ++ "delta: [" ++ i.delta.show() ++ "], " ++ "def-group-names: [" ++ i.def-group-names.show() ++ "]" ++ ", is-tail-context: " ++ i.is-tail-context.show() ++ ")"
+
 // --- Seperate effects for isolation ---
-// NOTE: unique state couldjust use read-only state with a counter, but this is more explicit also resolves effect polymorphism issues
-
-// pub effect rd<a>
-//   fun read(): a
-
-// pub effect wrt<a>
-//   fun write(a: a): ()
 
 pub effect environment
   fun get-env(): env
@@ -125,17 +116,6 @@ pub effect unique-state
 pub effect fun warning( msg : string ): ()
 
 pub alias chk = <environment, out, inp, unique-state, warning>
-
-// pub fun read-only(initial: a, action : () -> <rd<a>|e> b ) : e b
-//   with fun read() initial
-//   action()
-
-// pub fun write-only(initial: a, ?(++): (a, a) -> a, action: () -> <wrt<a>|e> b ) : e (b, a)
-//   var state := initial
-//   with handler
-//     return(x) (x, state)
-//     fun write(x) state := state ++ x
-//   action()
 
 pub fun env-handler(initial: env, action: () -> <environment|e> a) : e a
   var env := initial
@@ -204,13 +184,12 @@ pub fun input(input: input, action)
   with fun get-input() input
   action()
 
-pub fun borrowed(names: list<string>, action)
+pub fun add-borrowed(names: list<name>, action)
   val input = get-input()
   with input-override(input(delta = names ++ input.delta))
   action()
 
-pub fun is-borrowed(tname: tname): <inp, dbg> bool
-  warn("Is Borrowed: " ++ tname.name ++ " in delta: [" ++ get-input().delta.show() ++ "]")
+pub fun is-borrowed(tname: tname): inp bool
   get-input().delta.any(fn(n) n == tname.name)
 
 pub fun non-tail(action)
@@ -223,14 +202,6 @@ pub fun non-tail(action)
 
 pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
   warning(make-doc(get-env()))
-
-pub val name-effect-open: name = "std/core/types/@open"
-
-pub val name-int: name = "std/core/types/int"
-
-pub val name-true: name = "std/core/types/True"
-
-pub val name-pattern-match-error: name = "std/core/exn/error-pattern"
 
 fun main()
   ()

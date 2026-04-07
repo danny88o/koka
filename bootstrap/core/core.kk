@@ -25,6 +25,55 @@ pub type type-expr
   TApp(f: type-expr, args: list<type-expr>)
   TSyn(name: string, args: list<type-expr>, t: type-expr)
 
+pub fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
+  match expand-syn(t)
+    TApp(TCon(name), [l, e]) | name.normalize-name.ends-with(name-effect-extend).is-just ->
+      val (ls, tl) = extract-effect-extend(e)
+      val ls0 = extract-label(l)
+      (ls0 ++ ls, tl)
+    _ -> ([], t)
+
+pub fun extract-label(l: type-expr): div list<type-expr>
+  match expand-syn(l)
+    TApp(TCon(name), [_, _]) | name.normalize-name.ends-with(name-effect-extend).is-just ->
+      val (ls, _) = extract-effect-extend(l)
+      ls
+    _ -> [l]
+
+pub alias name = string
+
+pub val name-effect-open : name         = "std/core/types/@open"
+pub val name-int : name                 = "std/core/types/int"
+pub val name-true : name                = "std/core/types/True"
+pub val name-pattern-match-error : name = "std/core/exn/error-pattern"
+pub val name-lazy-memoize : name        = "std/core/lazy-memoize"
+pub val name-lazy-memoize-target : name = "std/core/lazy-memoize-target"
+pub val name-lazy-enter : name          = "std/core/lazy-enter"
+pub val name-lazy-leave : name          = "std/core/lazy-leave"
+pub val name-cctx-set-ctx-path : name   = "std/core/cctx-set-ctx-path"
+pub val name-field-addr-of : name       = "std/core/types/@field-addr-of"
+pub val name-core-int : name            = "std/core/int"
+pub val name-core-float64 : name        = "std/core/float64"
+pub val name-core-char : name           = "std/core/char"
+pub val name-core-string : name         = "std/core/string"
+pub val name-tp-total : name            = "std/core/types/total"
+pub val name-tp-div : name              = "std/core/types/div"
+pub val name-tp-exn : name              = "std/core/exn/exn"
+pub val name-effect-extend : name       = "effect-extend"
+pub val name-handled : name             = "handled"
+pub val name-handled1 : name            = "handled1"
+pub val name-total : name               = "total"
+pub val name-div : name                 = "div"
+pub val name-exn : name                 = "exn"
+
+pub val name-noreuse-suffix: string = "_noreuse"
+pub val name-cctx-prefix: string = "cctx"
+
+pub fun normalize-name(name : string) : string
+  match name.starts-with("std/core/types/open-")
+    Just(_) -> name-effect-open
+    Nothing -> name
+
 pub fun (==)(t1: type-expr, t2: type-expr): div bool
   match (t1, t2)
     (TForall(vars1, t1), TForall(vars2, t2))           -> vars1 == vars2 && t1 == t2
@@ -44,8 +93,6 @@ pub fun type-expr/show(type-expr: type-expr): div string
     TApp(f, args) -> f.show ++ " " ++ args.map(type-expr/show).join(" ")
     TSyn(name, args, _) -> name ++ " " ++ args.map(type-expr/show).join(" ")
 
-
-pub alias name = string
 
 pub type tname
   TName(name: name, tp: type-expr)
@@ -187,6 +234,17 @@ pub fun pattern/show(p: pattern): div string
 pub fun branch/show(b: branch): div string
   "Branch([" ++ b.patterns.map(fn(p) p.show).join(", ") ++ "], [" ++ b.guards.map(fn(g) g.show).join(", ") ++ "])"
 
+pub fun is-true(e: expr): bool
+  match e
+    Con(tn, _) -> tn.name == name-true
+    _ -> False
+
+pub fun is-error-branch(b: branch): bool
+  match b
+    Branch(pats, [Guard(test, App(App(_, [TypeApp(Var(tn), _)]), _))]) ->
+      pats.all(is-patWild) && test.is-true && tn.name == name-pattern-match-error
+    _ -> False
+
 pub type expr
   Lam(tnames: list<tname>, eff: type-expr, body: expr)
   Var(tname: tname)
@@ -215,7 +273,7 @@ pub type param-info
   Borrow
   Own
 
-pub fun param-infow/show(p: param-info): div string
+pub fun param-info/show(p: param-info): div string
   match p
     Borrow -> "Borrow"
     Own -> "Own"
@@ -236,6 +294,19 @@ pub fun fip-alloc/show(fa: fip-alloc): string
     AllocAtMost(n) -> "AllocAtMost(" ++ n.show ++ ")"
     AllocFinitely -> "AllocFinitely"
     AllocUnlimited -> "AllocUnlimited"
+
+pub fun (<=)(fa1: fip-alloc, fa2: fip-alloc): bool
+  match (fa1, fa2)
+    (AllocAtMost(n1), AllocAtMost(n2)) -> n1 <= n2
+    (AllocAtMost, AllocFinitely) -> True
+    (AllocAtMost, AllocUnlimited) -> True
+    (AllocFinitely, AllocFinitely) -> True
+    (AllocFinitely, AllocUnlimited) -> True
+    (AllocUnlimited, AllocUnlimited) -> True
+    _ -> False
+
+pub fun fip-alloc/max(fa1: fip-alloc, fa2: fip-alloc): fip-alloc
+  if fa1 <= fa2 then fa2 else fa1
 
 pub type fip-tag
   Fip(alloc: fip-alloc)
@@ -324,7 +395,7 @@ pub fun expand-syn(l: type-expr): type-expr
     TSyn(_, _, tp) -> expand-syn(tp)
     _ -> l
 
-pub fun type-of(e : expr) : _ type-expr
+pub fun type-of(e : expr) : type-expr
   match e
     Lam(tnames, eff, res) -> TFun(tnames.map(fn(tn) (tn.name, tn.tp)), eff, type-of(res))
     Var(tn) -> tn.tp
@@ -339,10 +410,10 @@ pub fun type-of(e : expr) : _ type-expr
         _ -> TVar(0)
     Con(tn, _) -> tn.tp
     Lit(l) -> match l
-      LitInt -> TCon("std/core/int")
-      LitFloat -> TCon("std/core/float64")
-      LitChar -> TCon("std/core/char")
-      LitString -> TCon("std/core/string")
+      LitInt -> TCon(name-core-int)
+      LitFloat -> TCon(name-core-float64)
+      LitChar -> TCon(name-core-char)
+      LitString -> TCon(name-core-string)
     Let(_, body) -> type-of(body)
     Case(_, branches) ->
       match branches

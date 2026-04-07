@@ -40,7 +40,7 @@ fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
   with def(d)
   with debug-warning()
   match d.sort
-    DefFun(borrows, ft) | !ft.is-no-fip -> // is fip or fbip
+    DefFun(borrows, ft) | !ft.is-noFip -> // is fip or fbip
       with fip-tag(ft)
       val out =
         with input(Input(def-group-names=def-group-names))
@@ -57,13 +57,13 @@ fun chk-top-level-expr(borrows: list<param-info>, e: expr): <pure, chk, dbg> ()
       val bpars = borrows
         .zip-param-info(pars)
         .filter(fn((pi, _)) pi.is-borrow)
-        .map(fn((_, p)) p)
+        .map(snd)
       val opars = borrows
         .zip-param-info(pars)
         .filter(fn((pi, _)) pi.is-own)
-        .map(fn((_, p)) p)
+        .map(snd)
       val names = bpars.map(name)
-      with borrowed(names) // This is a poorly named function, with delta is better name or something as it confuses with environemnt borrowed not
+      with add-borrowed(names)
       val out = extract-output(action={chk-expr(body)})
       write-output(opars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
 
@@ -74,6 +74,8 @@ fun chk-top-level-expr(borrows: list<param-info>, e: expr): <pure, chk, dbg> ()
 // --- Expression Check ---
 
 fun chk-expr( e : expr ): <div, chk, dbg> ()
+  fun is-ignored-primitive(name)
+    [name-cctx-set-ctx-path, name-lazy-memoize-target, name-lazy-enter, name-lazy-leave].any(fn(n) n == name)
   match e
     TypeLam(_, body) -> chk-expr(body)
     TypeApp(body, _) -> chk-expr(body)
@@ -83,7 +85,7 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
       val out = extract-output(action={chk-expr(body)})
       write-output(pars.foldl(out, fn(out', p) bind-name(p, NotReusable, out')))
     App(TypeApp(Var(tname), _), _) | tname.name.is-ignored-primitive -> ()
-    App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == "std/core/lazy-memoize" -> chk-expr(con-app)
+    App(TypeApp(Var(tname), _), [_, con-app]) | tname.name == name-lazy-memoize -> chk-expr(con-app)
     App(f, args) -> chk-app(f, args)
     Var(tname) ->
       // debug("considering checking variable: " ++ tname.show)
@@ -95,7 +97,7 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
         val gamma2 = bind-name(TName(def.name, def.tp), NotReusable, out)
         write-output(gamma2)
         val names = gamma2.gamma-nm.map(fn((tn, _)) tn.name)
-        with borrowed(names)
+        with add-borrowed(names)
         with tail-mod([Let(dgs, body)])
         chk-expr(def.expr)
     Let(_, _) -> emit-warning(fn(_) "internal: currently the fip analysis cannot handle nested function bindings")
@@ -104,9 +106,6 @@ fun chk-expr( e : expr ): <div, chk, dbg> ()
       chk-branches(scruts, branches)
     Con(_, _) -> ()
     Lit(lit) -> chk-lit(lit)
-
-fun is-ignored-primitive(name : string) : bool
-  ["std/core/cctx-set-ctx-path", "std/core/lazy-memoize-target", "std/core/lazy-enter", "std/core/lazy-leave"].any(fn(n) n == name) // TODO where does this go
 
 fun chk-lit(lit: lit): _ ()
   match lit
@@ -117,7 +116,7 @@ fun chk-lit(lit: lit): _ ()
 
 fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk, dbg> ()
   val which-borrowed = scrutinees.map(is-borrowed-scrutinee)
-  val branches-filtered = branches.filter(fn(b) !b.is-pattern-match-error)
+  val branches-filtered = branches.filter(fn(b) !b.is-error-branch)
   val stypes = scrutinees.map(type-of)
 
   val outs = branches-filtered.map(fn(b)
@@ -127,7 +126,7 @@ fun chk-branches(scrutinees: list<expr>, branches: list<branch>): <div, chk, dbg
   write-output(gamma2)
 
   val names = gamma2.gamma-nm.map(fn((tn, _)) tn.name)
-  with borrowed(names)
+  with add-borrowed(names)
   with tail-mod-product(branches-filtered)
   scrutinees.zip(which-borrowed).foreach(fn((s, wb)) chk-scrutinee(wb, s))
 
@@ -147,7 +146,7 @@ fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: bra
 
   val bor-names = bor-pats.map(fn((p, _)) p.bv).concat.map(fn(tn) tn.name)
   val outs =
-    with borrowed(bor-names)
+    with add-borrowed(bor-names)
     b.guards.map(fn(g) extract-output(action={chk-guard(g)}))
   val out = join-contexts(b.guards.map(fn(_) b.patterns), outs)
   write-output(own-pats.foldl(out, fn(acc, p) bind-pattern(p, acc)))
@@ -155,25 +154,14 @@ fun chk-branch(which-borrowed: list<param-info>, stypes: list<type-expr>, b: bra
 fun chk-guard(g: guard): <div, chk, dbg> ()
   val out = extract-output(action={chk-expr(g.expr)})
   val names = out.gamma-nm.map(fn((tn, _)) tn.name)
-  with borrowed(names) // Dont include wrtie-oupt in borrow context
+  with add-borrowed(names) // Dont include wrtie-oupt in borrow context
   with non-tail()
   chk-expr(g.test)
   write-output(out)
 
-fun is-pattern-match-error(b: branch): bool
-  match b
-    Branch(pats, [Guard(test, App(App(_, [TypeApp(Var(tn), _)]), _))]) ->
-      pats.all(is-patWild) && test.is-expr-true && tn.name == name-pattern-match-error
-    _ -> False
-
-fun is-expr-true(e: expr): bool
-  match e
-    Con(tn, _) -> tn.name == name-true
-    _ -> False
-
 fun tail-mod-product(branches: list<branch>, action: () -> <div, inp|e> a) : <div, inp|e> a
   match branches
-    [Branch(_, [Guard(test, e)])] | test.is-expr-true ->
+    [Branch(_, [Guard(test, e)])] | test.is-true ->
       with tail-mod([e])
       action()
     _ ->
@@ -293,35 +281,20 @@ fun zip-tokens(as1: tokens, as2: tokens): div tokens
 
 // --- Effect Check ---
 fun chk-effect(tp: type-expr)
-  if !is-fbip-extended(tp) then emit-warning(fn(env: env) -> "algebraic effects other than" ++ env.show ++ " pure may cause allocation.") // TODO use better than show
+  if !is-fbip-extended(tp) then emit-warning(fn(_) -> "algebraic effects other than pure may cause allocation.")
 
 fun is-fbip(tau: type-expr)
   match tau
     TCon(name) ->
       val n = name.normalize-name
-      ["total", "div", "exn", "std/core/types/total", "std/core/types/div", "std/core/exn/exn"].any(fn(s) s == n || n.ends-with("/" ++ s).is-just)
+      [name-total, name-div, name-exn, name-tp-total, name-tp-div, name-tp-exn].any(fn(s) s == n || n.ends-with("/" ++ s).is-just)
     TApp(TCon(name), [TCon(p)]) ->
-      (name.normalize-name.ends-with("handled").is-just || name.normalize-name.ends-with("handled1").is-just) && p.normalize-name.ends-with("exn").is-just
+      (name.normalize-name.ends-with(name-handled).is-just || name.normalize-name.ends-with(name-handled1).is-just) && p.normalize-name.ends-with(name-exn).is-just
     _ -> False
 
 fun is-fbip-extended(tp: type-expr)
   val (taus, _) = extract-effect-extend(tp)
   taus.all(is-fbip)
-
-fun extract-effect-extend(t: type-expr): div (list<type-expr>, type-expr)
-  match expand-syn(t)
-    TApp(TCon(name), [l, e]) | name.normalize-name.ends-with("effect-extend").is-just ->
-      val (ls, tl) = extract-effect-extend(e)
-      val ls0 = extract-label(l)
-      (ls0 ++ ls, tl)
-    _ -> ([], t)
-
-fun extract-label(l: type-expr): div list<type-expr>
-  match expand-syn(l)
-    TApp(TCon(name), [_, _]) | name.normalize-name.ends-with("effect-extend").is-just ->
-      val (ls, _) = extract-effect-extend(l)
-      ls
-    _ -> [l]
 
 fun is-mod-cons(e : expr) : div bool
   match e
@@ -424,15 +397,15 @@ fun is-con-as-just(repr: con-repr): bool
 fun size-field() : int
   8 // Assume 64-bit
 
-fun value-repr-size(vr : value-repr) : int
+fun value-repr/size(vr : value-repr) : int
   vr.raw-val + (vr.scan * size-field())
 
-fun con-repr-alloc-size(repr : con-repr) : int
+fun con-repr/alloc-size(repr : con-repr) : int
   if repr.dr.is-value then 0
-  else repr.vr.value-repr-size
+  else repr.vr.size
 
 fun get-constructor-alloc-size(repr: con-repr): <environment> reusable
-  val size = repr.con-repr-alloc-size
+  val size = repr.alloc-size
   if size == 0 then NotReusable
   else ReusableWithSize(size)
 
@@ -446,9 +419,9 @@ fun get-allocation(tn: tname, sz: reusable): <chk> ()
 
 fun chk-allocation(tn: tname, repr: con-repr): <div, chk, dbg> ()
   if repr.is-con-as-just then ()
-  elif repr.typename.ends-with("_noreuse").is-just then
+  elif repr.typename.ends-with(name-noreuse-suffix).is-just then
     require-capability(may-alloc, fn(_)
-      Just("types suffixed with _noreuse are not reused: " ++ repr.typename)
+      Just("types suffixed with " ++ name-noreuse-suffix ++ " are not reused: " ++ repr.typename)
     )
   else
     val size = get-constructor-alloc-size(repr)
@@ -476,19 +449,6 @@ fun parallel(a: alloc-in-loop, b: alloc-in-loop): alloc-in-loop
     a.has-self-call || b.has-self-call,
     a.has-both-in-sequence || b.has-both-in-sequence
   )
-
-fun (<=)(fa1: fip-alloc, fa2: fip-alloc): bool
-  match (fa1, fa2)
-    (AllocAtMost(n1), AllocAtMost(n2)) -> n1 <= n2
-    (AllocAtMost, AllocFinitely) -> True
-    (AllocAtMost, AllocUnlimited) -> True
-    (AllocFinitely, AllocFinitely) -> True
-    (AllocFinitely, AllocUnlimited) -> True
-    (AllocUnlimited, AllocUnlimited) -> True
-    _ -> False
-
-fun max(fa1: fip-alloc, fa2: fip-alloc): fip-alloc
-  if fa1 <= fa2 then fa2 else fa1
 
 fun get-alloc-credits(not-reused: list<int>, tree: alloc-tree): div (fip-alloc, alloc-in-loop)
   match tree
@@ -559,7 +519,7 @@ fun chk-arg(arg: (param-info, expr)): <div, chk, dbg> ()
                Just("passing owned expressions as borrowed causes deallocation")
             )
 
-fun zip-param-info(pinfos: list<param-info>, args: list<a>): div list<(param-info, a)>
+fbip fun zip-param-info(pinfos: list<param-info>, args: list<a>): div list<(param-info, a)>
   match (pinfos, args)
     (Cons(p, ps), Cons(a, rest)) -> Cons((p, a), zip-param-info(ps, rest))
     ([], Cons(a, rest)) -> Cons((Own, a), zip-param-info([], rest))
@@ -576,7 +536,7 @@ fun chk-fun-callable(name: string): <environment, out, warning, dbg> ()
   val normalized = name.normalize-name
   val result = env.gamma.lookup(fn(n) n == normalized)
   match result
-    Nothing | ["std/core/cctx-set-ctx-path", "std/core/types/@field-addr-of"].any(fn(n) n == normalized) ->
+    Nothing | [name-cctx-set-ctx-path, name-field-addr-of].any(fn(n) n == normalized) ->
       write-call-allocation(name, Fip(AllocAtMost(0)))
     Nothing ->
       emit-warning(fn(_) "internal: fip analysis could not find fip information for function: " ++ name)
@@ -591,6 +551,22 @@ fun may-recurse(f: fip-tag): bool
     Fip(_) -> False
     Fbip(_, is-tail) -> !is-tail
     NoFip(is-tail) -> !is-tail
+
+pub fun get-fip-alloc(f : fip-tag) : fip-alloc
+  match f
+    Fip(a) -> a
+    Fbip(a, _) -> a
+    NoFip -> AllocUnlimited
+
+pub fun may-alloc(f : fip-tag) : bool
+  match f.get-fip-alloc
+    AllocUnlimited -> True
+    _ -> False
+
+pub fun may-dealloc(f: fip-tag): bool
+  match f
+    Fip -> False
+    _   -> True
 
 // --- Output Verification ---
 
@@ -614,9 +590,7 @@ fun info-is-local(tname: tname): bool
   !tname.is-qualified
 
 fun is-cctx-name(name : string) : bool
-  match name.starts-with("cctx")
-    Just(_) -> True
-    Nothing -> False
+  name.starts-with(name-cctx-prefix).is-just
 
 fun needs-dup-drop(tname : tname)
   if tname.name.is-cctx-name then False else needs-dup-drop-tp(tname.tp)
@@ -647,22 +621,6 @@ fun get-param-infos(name : string) : <environment, dbg, div> list<param-info>
   match env.borrowed.lookup(fn(n) n == name)
     Just(pinfos) -> pinfos
     Nothing -> []
-
-fun may-dealloc(f: fip-tag): bool
-  match f
-    Fip -> False
-    _   -> True
-
-fun get-fip-alloc(f : fip-tag) : fip-alloc
-  match f
-    Fip(a) -> a
-    Fbip(a, _) -> a
-    NoFip -> AllocUnlimited
-
-fun may-alloc(f : fip-tag) : bool
-  match f.get-fip-alloc
-    AllocUnlimited -> True
-    _ -> False
 
 fun require-capability(cap: fip-tag -> bool, test: env -> maybe<string>): _ ()
   val env = get-env()
@@ -722,11 +680,6 @@ fun bind-name(nm: tname, msize: reusable, out: output): _ output
       if n > 1 && needs-dup-drop(nm) then
         require-capability(may-alloc, fn(_) Just("the variable " ++ nm.name ++ " is used multiple times (causing sharing and preventing reuse)"))
       out(gamma-nm = out.gamma-nm.filter(fn((tn, _)) tn != nm))
-
-fun is-no-fip( f : fip-tag ) : bool
-  match f
-    NoFip(_) -> True
-    _ -> False
 
 fun main()
   ()
