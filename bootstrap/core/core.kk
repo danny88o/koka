@@ -109,6 +109,11 @@ pub fun tname/(==)(tn1: tname, tn2: tname): bool
 pub fun tname/show(tn: tname): div string
   tn.name ++ ": " ++ tn.tp.show
 
+pub fun local-name(n : name) : name
+  match n.find-last("/")
+    Just(s) -> s.after.string
+    Nothing -> n
+
 pub type lit
   LitInt(i: int)
   LitFloat(d: float64)

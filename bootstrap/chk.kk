@@ -20,7 +20,7 @@ pub type alloc-tree
 pub fun alloc-tree/show(t: alloc-tree): div string
   match t
     Alloc(id) -> "Alloc(" ++ id.show ++ ")"
-    Call(f) -> "Call(" ++ f.fip-alloc/show ++ ")"
+    Call(f) -> "Call(" ++ f.show ++ ")"
     CallSelf(f) -> "CallSelf(" ++ f.show ++ ")"
     Seq(l, r) -> "Seq(" ++ show(l) ++ ", " ++ show(r) ++ ")"
     Match(ts) -> "Match(" ++ ts.map(show).join(", ") ++ ")"
@@ -117,6 +117,8 @@ pub effect fun warning( msg : string ): ()
 
 pub alias chk = <environment, out, inp, unique-state, warning>
 
+// --- Environment Handlers
+
 pub fun env-handler(initial: env, action: () -> <environment|e> a) : e a
   var env := initial
   with fun get-env() env
@@ -126,8 +128,19 @@ pub fun env-override(new-env: env, action: () -> <environment|e> a) : <environme
   with override fun get-env() new-env
   action()
 
-pub fun input-handler(initial: input, action: () -> <inp|e> a) : e a
-  var input := initial
+pub fun add-def( def : def, action : () -> <environment|e> a) : <environment|e> a
+  val env = get-env()
+  with env-override(env(current-def = Cons(def, env.current-def)))
+  action()
+
+pub fun fip-tag(tag: fip-tag, action : () -> <environment|e> a) : <environment|e> a
+  val env = get-env()
+  with env-override(env(fip-tag = tag))
+  action()
+
+// --- Input Handlers
+
+pub fun input-handler(input: input, action: () -> <inp|e> a) : e a
   with fun get-input() input
   action()
 
@@ -135,6 +148,41 @@ pub fun input-override(new-input: input, action: () -> <inp|e> a) : <inp|e> a
   with override fun get-input() new-input
   action()
 
+pub fun add-borrowed(names: list<name>, action: () -> <inp|e> a) : <inp|e> a
+  val input = get-input()
+  with input-override(input(delta = names ++ input.delta))
+  action()
+
+pub fun non-tail(action: () -> <inp|e> a) : <inp|e> a
+  val curr = get-input()
+  with input-override(curr(is-tail-context = False))
+  action()
+
+pub fun is-borrowed(tname: tname): inp bool
+  get-input().delta.any(fn(n) n == tname.name)
+
+// --- Warning Handlers
+
+pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
+  var warnings := []
+  with handler
+    return(x) warnings
+    fun warning(msg) warnings := Cons(msg, warnings)
+  action()
+
+pub fun debug-warning(action: () -> <warning, dbg, environment|e> a) : <dbg, environment, warning|e> a
+  with override fun warning(msg)
+    val f = get-env().current-def.head.maybe("Unknown", fn(d) d.name)
+    warn(f ++ ": " ++ msg)
+    warning(msg)
+  action()
+
+pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
+  val env = get-env()
+  val name = env.current-def.head.maybe("Unknown", fn(d) d.name)
+  warning("fip fun " ++ name.local-name ++ ": " ++ make-doc(env))
+
+// --- Output Handlers
 pub fun extract-output(initial: output = Output(), action: () -> <out, div|e> a) : <div|e> output
   var output := initial
   with handler
@@ -149,59 +197,6 @@ pub fun unique-id(action: () -> <unique-state|e> a) : e a
     next-id := next-id + 1
     id
   action()
-
-pub fun debug-warning(action: () -> <warning, dbg, environment|e> a) : <dbg, environment, warning|e> a
-  with override fun warning(msg)
-    val f = get-env().current-def.head.maybe("Unknown", fn(d) d.name)
-    warn(f ++ ": " ++ msg)
-    warning(msg)
-  action()
-
-pub fun warning-handler(action: () -> <warning|e> a) : e list<string>
-  var warnings := []
-  with handler
-    return(x) warnings
-    fun warning(msg) warnings := Cons(msg, warnings)
-  action()
-
-
-// --- Env Helpers
-
-pub fun def(def: def, action)
-  val env = get-env()
-  with env-override(env(current-def = Cons(def, env.current-def)))
-  action()
-
-pub fun fip-tag(tag: fip-tag, action)
-  val env = get-env()
-  with env-override(env(fip-tag = tag))
-  action()
-
-
-// --- Input Helpers
-
-pub fun input(input: input, action)
-  with fun get-input() input
-  action()
-
-pub fun add-borrowed(names: list<name>, action)
-  val input = get-input()
-  with input-override(input(delta = names ++ input.delta))
-  action()
-
-pub fun is-borrowed(tname: tname): inp bool
-  get-input().delta.any(fn(n) n == tname.name)
-
-pub fun non-tail(action)
-  val curr = get-input()
-  with input-override(curr(is-tail-context = False))
-  action()
-
-
-// --- Warning Helpers
-
-pub fun emit-warning(make-doc: env -> <environment, warning|e> string): <environment, warning|e> ()
-  warning(make-doc(get-env()))
 
 fun main()
   ()

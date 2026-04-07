@@ -12,14 +12,14 @@ module bootstrap/data/insertionsort
 //     Cons((y,vy), ys) -> sort-acc(ys, acc.insert(y, vy))
 //     Nil -> acc
 
-pub fun insert(xs : list<a>, x : a,  ?(>): (a, a) -> bool) : div list<a>
+pub fun insert(xs : list<a>, x : a,  ?(>): (a, a) -> bool) : list<a>
   match xs
     Cons(y, ys) ->
       if x > y then Cons(x, Cons(y, ys))
       else Cons(y, ys.insert(x))
     Nil -> Cons(x, Nil)
 
-pub fun sort(xs : list<(a)>, ?(>) : (a, a) -> bool) : div list<(a)>
+pub fun sort(xs : list<(a)>, ?(>) : (a, a) -> bool) : list<(a)>
   match xs
     Cons(y, ys) -> insert(sort(ys), y)
     Nil -> Nil

@@ -19,12 +19,10 @@ fun chk-def-groups(borrows: list<(name, list<param-info>)>, gamma: list<(string,
   with run-chk(borrows, gamma, type-infos)
   dgs.foreach(chk-def-group)
 
-fun run-chk(borrows: list<(name, list<param-info>)>, gamma: list<(string, fip-tag)>, type-infos: list<data-info>, action: () -> <chk, dbg, div|e> a) : <dbg, div|e> list<string>
-  with input-handler(Input())
+fun run-chk(borrows: list<(name, list<param-info>)>, gamma: list<(string, fip-tag)>, type-infos: list<data-info>, action: () -> <environment, unique-state, warning, dbg, div|e> a) : <dbg, div|e> list<string>
   with env-handler(Env(gamma = gamma, new-types = type-infos.map(fn(di) (di.name, di)), borrowed = borrows))
   with warning-handler()
   with unique-id()
-  with extract-output(Output())
   action()
 
 fun chk-def-group(dg : def-group )
@@ -35,21 +33,21 @@ fun chk-def-group(dg : def-group )
     DefNonRec(def) ->
       chk-top-level-def([def.name], def)
 
-fun chk-top-level-def(def-group-names : list<string>, d : def ): _ ()
+fun chk-top-level-def(def-group-names : list<string>, d : def ): <dbg, environment, unique-state, warning, div> ()
   info("checking function: " ++ d.name)
-  with def(d)
+  with add-def(d)
   with debug-warning()
   match d.sort
     DefFun(borrows, ft) | !ft.is-noFip -> // is fip or fbip
       with fip-tag(ft)
       val out =
-        with input(Input(def-group-names=def-group-names))
+        with input-handler(Input(def-group-names=def-group-names))
         extract-output(action={chk-top-level-expr(borrows, d.expr)})
       check-output-empty(out)
     _ -> () // Not a function
 
 // Lambdas at the top-level are part of the signature and not allocations.
-fun chk-top-level-expr(borrows: list<param-info>, e: expr): <pure, chk, dbg> ()
+fun chk-top-level-expr(borrows: list<param-info>, e: expr): <div, chk, dbg> ()
   debug("Env: " ++ get-env().show())
   match e
     Lam(pars, eff, body) ->
@@ -195,11 +193,6 @@ fun bv(p: pattern): div list<tname>
 
 // --- Pretty Printing ---
 
-fun local-name(n : string) : string
-  match n.find-last("/")
-    Just(s) -> s.after.string
-    Nothing -> n
-
 fun pattern/pretty(p: pattern): div string
   match p
     PatCon(tn, Nil) -> tn.name.local-name
@@ -213,13 +206,15 @@ fun pretty-gamma-nm(out: output): div string
   "(" ++ out.gamma-nm.map(fn((tn, cnt)) tn.name.local-name ++ "/" ++ cnt.show).join(", ") ++ ")"
 
 fun pretty-gamma-dia(out: output): div string
-  "(" ++ out.gamma-dia.flatmap(fn((sz, cs))
-    cs.map(fn((_, ids))
-      match ids.head
-        Just((tn, _)) -> tn.name.local-name ++ "/" ++ sz.show
-        Nothing -> ""
+  "(" ++ out.gamma-dia
+    .flatmap(fn((sz, cs))
+      cs.map(fn((_, ids))
+        match ids.head
+          Just((tn, _)) -> tn.name.local-name ++ "/" ++ sz.show
+          Nothing -> ""
+      )
     )
-  ).filter(fn(s) !s.is-empty).join(", ") ++ ")"
+  .filter(fn(s) !s.is-empty).join(", ") ++ ")"
 
 fun fip-alloc/pretty(fa: fip-alloc): string
   match fa
